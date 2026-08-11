@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TECNO AKTIVA</title>
+  <title>Tekno Activa | Tecnología y más</title>
 
   <style>
     * {
@@ -14,23 +14,24 @@
     }
 
     body {
-      background: #f5f5f5;
+      background: #f4f4f4;
       color: #222;
     }
 
     header {
       background: #111;
       color: white;
-      padding: 20px;
+      padding: 28px 15px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 28px;
+      font-size: 34px;
+      letter-spacing: 1px;
     }
 
     header p {
-      margin-top: 6px;
+      margin-top: 8px;
       color: #ccc;
     }
 
@@ -42,19 +43,25 @@
 
     .categorias {
       display: flex;
+      justify-content: center;
       gap: 10px;
-      overflow-x: auto;
-      margin-bottom: 25px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
     .categorias button {
       border: none;
       background: white;
-      padding: 12px 18px;
-      border-radius: 20px;
+      padding: 12px 20px;
+      border-radius: 25px;
       cursor: pointer;
-      white-space: nowrap;
+      font-size: 15px;
       box-shadow: 0 2px 8px #ddd;
+    }
+
+    .categorias button:hover {
+      background: #111;
+      color: white;
     }
 
     .productos {
@@ -85,16 +92,21 @@
       margin-bottom: 8px;
     }
 
+    .producto p {
+      color: #666;
+      font-size: 14px;
+    }
+
     .precio {
       font-size: 22px;
       font-weight: bold;
-      margin: 10px 0;
+      margin: 12px 0;
     }
 
-    .comprar {
+    .agregar {
       width: 100%;
       border: none;
-      background: #25D366;
+      background: #111;
       color: white;
       padding: 12px;
       border-radius: 8px;
@@ -102,24 +114,123 @@
       cursor: pointer;
     }
 
-    .carrito {
+    .agregar:hover {
+      background: #333;
+    }
+
+    .carrito-boton {
       position: fixed;
       right: 20px;
       bottom: 20px;
-      background: #111;
+      background: #25D366;
       color: white;
       border: none;
       border-radius: 50px;
       padding: 15px 20px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
       box-shadow: 0 4px 15px #999;
+      z-index: 10;
+    }
+
+    .carrito-boton span {
+      background: white;
+      color: #25D366;
+      border-radius: 50%;
+      padding: 3px 7px;
+      margin-left: 5px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 20;
+      padding: 20px;
+    }
+
+    .modal-contenido {
+      background: white;
+      max-width: 500px;
+      margin: 50px auto;
+      border-radius: 15px;
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-contenido h2 {
+      margin-bottom: 20px;
+    }
+
+    .item-carrito {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+
+    .cantidad {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cantidad button {
+      border: none;
+      background: #111;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .eliminar {
+      border: none;
+      background: #e53935;
+      color: white;
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .total {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+      text-align: right;
+    }
+
+    .whatsapp {
+      width: 100%;
+      border: none;
+      background: #25D366;
+      color: white;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cerrar {
+      width: 100%;
+      margin-top: 10px;
+      border: none;
+      background: #ddd;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
     }
 
     footer {
       text-align: center;
-      padding: 30px;
-      margin-top: 30px;
+      padding: 35px;
       color: #777;
     }
   </style>
@@ -128,85 +239,424 @@
 <body>
 
 <header>
-  <h1>TECNO AKTIVA</h1>
-  <p>Accesorios y tecnología</p>
+  <h1>TEKNO ACTIVA</h1>
+  <p>Tecnología, hogar y belleza</p>
 </header>
 
 <div class="contenedor">
 
+  <!-- CATEGORÍAS -->
   <div class="categorias">
-    <button>Todos</button>
-    <button>Fundas</button>
-    <button>Vidrios</button>
-    <button>Cargadores</button>
-    <button>Cables</button>
-    <button>Auriculares</button>
+
+    <button onclick="filtrar('todos')">
+      🛍️ Todos
+    </button>
+
+    <button onclick="filtrar('auriculares')">
+      🎧 Auriculares
+    </button>
+
+    <button onclick="filtrar('cargadores')">
+      🔌 Cargadores
+    </button>
+
+    <button onclick="filtrar('hogar')">
+      🏠 Hogar
+    </button>
+
+    <button onclick="filtrar('belleza')">
+      💄 Belleza
+    </button>
+
   </div>
 
+  <!-- PRODUCTOS -->
   <div class="productos">
 
-    <div class="producto">
-      <img src="https://via.placeholder.com/500x500?text=Funda" alt="Funda">
+    <!-- AURICULARES -->
+    <div class="producto" data-categoria="auriculares">
+
+      <img
+        src="https://via.placeholder.com/500x500?text=Auriculares"
+        alt="Auriculares"
+      >
+
       <div class="producto-info">
-        <h3>Funda para celular</h3>
-        <p>Funda protectora de excelente calidad.</p>
-        <div class="precio">$8.000</div>
-        <button class="comprar" onclick="comprar('Funda para celular', 8000)">
-          Comprar por WhatsApp
+
+        <h3>Auriculares Bluetooth</h3>
+
+        <p>Auriculares inalámbricos.</p>
+
+        <div class="precio">$15.000</div>
+
+        <button
+          class="agregar"
+          onclick="agregarCarrito('Auriculares Bluetooth', 15000)"
+        >
+          🛒 Agregar al carrito
         </button>
+
       </div>
     </div>
 
-    <div class="producto">
-      <img src="https://via.placeholder.com/500x500?text=Vidrio" alt="Vidrio templado">
-      <div class="producto-info">
-        <h3>Vidrio templado</h3>
-        <p>Protección para la pantalla.</p>
-        <div class="precio">$5.000</div>
-        <button class="comprar" onclick="comprar('Vidrio templado', 5000)">
-          Comprar por WhatsApp
-        </button>
-      </div>
-    </div>
 
-    <div class="producto">
-      <img src="https://via.placeholder.com/500x500?text=Cargador" alt="Cargador">
+    <!-- CARGADORES -->
+    <div class="producto" data-categoria="cargadores">
+
+      <img
+        src="https://via.placeholder.com/500x500?text=Cargador"
+        alt="Cargador"
+      >
+
       <div class="producto-info">
+
         <h3>Cargador rápido</h3>
+
         <p>Cargador USB de carga rápida.</p>
+
         <div class="precio">$12.000</div>
-        <button class="comprar" onclick="comprar('Cargador rápido', 12000)">
-          Comprar por WhatsApp
+
+        <button
+          class="agregar"
+          onclick="agregarCarrito('Cargador rápido', 12000)"
+        >
+          🛒 Agregar al carrito
         </button>
+
+      </div>
+    </div>
+
+
+    <!-- HOGAR -->
+    <div class="producto" data-categoria="hogar">
+
+      <img
+        src="https://via.placeholder.com/500x500?text=Hogar"
+        alt="Producto para el hogar"
+      >
+
+      <div class="producto-info">
+
+        <h3>Producto para el hogar</h3>
+
+        <p>Próximamente nuevos productos.</p>
+
+        <div class="precio">$10.000</div>
+
+        <button
+          class="agregar"
+          onclick="agregarCarrito('Producto para el hogar', 10000)"
+        >
+          🛒 Agregar al carrito
+        </button>
+
+      </div>
+    </div>
+
+
+    <!-- BELLEZA -->
+    <div class="producto" data-categoria="belleza">
+
+      <img
+        src="https://via.placeholder.com/500x500?text=Belleza"
+        alt="Producto de belleza"
+      >
+
+      <div class="producto-info">
+
+        <h3>Producto de belleza</h3>
+
+        <p>Próximamente nuevos productos.</p>
+
+        <div class="precio">$10.000</div>
+
+        <button
+          class="agregar"
+          onclick="agregarCarrito('Producto de belleza', 10000)"
+        >
+          🛒 Agregar al carrito
+        </button>
+
       </div>
     </div>
 
   </div>
 </div>
 
-<button class="carrito" onclick="alert('Próximamente: carrito de compras')">
+
+<!-- BOTÓN CARRITO -->
+<button class="carrito-boton" onclick="abrirCarrito()">
   🛒 Carrito
+  <span id="contador">0</span>
 </button>
 
+
+<!-- VENTANA DEL CARRITO -->
+<div class="modal" id="modal">
+
+  <div class="modal-contenido">
+
+    <h2>🛒 Tu carrito</h2>
+
+    <div id="listaCarrito"></div>
+
+    <div class="total">
+      Total: $<span id="total">0</span>
+    </div>
+
+    <button class="whatsapp" onclick="enviarWhatsApp()">
+      📲 Enviar pedido por WhatsApp
+    </button>
+
+    <button class="cerrar" onclick="cerrarCarrito()">
+      Cerrar
+    </button>
+
+  </div>
+</div>
+
+
 <footer>
-  © 2026 Mi Tienda
+  © 2026 Tekno Activa
 </footer>
 
+
 <script>
-  function comprar(producto, precio) {
 
-    const telefono = "5492640000000";
+  let carrito = [];
 
-    const mensaje =
-      "Hola! Quiero comprar:%0A%0A" +
-      "Producto: " + producto + "%0A" +
-      "Precio: $" + precio.toLocaleString("es-AR");
+
+  function agregarCarrito(nombre, precio) {
+
+    const producto =
+      carrito.find(item => item.nombre === nombre);
+
+    if (producto) {
+
+      producto.cantidad++;
+
+    } else {
+
+      carrito.push({
+        nombre: nombre,
+        precio: precio,
+        cantidad: 1
+      });
+
+    }
+
+    actualizarCarrito();
+
+    alert("Producto agregado al carrito 🛒");
+  }
+
+
+  function actualizarCarrito() {
+
+    const lista =
+      document.getElementById("listaCarrito");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+    let cantidadTotal = 0;
+
+
+    carrito.forEach((item, index) => {
+
+      const subtotal =
+        item.precio * item.cantidad;
+
+      total += subtotal;
+
+      cantidadTotal += item.cantidad;
+
+
+      lista.innerHTML += `
+
+        <div class="item-carrito">
+
+          <div>
+
+            <strong>${item.nombre}</strong>
+
+            <br>
+
+            $${item.precio.toLocaleString("es-AR")}
+
+          </div>
+
+
+          <div class="cantidad">
+
+            <button onclick="cambiarCantidad(${index}, -1)">
+              -
+            </button>
+
+            ${item.cantidad}
+
+            <button onclick="cambiarCantidad(${index}, 1)">
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            class="eliminar"
+            onclick="eliminarProducto(${index})"
+          >
+            🗑️
+          </button>
+
+        </div>
+
+      `;
+
+    });
+
+
+    document.getElementById("total").textContent =
+      total.toLocaleString("es-AR");
+
+    document.getElementById("contador").textContent =
+      cantidadTotal;
+
+  }
+
+
+  function cambiarCantidad(index, cambio) {
+
+    carrito[index].cantidad += cambio;
+
+    if (carrito[index].cantidad <= 0) {
+
+      carrito.splice(index, 1);
+
+    }
+
+    actualizarCarrito();
+
+  }
+
+
+  function eliminarProducto(index) {
+
+    carrito.splice(index, 1);
+
+    actualizarCarrito();
+
+  }
+
+
+  function abrirCarrito() {
+
+    document.getElementById("modal").style.display =
+      "block";
+
+    actualizarCarrito();
+
+  }
+
+
+  function cerrarCarrito() {
+
+    document.getElementById("modal").style.display =
+      "none";
+
+  }
+
+
+  function enviarWhatsApp() {
+
+    if (carrito.length === 0) {
+
+      alert("El carrito está vacío.");
+
+      return;
+
+    }
+
+
+    let mensaje =
+      "Hola Tekno Activa! 👋%0A%0A";
+
+    mensaje +=
+      "Quiero realizar este pedido:%0A%0A";
+
+
+    let total = 0;
+
+
+    carrito.forEach(item => {
+
+      const subtotal =
+        item.precio * item.cantidad;
+
+      total += subtotal;
+
+
+      mensaje +=
+        "📦 " +
+        item.nombre +
+        " x" +
+        item.cantidad +
+        " - $" +
+        subtotal.toLocaleString("es-AR") +
+        "%0A";
+
+    });
+
+
+    mensaje +=
+      "%0A💰 TOTAL: $" +
+      total.toLocaleString("es-AR");
+
+
+    mensaje +=
+      "%0A%0A¿Me indican cómo puedo realizar el pago y coordinar la entrega?";
+
+
+    const telefono =
+      "5492646181163";
+
 
     window.open(
-      "https://wa.me/" + telefono + "?text=" + mensaje,
+      "https://wa.me/" +
+      telefono +
+      "?text=" +
+      mensaje,
       "_blank"
     );
+
   }
+
+
+  function filtrar(categoria) {
+
+    const productos =
+      document.querySelectorAll(".producto");
+
+
+    productos.forEach(producto => {
+
+      if (
+        categoria === "todos" ||
+        producto.dataset.categoria === categoria
+      ) {
+
+        producto.style.display = "block";
+
+      } else {
+
+        producto.style.display = "none";
+
+      }
+
+    });
+
+  }
+
 </script>
 
 </body>
