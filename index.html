@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Tienda</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      margin-top: 6px;
+      color: #ccc;
+    }
+
+    .contenedor {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .categorias {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 25px;
+    }
+
+    .categorias button {
+      border: none;
+      background: white;
+      padding: 12px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px #ddd;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .producto {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px #ddd;
+    }
+
+    .producto img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #eee;
+    }
+
+    .producto-info {
+      padding: 15px;
+    }
+
+    .producto h3 {
+      margin-bottom: 8px;
+    }
+
+    .precio {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .comprar {
+      width: 100%;
+      border: none;
+      background: #25D366;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .carrito {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px #999;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 30px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>MI TIENDA</h1>
+  <p>Accesorios y tecnología</p>
+</header>
+
+<div class="contenedor">
+
+  <div class="categorias">
+    <button>Todos</button>
+    <button>Fundas</button>
+    <button>Vidrios</button>
+    <button>Cargadores</button>
+    <button>Cables</button>
+    <button>Auriculares</button>
+  </div>
+
+  <div class="productos">
+
+    <div class="producto">
+      <img src="https://via.placeholder.com/500x500?text=Funda" alt="Funda">
+      <div class="producto-info">
+        <h3>Funda para celular</h3>
+        <p>Funda protectora de excelente calidad.</p>
+        <div class="precio">$8.000</div>
+        <button class="comprar" onclick="comprar('Funda para celular', 8000)">
+          Comprar por WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <div class="producto">
+      <img src="https://via.placeholder.com/500x500?text=Vidrio" alt="Vidrio templado">
+      <div class="producto-info">
+        <h3>Vidrio templado</h3>
+        <p>Protección para la pantalla.</p>
+        <div class="precio">$5.000</div>
+        <button class="comprar" onclick="comprar('Vidrio templado', 5000)">
+          Comprar por WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <div class="producto">
+      <img src="https://via.placeholder.com/500x500?text=Cargador" alt="Cargador">
+      <div class="producto-info">
+        <h3>Cargador rápido</h3>
+        <p>Cargador USB de carga rápida.</p>
+        <div class="precio">$12.000</div>
+        <button class="comprar" onclick="comprar('Cargador rápido', 12000)">
+          Comprar por WhatsApp
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<button class="carrito" onclick="alert('Próximamente: carrito de compras')">
+  🛒 Carrito
+</button>
+
+<footer>
+  © 2026 Mi Tienda
+</footer>
+
+<script>
+  function comprar(producto, precio) {
+
+    const telefono = "5492640000000";
+
+    const mensaje =
+      "Hola! Quiero comprar:%0A%0A" +
+      "Producto: " + producto + "%0A" +
+      "Precio: $" + precio.toLocaleString("es-AR");
+
+    window.open(
+      "https://wa.me/" + telefono + "?text=" + mensaje,
+      "_blank"
+    );
+  }
+</script>
+
+</body>
+</html>
