@@ -290,13 +290,16 @@
   <p>Tecnología, hogar y belleza</p>
 </header>
 
+
 <div class="contenedor">
 
   <div class="barra">
 
     <div class="categorias">
 
-      <button onclick="filtrar('todos')">🛍️ Todos</button>
+      <button onclick="filtrar('todos')">
+        🛍️ Todos
+      </button>
 
       <button onclick="filtrar('auriculares')">
         🎧 Auriculares
@@ -316,25 +319,37 @@
 
     </div>
 
+
     <button class="admin-btn" onclick="abrirAdmin()">
       ⚙️ Administrar
     </button>
 
   </div>
 
-  <div id="productos" class="productos"></div>
+
+  <div
+    id="productos"
+    class="productos"
+  ></div>
 
 </div>
 
 
 <!-- CARRITO -->
 
-<button class="carrito-btn" onclick="abrirCarrito()">
+<button
+  class="carrito-btn"
+  onclick="abrirCarrito()"
+>
   🛒 Carrito
   <span id="contador">0</span>
 </button>
 
-<div class="modal" id="modalCarrito">
+
+<div
+  class="modal"
+  id="modalCarrito"
+>
 
   <div class="modal-contenido">
 
@@ -346,11 +361,17 @@
       Total: $<span id="total">0</span>
     </div>
 
-    <button class="whatsapp" onclick="enviarWhatsApp()">
+    <button
+      class="whatsapp"
+      onclick="enviarWhatsApp()"
+    >
       📲 Enviar pedido por WhatsApp
     </button>
 
-    <button class="cerrar" onclick="cerrarCarrito()">
+    <button
+      class="cerrar"
+      onclick="cerrarCarrito()"
+    >
       Cerrar
     </button>
 
@@ -361,11 +382,15 @@
 
 <!-- ADMINISTRACIÓN -->
 
-<div class="modal" id="modalAdmin">
+<div
+  class="modal"
+  id="modalAdmin"
+>
 
   <div class="modal-contenido">
 
     <h2>⚙️ Agregar producto</h2>
+
 
     <label>Nombre</label>
 
@@ -375,6 +400,7 @@
       placeholder="Ej: Auricular A6S"
     >
 
+
     <label>Precio</label>
 
     <input
@@ -383,6 +409,7 @@
       placeholder="9999"
     >
 
+
     <label>Precio anterior</label>
 
     <input
@@ -390,6 +417,7 @@
       type="number"
       placeholder="11500"
     >
+
 
     <label>Categoría</label>
 
@@ -413,12 +441,14 @@
 
     </select>
 
+
     <label>Descripción</label>
 
     <textarea
       id="descripcion"
       placeholder="Descripción del producto"
     ></textarea>
+
 
     <label>URL de imagen</label>
 
@@ -428,11 +458,19 @@
       placeholder="https://..."
     >
 
-    <button class="guardar" onclick="guardarProducto()">
+
+    <button
+      class="guardar"
+      onclick="guardarProducto()"
+    >
       ➕ Guardar producto
     </button>
 
-    <button class="cerrar" onclick="cerrarAdmin()">
+
+    <button
+      class="cerrar"
+      onclick="cerrarAdmin()"
+    >
       Cerrar
     </button>
 
@@ -455,14 +493,16 @@
 const SUPABASE_URL =
   "https://emjknuwvbvqonafckwce.supabase.co";
 
+
 const SUPABASE_KEY =
- sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG
+  sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG
 
 /* =========================
    PRODUCTOS
 ========================= */
 
 let productos = [];
+
 
 async function cargarProductos() {
 
@@ -480,6 +520,7 @@ async function cargarProductos() {
       }
     );
 
+
     if (!respuesta.ok) {
 
       throw new Error(
@@ -488,15 +529,21 @@ async function cargarProductos() {
 
     }
 
-    productos = await respuesta.json();
+
+    productos =
+      await respuesta.json();
+
 
     mostrarProductos(productos);
+
 
   } catch (error) {
 
     console.error(error);
 
-    document.getElementById("productos").innerHTML =
+    document.getElementById(
+      "productos"
+    ).innerHTML =
       "<p>No se pudieron cargar los productos.</p>";
 
   }
@@ -528,44 +575,60 @@ function mostrarProductos(lista) {
       >
 
         <img
-          src="${producto.imagen || 'https://via.placeholder.com/500x500?text=Producto'}"
+          src="${
+            producto.imagen ||
+            'https://via.placeholder.com/500x500?text=Producto'
+          }"
           alt="${producto.nombre}"
         >
+
 
         <div class="producto-info">
 
           ${
             tieneOferta
-            ? `<span class="oferta">🔥 OFERTA</span>`
-            : ""
+            ? '<span class="oferta">🔥 OFERTA</span>'
+            : ''
           }
+
 
           <h3>
             ${producto.nombre}
           </h3>
 
+
           <p>
             ${producto.descripcion || ""}
           </p>
+
 
           ${
             tieneOferta
             ? `
               <div class="precio-anterior">
-                $${Number(producto.precio_anterior).toLocaleString("es-AR")}
+                $${Number(
+                  producto.precio_anterior
+                ).toLocaleString("es-AR")}
               </div>
             `
             : ""
           }
 
+
           <div class="precio">
-            $${Number(producto.precio).toLocaleString("es-AR")}
+            $${Number(
+              producto.precio
+            ).toLocaleString("es-AR")}
           </div>
+
 
           <button
             class="agregar"
             onclick="agregarCarrito(
-              '${producto.nombre.replace(/'/g, "\\'")}',
+              '${producto.nombre.replace(
+                /'/g,
+                "\\'"
+              )}',
               ${producto.precio}
             )"
           >
@@ -584,35 +647,56 @@ function mostrarProductos(lista) {
 
 
 /* =========================
-   AGREGAR PRODUCTO
+   GUARDAR PRODUCTO
 ========================= */
 
 async function guardarProducto() {
 
   const nombre =
-    document.getElementById("nombre").value.trim();
+    document.getElementById(
+      "nombre"
+    ).value.trim();
+
 
   const precio =
-    Number(document.getElementById("precio").value);
+    Number(
+      document.getElementById(
+        "precio"
+      ).value
+    );
+
 
   const precioAnterior =
     Number(
-      document.getElementById("precioAnterior").value
+      document.getElementById(
+        "precioAnterior"
+      ).value
     ) || null;
 
+
   const categoria =
-    document.getElementById("categoria").value;
+    document.getElementById(
+      "categoria"
+    ).value;
+
 
   const descripcion =
-    document.getElementById("descripcion").value.trim();
+    document.getElementById(
+      "descripcion"
+    ).value.trim();
+
 
   const imagen =
-    document.getElementById("imagen").value.trim();
+    document.getElementById(
+      "imagen"
+    ).value.trim();
 
 
   if (!nombre || !precio) {
 
-    alert("Completá el nombre y el precio.");
+    alert(
+      "Completá el nombre y el precio."
+    );
 
     return;
 
@@ -621,34 +705,57 @@ async function guardarProducto() {
 
   try {
 
-    const respuesta = await fetch(
-      SUPABASE_URL + "/rest/v1/productos",
-      {
-        method: "POST",
+    const respuesta =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/productos",
+        {
 
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY,
-          "Content-Type":
-            "application/json",
-          "Prefer":
-            "return=minimal"
-        },
+          method: "POST",
 
-        body: JSON.stringify({
+          headers: {
 
-          nombre: nombre,
-          precio: precio,
-          precio_anterior: precioAnterior,
-          categoria: categoria,
-          descripcion: descripcion,
-          imagen: imagen
+            "apikey":
+              SUPABASE_KEY,
 
-        })
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY,
 
-      }
-    );
+            "Content-Type":
+              "application/json",
+
+            "Prefer":
+              "return=minimal"
+
+          },
+
+
+          body:
+            JSON.stringify({
+
+              nombre:
+                nombre,
+
+              precio:
+                precio,
+
+              precio_anterior:
+                precioAnterior,
+
+              categoria:
+                categoria,
+
+              descripcion:
+                descripcion,
+
+              imagen:
+                imagen
+
+            })
+
+        }
+      );
 
 
     if (!respuesta.ok) {
@@ -656,10 +763,14 @@ async function guardarProducto() {
       const error =
         await respuesta.text();
 
-      console.error(error);
+      console.error(
+        "Supabase:",
+        error
+      );
 
       alert(
-        "No se pudo guardar el producto."
+        "No se pudo guardar:\n\n" +
+        error
       );
 
       return;
@@ -667,27 +778,54 @@ async function guardarProducto() {
     }
 
 
-    alert("✅ Producto guardado.");
+    alert(
+      "✅ Producto guardado."
+    );
 
-    document.getElementById("nombre").value = "";
-    document.getElementById("precio").value = "";
-    document.getElementById("precioAnterior").value = "";
-    document.getElementById("descripcion").value = "";
-    document.getElementById("imagen").value = "";
+
+    document.getElementById(
+      "nombre"
+    ).value = "";
+
+
+    document.getElementById(
+      "precio"
+    ).value = "";
+
+
+    document.getElementById(
+      "precioAnterior"
+    ).value = "";
+
+
+    document.getElementById(
+      "descripcion"
+    ).value = "";
+
+
+    document.getElementById(
+      "imagen"
+    ).value = "";
+
 
     cerrarAdmin();
 
+
     cargarProductos();
+
 
   } catch (error) {
 
-  console.error("ERROR COMPLETO:", error);
+    console.error(
+      "ERROR COMPLETO:",
+      error
+    );
 
-  alert(
-    "ERROR: " + error.message
-  );
+    alert(
+      "ERROR: " +
+      error.message
+    );
 
-}
   }
 
 }
@@ -701,19 +839,26 @@ function filtrar(categoria) {
 
   if (categoria === "todos") {
 
-    mostrarProductos(productos);
+    mostrarProductos(
+      productos
+    );
 
     return;
 
   }
 
+
   const filtrados =
     productos.filter(
       producto =>
-        producto.categoria === categoria
+        producto.categoria ===
+        categoria
     );
 
-  mostrarProductos(filtrados);
+
+  mostrarProductos(
+    filtrados
+  );
 
 }
 
@@ -725,11 +870,16 @@ function filtrar(categoria) {
 let carrito = [];
 
 
-function agregarCarrito(nombre, precio) {
+function agregarCarrito(
+  nombre,
+  precio
+) {
 
   const producto =
     carrito.find(
-      item => item.nombre === nombre
+      item =>
+        item.nombre ===
+        nombre
     );
 
 
@@ -741,9 +891,14 @@ function agregarCarrito(nombre, precio) {
 
     carrito.push({
 
-      nombre: nombre,
-      precio: Number(precio),
-      cantidad: 1
+      nombre:
+        nombre,
+
+      precio:
+        Number(precio),
+
+      cantidad:
+        1
 
     });
 
@@ -752,7 +907,10 @@ function agregarCarrito(nombre, precio) {
 
   actualizarCarrito();
 
-  alert("Producto agregado 🛒");
+
+  alert(
+    "Producto agregado 🛒"
+  );
 
 }
 
@@ -760,99 +918,150 @@ function agregarCarrito(nombre, precio) {
 function actualizarCarrito() {
 
   const lista =
-    document.getElementById("listaCarrito");
+    document.getElementById(
+      "listaCarrito"
+    );
+
 
   lista.innerHTML = "";
 
+
   let total = 0;
+
   let cantidadTotal = 0;
 
 
-  carrito.forEach((item, index) => {
+  carrito.forEach(
+    (item, index) => {
 
-    const subtotal =
-      item.precio * item.cantidad;
-
-    total += subtotal;
-
-    cantidadTotal += item.cantidad;
+      const subtotal =
+        item.precio *
+        item.cantidad;
 
 
-    lista.innerHTML += `
+      total +=
+        subtotal;
 
-      <div class="item-carrito">
 
-        <div>
+      cantidadTotal +=
+        item.cantidad;
 
-          <strong>
-            ${item.nombre}
-          </strong>
 
-          <br>
+      lista.innerHTML += `
 
-          $${item.precio.toLocaleString("es-AR")}
+        <div class="item-carrito">
+
+          <div>
+
+            <strong>
+              ${item.nombre}
+            </strong>
+
+            <br>
+
+            $${item.precio.toLocaleString(
+              "es-AR"
+            )}
+
+          </div>
+
+
+          <div class="cantidad">
+
+            <button
+              onclick="cambiarCantidad(
+                ${index},
+                -1
+              )"
+            >
+              -
+            </button>
+
+
+            ${item.cantidad}
+
+
+            <button
+              onclick="cambiarCantidad(
+                ${index},
+                1
+              )"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            class="eliminar"
+            onclick="eliminarProducto(
+              ${index}
+            )"
+          >
+            🗑️
+          </button>
 
         </div>
 
-        <div class="cantidad">
+      `;
 
-          <button
-            onclick="cambiarCantidad(${index}, -1)"
-          >
-            -
-          </button>
-
-          ${item.cantidad}
-
-          <button
-            onclick="cambiarCantidad(${index}, 1)"
-          >
-            +
-          </button>
-
-        </div>
-
-        <button
-          class="eliminar"
-          onclick="eliminarProducto(${index})"
-        >
-          🗑️
-        </button>
-
-      </div>
-
-    `;
-
-  });
+    }
+  );
 
 
-  document.getElementById("total").textContent =
-    total.toLocaleString("es-AR");
+  document.getElementById(
+    "total"
+  ).textContent =
+    total.toLocaleString(
+      "es-AR"
+    );
 
-  document.getElementById("contador").textContent =
+
+  document.getElementById(
+    "contador"
+  ).textContent =
     cantidadTotal;
 
 }
 
 
-function cambiarCantidad(index, cambio) {
+function cambiarCantidad(
+  index,
+  cambio
+) {
 
-  carrito[index].cantidad += cambio;
+  carrito[index].cantidad +=
+    cambio;
 
-  if (carrito[index].cantidad <= 0) {
 
-    carrito.splice(index, 1);
+  if (
+    carrito[index].cantidad <=
+    0
+  ) {
+
+    carrito.splice(
+      index,
+      1
+    );
 
   }
+
 
   actualizarCarrito();
 
 }
 
 
-function eliminarProducto(index) {
+function eliminarProducto(
+  index
+) {
 
-  carrito.splice(index, 1);
+  carrito.splice(
+    index,
+    1
+  );
+
 
   actualizarCarrito();
 
@@ -863,7 +1072,9 @@ function abrirCarrito() {
 
   document.getElementById(
     "modalCarrito"
-  ).style.display = "block";
+  ).style.display =
+    "block";
+
 
   actualizarCarrito();
 
@@ -874,7 +1085,8 @@ function cerrarCarrito() {
 
   document.getElementById(
     "modalCarrito"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 }
 
@@ -885,9 +1097,14 @@ function cerrarCarrito() {
 
 function enviarWhatsApp() {
 
-  if (carrito.length === 0) {
+  if (
+    carrito.length ===
+    0
+  ) {
 
-    alert("El carrito está vacío.");
+    alert(
+      "El carrito está vacío."
+    );
 
     return;
 
@@ -897,6 +1114,7 @@ function enviarWhatsApp() {
   let mensaje =
     "Hola Tekno Activa! 👋%0A%0A";
 
+
   mensaje +=
     "Quiero realizar este pedido:%0A%0A";
 
@@ -904,29 +1122,38 @@ function enviarWhatsApp() {
   let total = 0;
 
 
-  carrito.forEach(item => {
+  carrito.forEach(
+    item => {
 
-    const subtotal =
-      item.precio * item.cantidad;
+      const subtotal =
+        item.precio *
+        item.cantidad;
 
-    total += subtotal;
+
+      total +=
+        subtotal;
 
 
-    mensaje +=
-      "📦 " +
-      item.nombre +
-      " x" +
-      item.cantidad +
-      " - $" +
-      subtotal.toLocaleString("es-AR") +
-      "%0A";
+      mensaje +=
+        "📦 " +
+        item.nombre +
+        " x" +
+        item.cantidad +
+        " - $" +
+        subtotal.toLocaleString(
+          "es-AR"
+        ) +
+        "%0A";
 
-  });
+    }
+  );
 
 
   mensaje +=
     "%0A💰 TOTAL: $" +
-    total.toLocaleString("es-AR");
+    total.toLocaleString(
+      "es-AR"
+    );
 
 
   window.open(
@@ -946,7 +1173,8 @@ function abrirAdmin() {
 
   document.getElementById(
     "modalAdmin"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 
 }
 
@@ -955,7 +1183,8 @@ function cerrarAdmin() {
 
   document.getElementById(
     "modalAdmin"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 }
 
