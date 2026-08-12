@@ -36,7 +36,6 @@
       object-fit: contain;
     }
 
-    /* Si todavía no tenés logo */
     .logo-texto {
       color: white;
       font-size: 30px;
@@ -117,13 +116,8 @@
       z-index: 5;
     }
 
-    .banner-prev {
-      left: 15px;
-    }
-
-    .banner-next {
-      right: 15px;
-    }
+    .banner-prev { left: 15px; }
+    .banner-next { right: 15px; }
 
     .banner-dots {
       position: absolute;
@@ -152,7 +146,7 @@
     }
 
     /* =========================
-       CONTENEDOR
+       CONTENEDOR Y BARRA
     ========================= */
 
     .contenedor {
@@ -165,9 +159,44 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
       margin-bottom: 25px;
       flex-wrap: wrap;
+    }
+
+    /* BUSCADOR CON LUPA */
+    .buscador-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .buscador-box input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      border: 1px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 14px;
+      outline: none;
+      background: white;
+      box-shadow: 0 2px 8px #eee;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .buscador-box input:focus {
+      border-color: #111;
+      box-shadow: 0 4px 12px #ddd;
+    }
+
+    .buscador-box .icon-lupa {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #777;
+      pointer-events: none;
     }
 
     .categorias {
@@ -177,17 +206,22 @@
     }
 
     .categorias button,
-    .admin-btn {
+    .admin-btn,
+    .info-btn {
       border: none;
       background: white;
       padding: 11px 16px;
       border-radius: 20px;
       cursor: pointer;
       box-shadow: 0 2px 8px #ddd;
+      font-size: 14px;
+      transition: background 0.2s, color 0.2s;
     }
 
     .categorias button:hover,
-    .admin-btn:hover {
+    .admin-btn:hover,
+    .info-btn:hover,
+    .categorias button.activo-cat {
       background: #111;
       color: white;
     }
@@ -274,7 +308,7 @@
     }
 
     /* =========================
-       CARRITO
+       CARRITO Y BOTÓN FLOTANTE
     ========================= */
 
     .carrito-btn {
@@ -289,6 +323,7 @@
       font-weight: bold;
       cursor: pointer;
       z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
     .carrito-btn span {
@@ -365,6 +400,41 @@
 
     .cerrar:hover {
       background: #ccc;
+    }
+
+    /* =========================
+       FORMAS DE PAGO ESTILOS
+    ========================= */
+
+    .pago-metodos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 15px 0;
+    }
+
+    .pago-card {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .pago-card span {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .pago-card h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .pago-card p {
+      font-size: 11px;
+      color: #666;
     }
 
     /* =========================
@@ -501,10 +571,7 @@
     ========================= */
 
     @media (max-width: 600px) {
-
-      header {
-        padding: 15px;
-      }
+      header { padding: 15px; }
 
       .logo {
         max-width: 180px;
@@ -516,20 +583,11 @@
         margin: 15px 10px 25px;
       }
 
-      .banner-texto {
-        padding: 15px;
-      }
+      .banner-texto { padding: 15px; }
+      .banner-texto h2 { font-size: 20px; }
+      .banner-texto p { font-size: 13px; }
 
-      .banner-texto h2 {
-        font-size: 20px;
-      }
-
-      .banner-texto p {
-        font-size: 13px;
-      }
-
-      .banner-prev,
-      .banner-next {
+      .banner-prev, .banner-next {
         width: 36px;
         height: 36px;
         font-size: 25px;
@@ -540,8 +598,10 @@
         bottom: 12px;
       }
 
-      .item-carrito {
-        flex-wrap: wrap;
+      .item-carrito { flex-wrap: wrap; }
+      
+      .pago-metodos {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -554,8 +614,6 @@
   ========================= -->
 
   <header>
-
-    <!-- CAMBIÁ ESTA URL POR LA URL DE TU LOGO -->
     <img
       class="logo"
       src=""
@@ -564,13 +622,9 @@
       style="display:none;"
     >
 
-    <!-- Se muestra mientras no haya logo -->
-    <div
-      class="logo-texto"
-      id="logoTexto">
+    <div class="logo-texto" id="logoTexto">
       TEKNO ACTIVA
     </div>
-
   </header>
 
   <!-- =========================
@@ -578,1685 +632,764 @@
   ========================= -->
 
   <div class="banner-container">
+    <div id="bannerSlider" class="banner-slider"></div>
 
-    <div
-      id="bannerSlider"
-      class="banner-slider">
-    </div>
+    <button class="banner-prev" onclick="bannerAnterior()">‹</button>
+    <button class="banner-next" onclick="bannerSiguiente()">›</button>
 
-    <button
-      class="banner-prev"
-      onclick="bannerAnterior()">
-      ‹
-    </button>
-
-    <button
-      class="banner-next"
-      onclick="bannerSiguiente()">
-      ›
-    </button>
-
-    <div
-      id="bannerDots"
-      class="banner-dots">
-    </div>
-
+    <div id="bannerDots" class="banner-dots"></div>
   </div>
 
   <div class="contenedor">
 
+    <!-- =========================
+         BARRA DE BÚSQUEDA Y NAVEGACIÓN
+    ========================= -->
+
     <div class="barra">
-
-      <div class="categorias">
-
-        <button onclick="filtrar('todos')">
-          🛍️ Todos
-        </button>
-
-        <button onclick="filtrar('auriculares')">
-          🎧 Auriculares
-        </button>
-
-        <button onclick="filtrar('cargadores')">
-          🔌 Cargadores
-        </button>
-
-        <button onclick="filtrar('hogar')">
-          🏠 Hogar
-        </button>
-
-        <button onclick="filtrar('belleza')">
-          💄 Belleza
-        </button>
-
+      
+      <!-- Buscador con Lupa -->
+      <div class="buscador-box">
+        <span class="icon-lupa">🔍</span>
+        <input 
+          type="text" 
+          id="buscadorInput" 
+          placeholder="Buscar productos..." 
+          oninput="filtrarProductos()"
+        >
       </div>
 
-      <button
-        class="admin-btn"
-        onclick="abrirAdmin()">
+      <button class="info-btn" onclick="abrirModalPagos()">
+        💳 Formas de Pago
+      </button>
+
+      <button class="admin-btn" onclick="abrirAdmin()">
         ⚙️ Administrar
       </button>
 
     </div>
 
-    <div
-      id="productos"
-      class="productos">
+    <!-- Categorías -->
+    <div class="categorias" style="margin-bottom: 25px;">
+      <button class="btn-cat activo-cat" onclick="filtrarCategoria('todos', this)">🛍️ Todos</button>
+      <button class="btn-cat" onclick="filtrarCategoria('auriculares', this)">🎧 Auriculares</button>
+      <button class="btn-cat" onclick="filtrarCategoria('cargadores', this)">🔌 Cargadores</button>
+      <button class="btn-cat" onclick="filtrarCategoria('parlantes', this)">🔊 Parlantes</button>
+      <button class="btn-cat" onclick="filtrarCategoria('accesorios', this)">📱 Accesorios</button>
     </div>
+
+    <!-- Lista de Productos -->
+    <div id="productos" class="productos"></div>
 
   </div>
 
-  <!-- =========================
-       CARRITO
-  ========================= -->
-
-  <button
-    class="carrito-btn"
-    onclick="abrirCarrito()">
-
-    🛒 Carrito
-
-    <span id="contador">0</span>
-
+  <!-- Botón Flotante Carrito -->
+  <button class="carrito-btn" onclick="abrirCarrito()">
+    🛒 Carrito <span id="cantidadCarrito">0</span>
   </button>
 
-  <div
-    class="modal"
-    id="modalCarrito">
+  <!-- =========================
+       MODAL FORMAS DE PAGO Y ENVÍOS
+  ========================= -->
 
+  <div id="modalPagos" class="modal">
     <div class="modal-contenido">
+      <h2>💳 Formas de Pago y Envíos</h2>
 
-      <h2>🛒 Tu carrito</h2>
+      <p style="font-weight: bold; margin-bottom: 10px; color: #111;">Métodos de Pago Aceptados:</p>
+      
+      <div class="pago-metodos">
+        <div class="pago-card">
+          <span>💵</span>
+          <h4>Efectivo</h4>
+          <p>En local o contra entrega</p>
+        </div>
 
-      <div id="listaCarrito"></div>
+        <div class="pago-card">
+          <span>📲</span>
+          <h4>Transferencia</h4>
+          <p>CVU / Alias disponible</p>
+        </div>
 
-      <div class="total">
-        Total: $<span id="total">0</span>
+        <div class="pago-card">
+          <span>💙</span>
+          <h4>Mercado Pago</h4>
+          <p>Dinero en cuenta o QR</p>
+        </div>
+
+        <div class="pago-card">
+          <span>💳</span>
+          <h4>Tarjetas</h4>
+          <p>Débito y Crédito</p>
+        </div>
       </div>
 
-      <button
-        class="whatsapp"
-        onclick="enviarWhatsApp()">
+      <p style="font-weight: bold; margin-top: 20px; margin-bottom: 10px; color: #111;">📦 Métodos de Envío:</p>
+      <ul style="padding-left: 20px; font-size: 14px; color: #555; line-height: 1.6;">
+        <li><strong>Envío a domicilio:</strong> Coordinamos la entrega directamente a tu dirección por WhatsApp.</li>
+        <li><strong>Retiro en Punto/Local:</strong> Podés retirar tu compra de forma presencial previo acuerdo.</li>
+      </ul>
 
-        📲 Enviar pedido por WhatsApp
+      <button class="cerrar" onclick="cerrarModal('modalPagos')">Cerrar</button>
+    </div>
+  </div>
 
+  <!-- =========================
+       MODAL CARRITO
+  ========================= -->
+
+  <div id="modalCarrito" class="modal">
+    <div class="modal-contenido">
+      <h2>🛒 Tu Carrito</h2>
+
+      <div id="itemsCarrito"></div>
+
+      <div class="total" id="totalCarrito">$0</div>
+
+      <div style="background: #f0f4f8; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; color: #333;">
+        💳 <strong>Aceptamos:</strong> Efectivo, Mercado Pago, Transferencia y Tarjetas.
+      </div>
+
+      <button class="whatsapp" onclick="enviarWhatsApp()">
+        📲 Pedir por WhatsApp
       </button>
 
-      <button
-        class="cerrar"
-        onclick="cerrarCarrito()">
-
+      <button class="cerrar" onclick="cerrarModal('modalCarrito')">
         Cerrar
-
       </button>
-
     </div>
-
   </div>
 
   <!-- =========================
-       LOGIN ADMIN
+       MODAL LOGIN Y ADMIN
   ========================= -->
 
-  <div
-    class="modal"
-    id="modalLogin">
-
+  <div id="modalLogin" class="modal">
     <div class="modal-contenido">
+      <h2>🔒 Acceso Admin</h2>
 
-      <h2>🔐 Administrador</h2>
-
-      <p style="margin-bottom:15px;">
-        Ingresá con tu cuenta de administrador.
-      </p>
-
-      <div
-        id="loginError"
-        class="error">
+      <div id="loginError" class="error">
+        Email o contraseña incorrectos.
       </div>
 
-      <label>Email</label>
-
       <input
-        id="loginEmail"
         type="email"
-        placeholder="tu@email.com"
-        autocomplete="username">
-
-      <label>Contraseña</label>
+        id="loginEmail"
+        placeholder="Correo electrónico"
+      >
 
       <input
-        id="loginPassword"
         type="password"
-        placeholder="Tu contraseña"
-        autocomplete="current-password">
+        id="loginPassword"
+        placeholder="Contraseña"
+      >
 
-      <button
-        class="guardar"
-        onclick="iniciarSesion()">
-
-        🔐 Ingresar
-
+      <button class="guardar" onclick="iniciarSesion()">
+        Ingresar
       </button>
 
-      <button
-        class="cerrar"
-        onclick="cerrarLogin()">
-
-        Cancelar
-
+      <button class="cerrar" onclick="cerrarModal('modalLogin')">
+        Cerrar
       </button>
-
     </div>
-
   </div>
 
-  <!-- =========================
-       ADMINISTRACIÓN
-  ========================= -->
-
-  <div
-    class="modal"
-    id="modalAdmin">
-
+  <div id="modalAdmin" class="modal">
     <div class="modal-contenido">
 
-      <h2>⚙️ Administrar Tekno Activa</h2>
+      <h2>⚙️ Panel Admin</h2>
 
       <div class="admin-estado">
-        🔓 Sesión de administrador activa
+        Sesión iniciada correctamente
       </div>
 
-      <hr>
-
-      <h3 style="margin:20px 0 10px;">
-        📦 Agregar producto
-      </h3>
-
-      <div
-        id="productoError"
-        class="error">
+      <div id="adminExito" class="exito">
+        Guardado con éxito.
       </div>
 
-      <div
-        id="productoExito"
-        class="exito">
+      <div id="adminError" class="error">
+        Surgió un error.
       </div>
 
-      <label>Nombre</label>
+      <h3>📌 Configurar Banner</h3>
+      <input type="text" id="bannerImg" placeholder="URL imagen banner">
+      <input type="text" id="bannerTitulo" placeholder="Título banner">
+      <input type="text" id="bannerSub" placeholder="Subtítulo banner">
+      <input type="text" id="bannerLink" placeholder="Link de redirección">
 
-      <input
-        id="nombre"
-        type="text"
-        placeholder="Ej: Auricular A6S">
+      <button class="guardar" onclick="guardarBanner()">
+        + Agregar Banner
+      </button>
 
-      <label>Precio</label>
+      <div id="adminBanners" class="admin-lista"></div>
 
-      <input
-        id="precio"
-        type="number"
-        placeholder="9999">
+      <hr style="margin: 20px 0;">
 
-      <label>Precio anterior</label>
+      <h3>📦 Agregar Producto</h3>
 
-      <input
-        id="precioAnterior"
-        type="number"
-        placeholder="11500">
-
-      <label>Categoría</label>
+      <input type="text" id="nombre" placeholder="Nombre producto">
+      <input type="number" id="precio" placeholder="Precio">
+      <input type="number" id="precioOferta" placeholder="Precio oferta (opcional)">
 
       <select id="categoria">
-
-        <option value="auriculares">
-          Auriculares
-        </option>
-
-        <option value="cargadores">
-          Cargadores
-        </option>
-
-        <option value="hogar">
-          Hogar
-        </option>
-
-        <option value="belleza">
-          Belleza
-        </option>
-
+        <option value="auriculares">Auriculares</option>
+        <option value="cargadores">Cargadores</option>
+        <option value="parlantes">Parlantes</option>
+        <option value="accesorios">Accesorios</option>
       </select>
 
-      <label>Descripción</label>
+      <input type="text" id="imagen" placeholder="URL de la imagen">
+      <textarea id="descripcion" placeholder="Descripción corta"></textarea>
 
-      <textarea
-        id="descripcion"
-        placeholder="Descripción del producto">
-      </textarea>
-
-      <label>URL de imagen</label>
-
-      <input
-        id="imagen"
-        type="text"
-        placeholder="https://...">
-
-      <button
-        class="guardar"
-        onclick="guardarProducto()">
-
-        ➕ Guardar producto
-
+      <button class="guardar" onclick="guardarProducto()">
+        Guardar Producto
       </button>
 
-      <hr style="margin:25px 0;">
+      <hr style="margin: 20px 0;">
 
-      <h3 style="margin-bottom:10px;">
-        🖼️ Agregar banner
-      </h3>
+      <h3>🗑️ Administrar Productos</h3>
+      <div id="adminProductos" class="admin-lista"></div>
 
-      <div
-        id="bannerError"
-        class="error">
-      </div>
-
-      <div
-        id="bannerExito"
-        class="exito">
-      </div>
-
-      <label>URL de imagen</label>
-
-      <input
-        id="bannerImagen"
-        type="text"
-        placeholder="https://...">
-
-      <label>Título</label>
-
-      <input
-        id="bannerTitulo"
-        type="text"
-        placeholder="Ej: ¡Ofertas de la semana!">
-
-      <label>Texto</label>
-
-      <input
-        id="bannerTexto"
-        type="text"
-        placeholder="Ej: Hasta 30% de descuento">
-
-      <label>Enlace opcional</label>
-
-      <input
-        id="bannerEnlace"
-        type="text"
-        placeholder="https://...">
-
-      <button
-        class="guardar"
-        onclick="guardarBanner()">
-
-        🖼️ Guardar banner
-
+      <button class="logout" onclick="cerrarSesion()">
+        Cerrar Sesión
       </button>
 
-      <hr style="margin:25px 0;">
-
-      <h3 style="margin-bottom:10px;">
-        📋 Productos actuales
-      </h3>
-
-      <div
-        id="adminLista"
-        class="admin-lista">
-      </div>
-
-      <button
-        class="logout"
-        onclick="cerrarSesion()">
-
-        🔒 Cerrar sesión
-
-      </button>
-
-      <button
-        class="cerrar"
-        onclick="cerrarAdmin()">
-
-        Cerrar panel
-
+      <button class="cerrar" onclick="cerrarModal('modalAdmin')">
+        Cerrar
       </button>
 
     </div>
-
   </div>
 
   <footer>
-    © 2026 Tekno Activa
+    Tekno Activa &copy; 2026 - Todos los derechos reservados
   </footer>
 
-  <!-- =========================
-       SUPABASE
-  ========================= -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-scoped-js@2"></script>
 
   <script>
+    const SUPABASE_URL = "https://eiyrlyrlyqckbftoxhnd.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpeXJseXJseXFja2JmdG94aG5kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzNTA1MTYsImV4cCI6MjA1NTkyNjUxNn0.7F4IeX6c4T-0Y1T659M-a72t095UfE8q055s08qG53s";
 
-    /* =========================
-       CONFIGURACIÓN SUPABASE
-    ========================= */
-
-    const SUPABASE_URL =
-      "https://emjknuwvbvqonafckwce.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
-
-    const supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-
-    /* =========================
-       VARIABLES
-    ========================= */
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let productos = [];
     let banners = [];
+    let carrito = JSON.parse(localStorage.getItem("carrito_tekno")) || [];
     let bannerActual = 0;
-    let bannerInterval;
-    let carrito = [];
-
-
-    /* =========================
-       SESIÓN
-    ========================= */
-
-    async function verificarSesion() {
-
-      const {
-        data: {
-          session
-        }
-      } = await supabaseClient.auth.getSession();
-
-      return session;
-    }
-
-
-    /* =========================
-       ABRIR ADMIN
-    ========================= */
-
-    async function abrirAdmin() {
-
-      const session =
-        await verificarSesion();
-
-      if (!session) {
-
-        document.getElementById(
-          "modalLogin"
-        ).style.display = "block";
-
-        return;
-      }
-
-      document.getElementById(
-        "modalAdmin"
-      ).style.display = "block";
-
-      cargarListaAdmin();
-    }
-
-
-    /* =========================
-       CERRAR ADMIN
-    ========================= */
-
-    function cerrarAdmin() {
-
-      document.getElementById(
-        "modalAdmin"
-      ).style.display = "none";
-
-    }
-
-
-    /* =========================
-       LOGIN
-    ========================= */
-
-    async function iniciarSesion() {
-
-      const email =
-        document.getElementById(
-          "loginEmail"
-        ).value.trim();
-
-      const password =
-        document.getElementById(
-          "loginPassword"
-        ).value;
-
-      const errorBox =
-        document.getElementById(
-          "loginError"
-        );
-
-      errorBox.style.display = "none";
-
-      if (!email || !password) {
-
-        errorBox.textContent =
-          "Completá el email y la contraseña.";
-
-        errorBox.style.display = "block";
-
-        return;
-      }
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
-
-      if (error) {
-
-        console.error(error);
-
-        errorBox.textContent =
-          "Email o contraseña incorrectos.";
-
-        errorBox.style.display = "block";
-
-        return;
-      }
-
-      if (data.session) {
-
-        document.getElementById(
-          "modalLogin"
-        ).style.display = "none";
-
-        document.getElementById(
-          "loginPassword"
-        ).value = "";
-
-        document.getElementById(
-          "modalAdmin"
-        ).style.display = "block";
-
-        cargarListaAdmin();
-      }
-
-    }
-
-
-    /* =========================
-       CERRAR LOGIN
-    ========================= */
-
-    function cerrarLogin() {
-
-      document.getElementById(
-        "modalLogin"
-      ).style.display = "none";
-
-      document.getElementById(
-        "loginError"
-      ).style.display = "none";
-
-    }
-
-
-    /* =========================
-       CERRAR SESIÓN
-    ========================= */
-
-    async function cerrarSesion() {
-
-      await supabaseClient.auth.signOut();
-
-      cerrarAdmin();
-
-      alert("🔒 Sesión cerrada.");
-
-    }
-
-
-    /* =========================
-       CARGAR PRODUCTOS
-    ========================= */
-
-    async function cargarProductos() {
-
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("productos")
-            .select("*")
-            .order("id", {
-              ascending: true
-            });
-
-        if (error) {
-          throw error;
-        }
-
-        productos = data || [];
-
-        mostrarProductos(productos);
-
-      } catch (error) {
-
-        console.error(
-          "Error productos:",
-          error
-        );
-
-        document.getElementById(
-          "productos"
-        ).innerHTML =
-          "<p>No se pudieron cargar los productos.</p>";
-
-      }
-
-    }
-
-
-    /* =========================
-       MOSTRAR PRODUCTOS
-    ========================= */
-
-    function mostrarProductos(lista) {
-
-      const contenedor =
-        document.getElementById(
-          "productos"
-        );
-
-      contenedor.innerHTML = "";
-
-      if (!lista.length) {
-
-        contenedor.innerHTML =
-          "<p>No hay productos cargados todavía.</p>";
-
-        return;
-      }
-
-      lista.forEach(producto => {
-
-        const tieneOferta =
-          producto.precio_anterior &&
-          Number(producto.precio_anterior) >
-          Number(producto.precio);
-
-        const imagen =
-          producto.imagen ||
-          "https://via.placeholder.com/500x500?text=Producto";
-
-        const nombreSeguro =
-          String(producto.nombre)
-            .replace(/\\/g, "\\\\")
-            .replace(/'/g, "\\'");
-
-        contenedor.innerHTML += `
-
-          <div
-            class="producto"
-            data-categoria="${escapeHTML(producto.categoria || "")}"
-          >
-
-            <img
-              src="${escapeHTML(imagen)}"
-              alt="${escapeHTML(producto.nombre)}"
-              onerror="this.src='https://via.placeholder.com/500x500?text=Producto'"
-            >
-
-            <div class="producto-info">
-
-              ${
-                tieneOferta
-                  ? `
-                    <span class="oferta">
-                      🔥 OFERTA
-                    </span>
-                  `
-                  : ""
-              }
-
-              <h3>
-                ${escapeHTML(producto.nombre)}
-              </h3>
-
-              <p>
-                ${escapeHTML(producto.descripcion || "")}
-              </p>
-
-              ${
-                tieneOferta
-                  ? `
-                    <div class="precio-anterior">
-                      $${Number(
-                        producto.precio_anterior
-                      ).toLocaleString("es-AR")}
-                    </div>
-                  `
-                  : ""
-              }
-
-              <div class="precio">
-                $${Number(
-                  producto.precio
-                ).toLocaleString("es-AR")}
-              </div>
-
-              <button
-                class="agregar"
-                onclick="agregarCarrito(
-                  '${nombreSeguro}',
-                  ${Number(producto.precio)}
-                )">
-
-                🛒 Agregar al carrito
-
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      });
-
-    }
-
-
-    /* =========================
-       ESCAPAR HTML
-    ========================= */
-
-    function escapeHTML(text) {
-
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =========================
-       GUARDAR PRODUCTO
-    ========================= */
-
-    async function guardarProducto() {
-
-      const nombre =
-        document.getElementById(
-          "nombre"
-        ).value.trim();
-
-      const precio =
-        Number(
-          document.getElementById(
-            "precio"
-          ).value
-        );
-
-      const precioAnteriorValor =
-        document.getElementById(
-          "precioAnterior"
-        ).value;
-
-      const precioAnterior =
-        precioAnteriorValor
-          ? Number(precioAnteriorValor)
-          : null;
-
-      const categoria =
-        document.getElementById(
-          "categoria"
-        ).value;
-
-      const descripcion =
-        document.getElementById(
-          "descripcion"
-        ).value.trim();
-
-      const imagen =
-        document.getElementById(
-          "imagen"
-        ).value.trim();
-
-      const errorBox =
-        document.getElementById(
-          "productoError"
-        );
-
-      const exitoBox =
-        document.getElementById(
-          "productoExito"
-        );
-
-      errorBox.style.display = "none";
-      exitoBox.style.display = "none";
-
-      if (!nombre || !precio) {
-
-        errorBox.textContent =
-          "Completá el nombre y el precio.";
-
-        errorBox.style.display = "block";
-
-        return;
-      }
-
-      const session =
-        await verificarSesion();
-
-      if (!session) {
-
-        errorBox.textContent =
-          "Tu sesión expiró. Volvé a iniciar sesión.";
-
-        errorBox.style.display = "block";
-
-        return;
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("productos")
-          .insert({
-
-            nombre,
-            precio,
-            precio_anterior: precioAnterior,
-            categoria,
-            descripcion,
-            imagen
-
-          });
-
-      if (error) {
-
-        console.error(error);
-
-        errorBox.textContent =
-          "No se pudo guardar el producto: " +
-          error.message;
-
-        errorBox.style.display = "block";
-
-        return;
-      }
-
-      exitoBox.textContent =
-        "✅ Producto guardado correctamente.";
-
-      exitoBox.style.display = "block";
-
-      document.getElementById("nombre").value = "";
-      document.getElementById("precio").value = "";
-      document.getElementById("precioAnterior").value = "";
-      document.getElementById("descripcion").value = "";
-      document.getElementById("imagen").value = "";
-
+    let bannerTimer = null;
+    let categoriaActiva = "todos";
+
+    // CARGA INICIAL
+    window.onload = async () => {
+      await cargarBanners();
       await cargarProductos();
-      await cargarListaAdmin();
-
-    }
-
+      actualizarCarrito();
+    };
 
     /* =========================
-       LISTA ADMIN
-    ========================= */
-
-    async function cargarListaAdmin() {
-
-      const lista =
-        document.getElementById(
-          "adminLista"
-        );
-
-      lista.innerHTML =
-        "Cargando...";
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("productos")
-          .select("*")
-          .order("id", {
-            ascending: false
-          });
-
-      if (error) {
-
-        lista.innerHTML =
-          "No se pudieron cargar los productos.";
-
-        console.error(error);
-
-        return;
-      }
-
-      if (!data.length) {
-
-        lista.innerHTML =
-          "No hay productos.";
-
-        return;
-      }
-
-      lista.innerHTML = "";
-
-      data.forEach(producto => {
-
-        lista.innerHTML += `
-
-          <div class="admin-producto">
-
-            <div>
-
-              <strong>
-                ${escapeHTML(producto.nombre)}
-              </strong>
-
-              <br>
-
-              $${Number(
-                producto.precio
-              ).toLocaleString("es-AR")}
-
-            </div>
-
-            <button
-              onclick="eliminarProductoAdmin(${producto.id})">
-
-              🗑️ Eliminar
-
-            </button>
-
-          </div>
-
-        `;
-
-      });
-
-    }
-
-
-    /* =========================
-       ELIMINAR PRODUCTO
-    ========================= */
-
-    async function eliminarProductoAdmin(id) {
-
-      const confirmar =
-        confirm(
-          "¿Seguro que querés eliminar este producto?"
-        );
-
-      if (!confirmar) {
-        return;
-      }
-
-      const session =
-        await verificarSesion();
-
-      if (!session) {
-
-        alert(
-          "Tu sesión expiró."
-        );
-
-        return;
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("productos")
-          .delete()
-          .eq("id", id);
-
-      if (error) {
-
-        console.error(error);
-
-        alert(
-          "No se pudo eliminar: " +
-          error.message
-        );
-
-        return;
-      }
-
-      alert(
-        "🗑️ Producto eliminado."
-      );
-
-      await cargarProductos();
-      await cargarListaAdmin();
-
-    }
-
-
-    /* =========================
-       CARGAR BANNERS
+       BANNERS
     ========================= */
 
     async function cargarBanners() {
+      const { data, error } = await supabaseClient
+        .from("banners")
+        .select("*")
+        .order("id", { ascending: false });
 
-      try {
+      if (error) return;
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .from("banners")
-            .select("*")
-            .eq("activo", true)
-            .order("id", {
-              ascending: true
-            });
-
-        if (error) {
-          throw error;
-        }
-
-        banners = data || [];
-        bannerActual = 0;
-
-        mostrarBanner();
-
-      } catch (error) {
-
-        console.error(
-          "Error banners:",
-          error
-        );
-
-      }
-
+      banners = data || [];
+      renderBanners();
     }
 
-
-    /* =========================
-       MOSTRAR BANNER
-    ========================= */
-
-    function mostrarBanner() {
-
-      const slider =
-        document.getElementById(
-          "bannerSlider"
-        );
-
-      const dots =
-        document.getElementById(
-          "bannerDots"
-        );
-
-      if (!slider || !dots) {
-        return;
-      }
+    function renderBanners() {
+      const slider = document.getElementById("bannerSlider");
+      const dots = document.getElementById("bannerDots");
 
       if (!banners.length) {
-
-        slider.innerHTML = "";
+        slider.innerHTML = `
+          <div style="color: white; text-align: center; padding: 100px 20px;">
+            <h2>Bienvenido a Tekno Activa</h2>
+            <p>La mejor tecnología al mejor precio</p>
+          </div>
+        `;
         dots.innerHTML = "";
-
-        clearInterval(
-          bannerInterval
-        );
-
         return;
       }
 
-      const banner =
-        banners[bannerActual];
+      const b = banners[bannerActual];
 
-      const enlace =
-        banner.enlace || "#";
-
-      slider.innerHTML = `
-
-        <a
-          href="${escapeHTML(enlace)}"
-          ${
-            banner.enlace
-              ? 'target="_blank" rel="noopener noreferrer"'
-              : ""
-          }
-        >
-
-          <img
-            src="${escapeHTML(banner.imagen)}"
-            alt="${escapeHTML(
-              banner.titulo ||
-              "Banner Tekno Activa"
-            )}"
-          >
-
-          ${
-            banner.titulo ||
-            banner.texto
-              ? `
-                <div class="banner-texto">
-
-                  ${
-                    banner.titulo
-                      ? `
-                        <h2>
-                          ${escapeHTML(
-                            banner.titulo
-                          )}
-                        </h2>
-                      `
-                      : ""
-                  }
-
-                  ${
-                    banner.texto
-                      ? `
-                        <p>
-                          ${escapeHTML(
-                            banner.texto
-                          )}
-                        </p>
-                      `
-                      : ""
-                  }
-
-                </div>
-              `
-              : ""
-          }
-
-        </a>
-
+      let htmlContent = `
+        <img src="${b.imagen_url}" alt="${b.titulo || 'Banner'}">
+        <div class="banner-texto">
+          <h2>${b.titulo || ''}</h2>
+          <p>${b.subtitulo || ''}</p>
+        </div>
       `;
 
-      dots.innerHTML =
-        banners.map(
-          (_, index) => `
-
-            <button
-              class="${
-                index === bannerActual
-                  ? "activo"
-                  : ""
-              }"
-              onclick="irABanner(${index})">
-            </button>
-
-          `
-        ).join("");
-
-      clearInterval(
-        bannerInterval
-      );
-
-      if (banners.length > 1) {
-
-        bannerInterval =
-          setInterval(
-            bannerSiguiente,
-            5000
-          );
-
+      if (b.link) {
+        slider.innerHTML = `<a href="${b.link}" target="_blank">${htmlContent}</a>`;
+      } else {
+        slider.innerHTML = htmlContent;
       }
 
+      dots.innerHTML = banners.map((_, i) => `
+        <button class="${i === bannerActual ? 'activo' : ''}" onclick="irABanner(${i})"></button>
+      `).join("");
+
+      reiniciarTimerBanner();
     }
 
-
-    /* =========================
-       SIGUIENTE BANNER
-    ========================= */
+    function reiniciarTimerBanner() {
+      clearInterval(bannerTimer);
+      if (banners.length > 1) {
+        bannerTimer = setInterval(() => {
+          bannerSiguiente();
+        }, 4000);
+      }
+    }
 
     function bannerSiguiente() {
-
-      if (!banners.length) {
-        return;
-      }
-
-      bannerActual =
-        (bannerActual + 1) %
-        banners.length;
-
-      mostrarBanner();
-
+      if (!banners.length) return;
+      bannerActual = (bannerActual + 1) % banners.length;
+      renderBanners();
     }
-
-
-    /* =========================
-       ANTERIOR BANNER
-    ========================= */
 
     function bannerAnterior() {
-
-      if (!banners.length) {
-        return;
-      }
-
-      bannerActual =
-        (bannerActual - 1 +
-          banners.length) %
-        banners.length;
-
-      mostrarBanner();
-
+      if (!banners.length) return;
+      bannerActual = (bannerActual - 1 + banners.length) % banners.length;
+      renderBanners();
     }
 
-
-    /* =========================
-       IR A BANNER
-    ========================= */
-
-    function irABanner(index) {
-
-      bannerActual = index;
-
-      mostrarBanner();
-
+    function irABanner(i) {
+      bannerActual = i;
+      renderBanners();
     }
 
-
     /* =========================
-       GUARDAR BANNER
+       PRODUCTOS & FILTROS
     ========================= */
 
-    async function guardarBanner() {
-
-      const imagen =
-        document.getElementById(
-          "bannerImagen"
-        ).value.trim();
-
-      const titulo =
-        document.getElementById(
-          "bannerTitulo"
-        ).value.trim();
-
-      const texto =
-        document.getElementById(
-          "bannerTexto"
-        ).value.trim();
-
-      const enlace =
-        document.getElementById(
-          "bannerEnlace"
-        ).value.trim();
-
-      const errorBox =
-        document.getElementById(
-          "bannerError"
-        );
-
-      const exitoBox =
-        document.getElementById(
-          "bannerExito"
-        );
-
-      errorBox.style.display = "none";
-      exitoBox.style.display = "none";
-
-      if (!imagen) {
-
-        errorBox.textContent =
-          "Ingresá la URL de la imagen.";
-
-        errorBox.style.display =
-          "block";
-
-        return;
-      }
-
-      const session =
-        await verificarSesion();
-
-      if (!session) {
-
-        errorBox.textContent =
-          "Tu sesión expiró.";
-
-        errorBox.style.display =
-          "block";
-
-        return;
-      }
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .from("banners")
-          .insert({
-
-            imagen,
-            titulo,
-            texto,
-            enlace: enlace || null,
-            activo: true
-
-          });
+    async function cargarProductos() {
+      const { data, error } = await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("id", { ascending: false });
 
       if (error) {
-
-        console.error(error);
-
-        errorBox.textContent =
-          "No se pudo guardar el banner: " +
-          error.message;
-
-        errorBox.style.display =
-          "block";
-
+        alert("Error cargando productos");
         return;
       }
 
-      exitoBox.textContent =
-        "✅ Banner guardado correctamente.";
-
-      exitoBox.style.display =
-        "block";
-
-      document.getElementById(
-        "bannerImagen"
-      ).value = "";
-
-      document.getElementById(
-        "bannerTitulo"
-      ).value = "";
-
-      document.getElementById(
-        "bannerTexto"
-      ).value = "";
-
-      document.getElementById(
-        "bannerEnlace"
-      ).value = "";
-
-      await cargarBanners();
-
+      productos = data || [];
+      filtrarProductos();
     }
 
+    function filtrarCategoria(cat, elemento) {
+      categoriaActiva = cat;
+      
+      // Actualizar botón activo
+      const btns = document.querySelectorAll('.btn-cat');
+      btns.forEach(b => b.classList.remove('activo-cat'));
+      if(elemento) elemento.classList.add('activo-cat');
 
-    /* =========================
-       FILTROS
-    ========================= */
+      filtrarProductos();
+    }
 
-    function filtrar(categoria) {
+    function filtrarProductos() {
+      const textoBusqueda = document.getElementById("buscadorInput").value.toLowerCase().trim();
 
-      if (categoria === "todos") {
+      const resultado = productos.filter(p => {
+        // Filtro Categoria
+        const coincideCategoria = (categoriaActiva === "todos" || p.categoria === categoriaActiva);
+        
+        // Filtro Buscador por Lupa (Nombre o Descripción)
+        const coincideTexto = p.nombre.toLowerCase().includes(textoBusqueda) || 
+                               (p.descripcion && p.descripcion.toLowerCase().includes(textoBusqueda));
 
-        mostrarProductos(
-          productos
-        );
+        return coincideCategoria && coincideTexto;
+      });
 
+      renderProductos(resultado);
+    }
+
+    function renderProductos(lista) {
+      const cont = document.getElementById("productos");
+
+      if (!lista.length) {
+        cont.innerHTML = "<p style='grid-column: 1/-1; text-align: center; padding: 40px; color: #777;'>No se encontraron productos.</p>";
         return;
       }
 
-      const filtrados =
-        productos.filter(
-          producto =>
-            producto.categoria ===
-            categoria
-        );
+      cont.innerHTML = lista.map(p => {
+        const tieneOferta = p.precio_oferta && Number(p.precio_oferta) > 0;
+        const precioFinal = tieneOferta ? p.precio_oferta : p.precio;
 
-      mostrarProductos(
-        filtrados
-      );
+        return `
+          <div class="producto">
+            <img src="${p.imagen_url}" alt="${p.nombre}">
+            <div class="producto-info">
 
+              ${tieneOferta ? `<span class="oferta">OFERTA</span>` : ""}
+
+              <h3>${p.nombre}</h3>
+              <p>${p.descripcion || ""}</p>
+
+              ${tieneOferta ? `<div class="precio-anterior">$${p.precio}</div>` : ""}
+
+              <div class="precio">$${precioFinal}</div>
+
+              <button class="agregar" onclick="agregarAlCarrito(${p.id})">
+                Agregar al carrito
+              </button>
+
+            </div>
+          </div>
+        `;
+      }).join("");
     }
-
 
     /* =========================
        CARRITO
     ========================= */
 
-    function agregarCarrito(
-      nombre,
-      precio
-    ) {
+    function agregarAlCarrito(id) {
+      const p = productos.find(x => x.id === id);
+      if (!p) return;
 
-      const producto =
-        carrito.find(
-          item =>
-            item.nombre ===
-            nombre
-        );
+      const item = carrito.find(x => x.id === id);
 
-      if (producto) {
-
-        producto.cantidad++;
-
+      if (item) {
+        item.cantidad++;
       } else {
-
-        carrito.push({
-
-          nombre,
-          precio: Number(precio),
-          cantidad: 1
-
-        });
-
+        carrito.push({ ...p, cantidad: 1 });
       }
 
-      actualizarCarrito();
-
-      alert(
-        "Producto agregado 🛒"
-      );
-
+      guardarYActualizarCarrito();
+      abrirModal('modalCarrito');
     }
 
+    function cambiarCantidad(id, cambio) {
+      const item = carrito.find(x => x.id === id);
+      if (!item) return;
 
-    /* =========================
-       ACTUALIZAR CARRITO
-    ========================= */
+      item.cantidad += cambio;
+
+      if (item.cantidad <= 0) {
+        carrito = carrito.filter(x => x.id !== id);
+      }
+
+      guardarYActualizarCarrito();
+    }
+
+    function eliminarItem(id) {
+      carrito = carrito.filter(x => x.id !== id);
+      guardarYActualizarCarrito();
+    }
+
+    function guardarYActualizarCarrito() {
+      localStorage.setItem("carrito_tekno", JSON.stringify(carrito));
+      actualizarCarrito();
+    }
 
     function actualizarCarrito() {
+      const itemsDiv = document.getElementById("itemsCarrito");
+      const cantSpan = document.getElementById("cantidadCarrito");
+      const totalDiv = document.getElementById("totalCarrito");
 
-      const lista =
-        document.getElementById(
-          "listaCarrito"
-        );
+      const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      cantSpan.textContent = totalItems;
 
-      lista.innerHTML = "";
-
-      let total = 0;
-      let cantidadTotal = 0;
-
-      carrito.forEach(
-        (item, index) => {
-
-          const subtotal =
-            item.precio *
-            item.cantidad;
-
-          total += subtotal;
-
-          cantidadTotal +=
-            item.cantidad;
-
-          lista.innerHTML += `
-
-            <div class="item-carrito">
-
-              <div>
-
-                <strong>
-                  ${escapeHTML(item.nombre)}
-                </strong>
-
-                <br>
-
-                $${item.precio.toLocaleString(
-                  "es-AR"
-                )}
-
-              </div>
-
-              <div class="cantidad">
-
-                <button
-                  onclick="cambiarCantidad(
-                    ${index},
-                    -1
-                  )">
-                  −
-                </button>
-
-                ${item.cantidad}
-
-                <button
-                  onclick="cambiarCantidad(
-                    ${index},
-                    1
-                  )">
-                  +
-                </button>
-
-              </div>
-
-              <button
-                class="eliminar"
-                onclick="eliminarDelCarrito(
-                  ${index}
-                )">
-
-                🗑️
-
-              </button>
-
-            </div>
-
-          `;
-
-        }
-      );
-
-      document.getElementById(
-        "total"
-      ).textContent =
-        total.toLocaleString(
-          "es-AR"
-        );
-
-      document.getElementById(
-        "contador"
-      ).textContent =
-        cantidadTotal;
-
-    }
-
-
-    /* =========================
-       CAMBIAR CANTIDAD
-    ========================= */
-
-    function cambiarCantidad(
-      index,
-      cambio
-    ) {
-
-      carrito[index].cantidad +=
-        cambio;
-
-      if (
-        carrito[index].cantidad <=
-        0
-      ) {
-
-        carrito.splice(
-          index,
-          1
-        );
-
-      }
-
-      actualizarCarrito();
-
-    }
-
-
-    /* =========================
-       ELIMINAR DEL CARRITO
-    ========================= */
-
-    function eliminarDelCarrito(
-      index
-    ) {
-
-      carrito.splice(
-        index,
-        1
-      );
-
-      actualizarCarrito();
-
-    }
-
-
-    /* =========================
-       ABRIR CARRITO
-    ========================= */
-
-    function abrirCarrito() {
-
-      document.getElementById(
-        "modalCarrito"
-      ).style.display =
-        "block";
-
-      actualizarCarrito();
-
-    }
-
-
-    /* =========================
-       CERRAR CARRITO
-    ========================= */
-
-    function cerrarCarrito() {
-
-      document.getElementById(
-        "modalCarrito"
-      ).style.display =
-        "none";
-
-    }
-
-
-    /* =========================
-       WHATSAPP
-    ========================= */
-
-    function enviarWhatsApp() {
-
-      if (
-        carrito.length === 0
-      ) {
-
-        alert(
-          "El carrito está vacío."
-        );
-
+      if (!carrito.length) {
+        itemsDiv.innerHTML = "<p>El carrito está vacío.</p>";
+        totalDiv.textContent = "$0";
         return;
       }
 
-      let mensaje =
-        "Hola Tekno Activa! 👋\n\n";
+      let total = 0;
 
-      mensaje +=
-        "Quiero realizar este pedido:\n\n";
+      itemsDiv.innerHTML = carrito.map(item => {
+        const precioFinal = (item.precio_oferta && Number(item.precio_oferta) > 0)
+          ? Number(item.precio_oferta)
+          : Number(item.precio);
+
+        const subtotal = precioFinal * item.cantidad;
+        total += subtotal;
+
+        return `
+          <div class="item-carrito">
+            <div>
+              <strong>${item.nombre}</strong><br>
+              <small>$${precioFinal} x ${item.cantidad} = $${subtotal}</small>
+            </div>
+
+            <div class="cantidad">
+              <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
+              <span>${item.cantidad}</span>
+              <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
+
+              <button class="eliminar" onclick="eliminarItem(${item.id})">🗑️</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      totalDiv.textContent = `$${total}`;
+    }
+
+    function enviarWhatsApp() {
+      if (!carrito.length) {
+        alert("El carrito está vacío");
+        return;
+      }
+
+      let mensaje = "¡Hola Tekno Activa! 👋 Quisiera realizar el siguiente pedido:\n\n";
 
       let total = 0;
 
-      carrito.forEach(
-        item => {
+      carrito.forEach(item => {
+        const precioFinal = (item.precio_oferta && Number(item.precio_oferta) > 0)
+          ? Number(item.precio_oferta)
+          : Number(item.precio);
 
-          const subtotal =
-            item.precio *
-            item.cantidad;
+        const subtotal = precioFinal * item.cantidad;
+        total += subtotal;
 
-          total += subtotal;
+        mensaje += `• ${item.nombre} (x${item.cantidad}) - $${subtotal}\n`;
+      });
 
-          mensaje +=
-            "📦 " +
-            item.nombre +
-            " x" +
-            item.cantidad +
-            " - $" +
-            subtotal.toLocaleString(
-              "es-AR"
-            ) +
-            "\n";
+      mensaje += `\n*TOTAL: $${total}*`;
 
-        }
-      );
-
-      mensaje +=
-        "\n💰 TOTAL: $" +
-        total.toLocaleString(
-          "es-AR"
-        );
-
-      window.open(
-        "https://wa.me/5492646181163?text=" +
-        encodeURIComponent(mensaje),
-        "_blank"
-      );
-
+      const url = `https://wa.me/542644837580?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank");
     }
 
-
     /* =========================
-       LOGO
+       MODALES FUNCIONES GENERALES
     ========================= */
 
-    function configurarLogo() {
+    function abrirModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
 
-      const logoUrl = "";
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
 
-      const logo =
-        document.getElementById(
-          "logoImagen"
-        );
+    function abrirCarrito() {
+      actualizarCarrito();
+      abrirModal("modalCarrito");
+    }
 
-      const texto =
-        document.getElementById(
-          "logoTexto"
-        );
+    function abrirModalPagos() {
+      abrirModal("modalPagos");
+    }
 
-      if (logoUrl) {
+    /* =========================
+       AUTENTICACIÓN Y ADMIN
+    ========================= */
 
-        logo.src = logoUrl;
-        logo.style.display = "inline-block";
-        texto.style.display = "none";
+    async function abrirAdmin() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
 
+      if (session) {
+        cargarListasAdmin();
+        abrirModal("modalAdmin");
+      } else {
+        abrirModal("modalLogin");
+      }
+    }
+
+    async function iniciarSesion() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+      const errorDiv = document.getElementById("loginError");
+
+      errorDiv.style.display = "none";
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        errorDiv.style.display = "block";
+        return;
       }
 
+      cerrarModal("modalLogin");
+      cargarListasAdmin();
+      abrirModal("modalAdmin");
     }
 
+    async function cerrarSesion() {
+      await supabaseClient.auth.signOut();
+      cerrarModal("modalAdmin");
+      alert("Sesión cerrada");
+    }
+
+    function cargarListasAdmin() {
+      renderAdminBanners();
+      renderAdminProductos();
+    }
 
     /* =========================
-       INICIO
+       ADMIN - BANNERS
     ========================= */
 
-    configurarLogo();
+    async function guardarBanner() {
+      const imagen_url = document.getElementById("bannerImg").value;
+      const titulo = document.getElementById("bannerTitulo").value;
+      const subtitulo = document.getElementById("bannerSub").value;
+      const link = document.getElementById("bannerLink").value;
 
-    cargarProductos();
+      if (!imagen_url) {
+        alert("Ingresa la URL de la imagen");
+        return;
+      }
 
-    cargarBanners();
+      const { error } = await supabaseClient
+        .from("banners")
+        .insert([{ imagen_url, titulo, subtitulo, link }]);
 
+      if (error) {
+        alert("Error al guardar banner");
+        return;
+      }
+
+      document.getElementById("bannerImg").value = "";
+      document.getElementById("bannerTitulo").value = "";
+      document.getElementById("bannerSub").value = "";
+      document.getElementById("bannerLink").value = "";
+
+      await cargarBanners();
+      renderAdminBanners();
+      mostrarExito();
+    }
+
+    function renderAdminBanners() {
+      const div = document.getElementById("adminBanners");
+
+      if (!banners.length) {
+        div.innerHTML = "<p>No hay banners registrados.</p>";
+        return;
+      }
+
+      div.innerHTML = banners.map(b => `
+        <div class="admin-producto">
+          <div>
+            <strong>${b.titulo || 'Sin título'}</strong><br>
+            <small>${b.imagen_url}</small>
+          </div>
+          <button onclick="eliminarBanner(${b.id})">Eliminar</button>
+        </div>
+      `).join("");
+    }
+
+    async function eliminarBanner(id) {
+      if (!confirm("¿Eliminar este banner?")) return;
+
+      const { error } = await supabaseClient
+        .from("banners")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        alert("Error al eliminar");
+        return;
+      }
+
+      await cargarBanners();
+      renderAdminBanners();
+    }
+
+    /* =========================
+       ADMIN - PRODUCTOS
+    ========================= */
+
+    async function guardarProducto() {
+      const nombre = document.getElementById("nombre").value;
+      const precio = document.getElementById("precio").value;
+      const precio_oferta = document.getElementById("precioOferta").value || null;
+      const categoria = document.getElementById("categoria").value;
+      const imagen_url = document.getElementById("imagen").value;
+      const descripcion = document.getElementById("descripcion").value;
+
+      if (!nombre || !precio || !imagen_url) {
+        alert("Completa los campos requeridos (Nombre, Precio e Imagen)");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("productos")
+        .insert([{
+          nombre,
+          precio,
+          precio_oferta,
+          categoria,
+          imagen_url,
+          descripcion
+        }]);
+
+      if (error) {
+        alert("Error al guardar el producto");
+        return;
+      }
+
+      document.getElementById("nombre").value = "";
+      document.getElementById("precio").value = "";
+      document.getElementById("precioOferta").value = "";
+      document.getElementById("imagen").value = "";
+      document.getElementById("descripcion").value = "";
+
+      await cargarProductos();
+      renderAdminProductos();
+      mostrarExito();
+    }
+
+    function renderAdminProductos() {
+      const div = document.getElementById("adminProductos");
+
+      if (!productos.length) {
+        div.innerHTML = "<p>No hay productos registrados.</p>";
+        return;
+      }
+
+      div.innerHTML = productos.map(p => `
+        <div class="admin-producto">
+          <div>
+            <strong>${p.nombre}</strong> - $${p.precio}<br>
+            <small>Categoría: ${p.categoria}</small>
+          </div>
+          <button onclick="eliminarProducto(${p.id})">Eliminar</button>
+        </div>
+      `).join("");
+    }
+
+    async function eliminarProducto(id) {
+      if (!confirm("¿Eliminar este producto?")) return;
+
+      const { error } = await supabaseClient
+        .from("productos")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        alert("Error al eliminar producto");
+        return;
+      }
+
+      await cargarProductos();
+      renderAdminProductos();
+    }
+
+    function mostrarExito() {
+      const div = document.getElementById("adminExito");
+      div.style.display = "block";
+      setTimeout(() => { div.style.display = "none"; }, 3000);
+    }
   </script>
-
 </body>
 </html>
