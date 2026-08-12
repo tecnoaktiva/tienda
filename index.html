@@ -19,20 +19,28 @@
       color: #222;
     }
 
+    /* =========================
+       ENCABEZADO - SOLO LOGO
+    ========================= */
+
     header {
       background: #111;
       color: white;
       text-align: center;
-      padding: 30px 15px;
+      padding: 18px 15px;
     }
 
-    header h1 {
-      font-size: 34px;
+    .logo {
+      max-width: 220px;
+      max-height: 75px;
+      object-fit: contain;
     }
 
-    header p {
-      margin-top: 8px;
-      color: #ccc;
+    /* Si todavía no tenés logo */
+    .logo-texto {
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
     }
 
     /* =========================
@@ -190,8 +198,10 @@
 
     .productos {
       display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+      );
       gap: 20px;
     }
 
@@ -492,8 +502,13 @@
 
     @media (max-width: 600px) {
 
-      header h1 {
-        font-size: 28px;
+      header {
+        padding: 15px;
+      }
+
+      .logo {
+        max-width: 180px;
+        max-height: 60px;
       }
 
       .banner-container {
@@ -534,583 +549,897 @@
 
 <body>
 
-<header>
-  <h1>TEKNO ACTIVA</h1>
-  <p>Tecnología, hogar y belleza</p>
-</header>
+  <!-- =========================
+       LOGO
+  ========================= -->
 
-<!-- =========================
-     BANNER
-========================= -->
+  <header>
 
-<div class="banner-container">
+    <!-- CAMBIÁ ESTA URL POR LA URL DE TU LOGO -->
+    <img
+      class="logo"
+      src=""
+      alt="Tekno Activa"
+      id="logoImagen"
+      style="display:none;"
+    >
 
-  <div
-    id="bannerSlider"
-    class="banner-slider">
+    <!-- Se muestra mientras no haya logo -->
+    <div
+      class="logo-texto"
+      id="logoTexto">
+      TEKNO ACTIVA
+    </div>
+
+  </header>
+
+  <!-- =========================
+       BANNER
+  ========================= -->
+
+  <div class="banner-container">
+
+    <div
+      id="bannerSlider"
+      class="banner-slider">
+    </div>
+
+    <button
+      class="banner-prev"
+      onclick="bannerAnterior()">
+      ‹
+    </button>
+
+    <button
+      class="banner-next"
+      onclick="bannerSiguiente()">
+      ›
+    </button>
+
+    <div
+      id="bannerDots"
+      class="banner-dots">
+    </div>
+
   </div>
+
+  <div class="contenedor">
+
+    <div class="barra">
+
+      <div class="categorias">
+
+        <button onclick="filtrar('todos')">
+          🛍️ Todos
+        </button>
+
+        <button onclick="filtrar('auriculares')">
+          🎧 Auriculares
+        </button>
+
+        <button onclick="filtrar('cargadores')">
+          🔌 Cargadores
+        </button>
+
+        <button onclick="filtrar('hogar')">
+          🏠 Hogar
+        </button>
+
+        <button onclick="filtrar('belleza')">
+          💄 Belleza
+        </button>
+
+      </div>
+
+      <button
+        class="admin-btn"
+        onclick="abrirAdmin()">
+        ⚙️ Administrar
+      </button>
+
+    </div>
+
+    <div
+      id="productos"
+      class="productos">
+    </div>
+
+  </div>
+
+  <!-- =========================
+       CARRITO
+  ========================= -->
 
   <button
-    class="banner-prev"
-    onclick="bannerAnterior()">
-    ‹
-  </button>
+    class="carrito-btn"
+    onclick="abrirCarrito()">
 
-  <button
-    class="banner-next"
-    onclick="bannerSiguiente()">
-    ›
+    🛒 Carrito
+
+    <span id="contador">0</span>
+
   </button>
 
   <div
-    id="bannerDots"
-    class="banner-dots">
-  </div>
+    class="modal"
+    id="modalCarrito">
 
-</div>
+    <div class="modal-contenido">
 
-<div class="contenedor">
+      <h2>🛒 Tu carrito</h2>
 
-  <div class="barra">
+      <div id="listaCarrito"></div>
 
-    <div class="categorias">
+      <div class="total">
+        Total: $<span id="total">0</span>
+      </div>
 
-      <button onclick="filtrar('todos')">
-        🛍️ Todos
+      <button
+        class="whatsapp"
+        onclick="enviarWhatsApp()">
+
+        📲 Enviar pedido por WhatsApp
+
       </button>
 
-      <button onclick="filtrar('auriculares')">
-        🎧 Auriculares
-      </button>
+      <button
+        class="cerrar"
+        onclick="cerrarCarrito()">
 
-      <button onclick="filtrar('cargadores')">
-        🔌 Cargadores
-      </button>
+        Cerrar
 
-      <button onclick="filtrar('hogar')">
-        🏠 Hogar
-      </button>
-
-      <button onclick="filtrar('belleza')">
-        💄 Belleza
       </button>
 
     </div>
 
-    <button
-      class="admin-btn"
-      onclick="abrirAdmin()">
-      ⚙️ Administrar
-    </button>
-
   </div>
+
+  <!-- =========================
+       LOGIN ADMIN
+  ========================= -->
 
   <div
-    id="productos"
-    class="productos">
-  </div>
+    class="modal"
+    id="modalLogin">
 
-</div>
+    <div class="modal-contenido">
 
-<!-- =========================
-     CARRITO
-========================= -->
+      <h2>🔐 Administrador</h2>
 
-<button
-  class="carrito-btn"
-  onclick="abrirCarrito()">
+      <p style="margin-bottom:15px;">
+        Ingresá con tu cuenta de administrador.
+      </p>
 
-  🛒 Carrito
+      <div
+        id="loginError"
+        class="error">
+      </div>
 
-  <span id="contador">0</span>
+      <label>Email</label>
 
-</button>
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="tu@email.com"
+        autocomplete="username">
 
-<div
-  class="modal"
-  id="modalCarrito">
+      <label>Contraseña</label>
 
-  <div class="modal-contenido">
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Tu contraseña"
+        autocomplete="current-password">
 
-    <h2>🛒 Tu carrito</h2>
+      <button
+        class="guardar"
+        onclick="iniciarSesion()">
 
-    <div id="listaCarrito"></div>
+        🔐 Ingresar
 
-    <div class="total">
-      Total: $<span id="total">0</span>
+      </button>
+
+      <button
+        class="cerrar"
+        onclick="cerrarLogin()">
+
+        Cancelar
+
+      </button>
+
     </div>
-
-    <button
-      class="whatsapp"
-      onclick="enviarWhatsApp()">
-
-      📲 Enviar pedido por WhatsApp
-
-    </button>
-
-    <button
-      class="cerrar"
-      onclick="cerrarCarrito()">
-
-      Cerrar
-
-    </button>
-
-  </div>
-
-</div>
-
-<!-- =========================
-     LOGIN ADMIN
-========================= -->
-
-<div
-  class="modal"
-  id="modalLogin">
-
-  <div class="modal-contenido">
-
-    <h2>🔐 Administrador</h2>
-
-    <p style="margin-bottom:15px;">
-      Ingresá con tu cuenta de administrador.
-    </p>
-
-    <div
-      id="loginError"
-      class="error">
-    </div>
-
-    <label>Email</label>
-
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="tu@email.com"
-      autocomplete="username">
-
-    <label>Contraseña</label>
-
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Tu contraseña"
-      autocomplete="current-password">
-
-    <button
-      class="guardar"
-      onclick="iniciarSesion()">
-
-      🔐 Ingresar
-
-    </button>
-
-    <button
-      class="cerrar"
-      onclick="cerrarLogin()">
-
-      Cancelar
-
-    </button>
 
   </div>
 
-</div>
+  <!-- =========================
+       ADMINISTRACIÓN
+  ========================= -->
 
-<!-- =========================
-     ADMINISTRACIÓN
-========================= -->
+  <div
+    class="modal"
+    id="modalAdmin">
 
-<div
-  class="modal"
-  id="modalAdmin">
+    <div class="modal-contenido">
 
-  <div class="modal-contenido">
+      <h2>⚙️ Administrar Tekno Activa</h2>
 
-    <h2>⚙️ Administrar Tekno Activa</h2>
+      <div class="admin-estado">
+        🔓 Sesión de administrador activa
+      </div>
 
-    <div class="admin-estado">
-      🔓 Sesión de administrador activa
+      <hr>
+
+      <h3 style="margin:20px 0 10px;">
+        📦 Agregar producto
+      </h3>
+
+      <div
+        id="productoError"
+        class="error">
+      </div>
+
+      <div
+        id="productoExito"
+        class="exito">
+      </div>
+
+      <label>Nombre</label>
+
+      <input
+        id="nombre"
+        type="text"
+        placeholder="Ej: Auricular A6S">
+
+      <label>Precio</label>
+
+      <input
+        id="precio"
+        type="number"
+        placeholder="9999">
+
+      <label>Precio anterior</label>
+
+      <input
+        id="precioAnterior"
+        type="number"
+        placeholder="11500">
+
+      <label>Categoría</label>
+
+      <select id="categoria">
+
+        <option value="auriculares">
+          Auriculares
+        </option>
+
+        <option value="cargadores">
+          Cargadores
+        </option>
+
+        <option value="hogar">
+          Hogar
+        </option>
+
+        <option value="belleza">
+          Belleza
+        </option>
+
+      </select>
+
+      <label>Descripción</label>
+
+      <textarea
+        id="descripcion"
+        placeholder="Descripción del producto">
+      </textarea>
+
+      <label>URL de imagen</label>
+
+      <input
+        id="imagen"
+        type="text"
+        placeholder="https://...">
+
+      <button
+        class="guardar"
+        onclick="guardarProducto()">
+
+        ➕ Guardar producto
+
+      </button>
+
+      <hr style="margin:25px 0;">
+
+      <h3 style="margin-bottom:10px;">
+        🖼️ Agregar banner
+      </h3>
+
+      <div
+        id="bannerError"
+        class="error">
+      </div>
+
+      <div
+        id="bannerExito"
+        class="exito">
+      </div>
+
+      <label>URL de imagen</label>
+
+      <input
+        id="bannerImagen"
+        type="text"
+        placeholder="https://...">
+
+      <label>Título</label>
+
+      <input
+        id="bannerTitulo"
+        type="text"
+        placeholder="Ej: ¡Ofertas de la semana!">
+
+      <label>Texto</label>
+
+      <input
+        id="bannerTexto"
+        type="text"
+        placeholder="Ej: Hasta 30% de descuento">
+
+      <label>Enlace opcional</label>
+
+      <input
+        id="bannerEnlace"
+        type="text"
+        placeholder="https://...">
+
+      <button
+        class="guardar"
+        onclick="guardarBanner()">
+
+        🖼️ Guardar banner
+
+      </button>
+
+      <hr style="margin:25px 0;">
+
+      <h3 style="margin-bottom:10px;">
+        📋 Productos actuales
+      </h3>
+
+      <div
+        id="adminLista"
+        class="admin-lista">
+      </div>
+
+      <button
+        class="logout"
+        onclick="cerrarSesion()">
+
+        🔒 Cerrar sesión
+
+      </button>
+
+      <button
+        class="cerrar"
+        onclick="cerrarAdmin()">
+
+        Cerrar panel
+
+      </button>
+
     </div>
-
-    <hr>
-
-    <h3 style="margin:20px 0 10px;">
-      📦 Agregar producto
-    </h3>
-
-    <div
-      id="productoError"
-      class="error">
-    </div>
-
-    <div
-      id="productoExito"
-      class="exito">
-    </div>
-
-    <label>Nombre</label>
-
-    <input
-      id="nombre"
-      type="text"
-      placeholder="Ej: Auricular A6S">
-
-    <label>Precio</label>
-
-    <input
-      id="precio"
-      type="number"
-      placeholder="9999">
-
-    <label>Precio anterior</label>
-
-    <input
-      id="precioAnterior"
-      type="number"
-      placeholder="11500">
-
-    <label>Categoría</label>
-
-    <select id="categoria">
-
-      <option value="auriculares">
-        Auriculares
-      </option>
-
-      <option value="cargadores">
-        Cargadores
-      </option>
-
-      <option value="hogar">
-        Hogar
-      </option>
-
-      <option value="belleza">
-        Belleza
-      </option>
-
-    </select>
-
-    <label>Descripción</label>
-
-    <textarea
-      id="descripcion"
-      placeholder="Descripción del producto">
-    </textarea>
-
-    <label>URL de imagen</label>
-
-    <input
-      id="imagen"
-      type="text"
-      placeholder="https://...">
-
-    <button
-      class="guardar"
-      onclick="guardarProducto()">
-
-      ➕ Guardar producto
-
-    </button>
-
-    <hr style="margin:25px 0;">
-
-    <h3 style="margin-bottom:10px;">
-      🖼️ Agregar banner
-    </h3>
-
-    <div
-      id="bannerError"
-      class="error">
-    </div>
-
-    <div
-      id="bannerExito"
-      class="exito">
-    </div>
-
-    <label>URL de imagen</label>
-
-    <input
-      id="bannerImagen"
-      type="text"
-      placeholder="https://...">
-
-    <label>Título</label>
-
-    <input
-      id="bannerTitulo"
-      type="text"
-      placeholder="Ej: ¡Ofertas de la semana!">
-
-    <label>Texto</label>
-
-    <input
-      id="bannerTexto"
-      type="text"
-      placeholder="Ej: Hasta 30% de descuento">
-
-    <label>Enlace opcional</label>
-
-    <input
-      id="bannerEnlace"
-      type="text"
-      placeholder="https://...">
-
-    <button
-      class="guardar"
-      onclick="guardarBanner()">
-
-      🖼️ Guardar banner
-
-    </button>
-
-    <hr style="margin:25px 0;">
-
-    <h3 style="margin-bottom:10px;">
-      📋 Productos actuales
-    </h3>
-
-    <div
-      id="adminLista"
-      class="admin-lista">
-    </div>
-
-    <button
-      class="logout"
-      onclick="cerrarSesion()">
-
-      🔒 Cerrar sesión
-
-    </button>
-
-    <button
-      class="cerrar"
-      onclick="cerrarAdmin()">
-
-      Cerrar panel
-
-    </button>
 
   </div>
 
-</div>
+  <footer>
+    © 2026 Tekno Activa
+  </footer>
 
-<footer>
-  © 2026 Tekno Activa
-</footer>
+  <!-- =========================
+       SUPABASE
+  ========================= -->
 
-<!-- =========================
-     SUPABASE
-========================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
 
-<script>
+    /* =========================
+       CONFIGURACIÓN SUPABASE
+    ========================= */
 
-  /* =========================
-     CONFIGURACIÓN SUPABASE
-  ========================= */
+    const SUPABASE_URL =
+      "https://emjknuwvbvqonafckwce.supabase.co";
 
-  const SUPABASE_URL =
-    "https://emjknuwvbvqonafckwce.supabase.co";
+    const SUPABASE_KEY =
+      "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
 
-  const SUPABASE_KEY =
-    "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
-
-  /* =========================
-     VARIABLES
-  ========================= */
-
-  let productos = [];
-
-  let banners = [];
-
-  let bannerActual = 0;
-
-  let bannerInterval;
-
-  let carrito = [];
-
-
-  /* =========================
-     SESIÓN
-  ========================= */
-
-  async function verificarSesion() {
-
-    const {
-      data: {
-        session
-      }
-    } =
-      await supabaseClient.auth.getSession();
-
-    return session;
-  }
-
-
-  /* =========================
-     ABRIR ADMIN
-  ========================= */
-
-  async function abrirAdmin() {
-
-    const session =
-      await verificarSesion();
-
-    if (!session) {
-
-      document.getElementById(
-        "modalLogin"
-      ).style.display = "block";
-
-      return;
-    }
-
-    document.getElementById(
-      "modalAdmin"
-    ).style.display = "block";
-
-    cargarListaAdmin();
-  }
-
-
-  /* =========================
-     CERRAR ADMIN
-  ========================= */
-
-  function cerrarAdmin() {
-
-    document.getElementById(
-      "modalAdmin"
-    ).style.display = "none";
-
-  }
-
-
-  /* =========================
-     LOGIN
-  ========================= */
-
-  async function iniciarSesion() {
-
-    const email =
-      document.getElementById(
-        "loginEmail"
-      ).value.trim();
-
-    const password =
-      document.getElementById(
-        "loginPassword"
-      ).value;
-
-    const errorBox =
-      document.getElementById(
-        "loginError"
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
       );
 
-    errorBox.style.display = "none";
 
-    if (!email || !password) {
+    /* =========================
+       VARIABLES
+    ========================= */
 
-      errorBox.textContent =
-        "Completá el email y la contraseña.";
+    let productos = [];
+    let banners = [];
+    let bannerActual = 0;
+    let bannerInterval;
+    let carrito = [];
 
-      errorBox.style.display = "block";
 
-      return;
+    /* =========================
+       SESIÓN
+    ========================= */
+
+    async function verificarSesion() {
+
+      const {
+        data: {
+          session
+        }
+      } = await supabaseClient.auth.getSession();
+
+      return session;
     }
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
 
-    if (error) {
+    /* =========================
+       ABRIR ADMIN
+    ========================= */
 
-      console.error(error);
+    async function abrirAdmin() {
 
-      errorBox.textContent =
-        "Email o contraseña incorrectos.";
+      const session =
+        await verificarSesion();
 
-      errorBox.style.display = "block";
+      if (!session) {
 
-      return;
-    }
+        document.getElementById(
+          "modalLogin"
+        ).style.display = "block";
 
-    if (data.session) {
-
-      document.getElementById(
-        "modalLogin"
-      ).style.display = "none";
-
-      document.getElementById(
-        "loginPassword"
-      ).value = "";
+        return;
+      }
 
       document.getElementById(
         "modalAdmin"
       ).style.display = "block";
 
       cargarListaAdmin();
+    }
+
+
+    /* =========================
+       CERRAR ADMIN
+    ========================= */
+
+    function cerrarAdmin() {
+
+      document.getElementById(
+        "modalAdmin"
+      ).style.display = "none";
 
     }
 
-  }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    async function iniciarSesion() {
+
+      const email =
+        document.getElementById(
+          "loginEmail"
+        ).value.trim();
+
+      const password =
+        document.getElementById(
+          "loginPassword"
+        ).value;
+
+      const errorBox =
+        document.getElementById(
+          "loginError"
+        );
+
+      errorBox.style.display = "none";
+
+      if (!email || !password) {
+
+        errorBox.textContent =
+          "Completá el email y la contraseña.";
+
+        errorBox.style.display = "block";
+
+        return;
+      }
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+          "Email o contraseña incorrectos.";
+
+        errorBox.style.display = "block";
+
+        return;
+      }
+
+      if (data.session) {
+
+        document.getElementById(
+          "modalLogin"
+        ).style.display = "none";
+
+        document.getElementById(
+          "loginPassword"
+        ).value = "";
+
+        document.getElementById(
+          "modalAdmin"
+        ).style.display = "block";
+
+        cargarListaAdmin();
+      }
+
+    }
 
 
-  /* =========================
-     CERRAR LOGIN
-  ========================= */
+    /* =========================
+       CERRAR LOGIN
+    ========================= */
 
-  function cerrarLogin() {
+    function cerrarLogin() {
 
-    document.getElementById(
-      "modalLogin"
-    ).style.display = "none";
+      document.getElementById(
+        "modalLogin"
+      ).style.display = "none";
 
-    document.getElementById(
-      "loginError"
-    ).style.display = "none";
+      document.getElementById(
+        "loginError"
+      ).style.display = "none";
 
-  }
-
-
-  /* =========================
-     CERRAR SESIÓN
-  ========================= */
-
-  async function cerrarSesion() {
-
-    await supabaseClient.auth.signOut();
-
-    cerrarAdmin();
-
-    alert("🔒 Sesión cerrada.");
-
-  }
+    }
 
 
-  /* =========================
-     CARGAR PRODUCTOS
-  ========================= */
+    /* =========================
+       CERRAR SESIÓN
+    ========================= */
 
-  async function cargarProductos() {
+    async function cerrarSesion() {
 
-    try {
+      await supabaseClient.auth.signOut();
+
+      cerrarAdmin();
+
+      alert("🔒 Sesión cerrada.");
+
+    }
+
+
+    /* =========================
+       CARGAR PRODUCTOS
+    ========================= */
+
+    async function cargarProductos() {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("productos")
+            .select("*")
+            .order("id", {
+              ascending: true
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        productos = data || [];
+
+        mostrarProductos(productos);
+
+      } catch (error) {
+
+        console.error(
+          "Error productos:",
+          error
+        );
+
+        document.getElementById(
+          "productos"
+        ).innerHTML =
+          "<p>No se pudieron cargar los productos.</p>";
+
+      }
+
+    }
+
+
+    /* =========================
+       MOSTRAR PRODUCTOS
+    ========================= */
+
+    function mostrarProductos(lista) {
+
+      const contenedor =
+        document.getElementById(
+          "productos"
+        );
+
+      contenedor.innerHTML = "";
+
+      if (!lista.length) {
+
+        contenedor.innerHTML =
+          "<p>No hay productos cargados todavía.</p>";
+
+        return;
+      }
+
+      lista.forEach(producto => {
+
+        const tieneOferta =
+          producto.precio_anterior &&
+          Number(producto.precio_anterior) >
+          Number(producto.precio);
+
+        const imagen =
+          producto.imagen ||
+          "https://via.placeholder.com/500x500?text=Producto";
+
+        const nombreSeguro =
+          String(producto.nombre)
+            .replace(/\\/g, "\\\\")
+            .replace(/'/g, "\\'");
+
+        contenedor.innerHTML += `
+
+          <div
+            class="producto"
+            data-categoria="${escapeHTML(producto.categoria || "")}"
+          >
+
+            <img
+              src="${escapeHTML(imagen)}"
+              alt="${escapeHTML(producto.nombre)}"
+              onerror="this.src='https://via.placeholder.com/500x500?text=Producto'"
+            >
+
+            <div class="producto-info">
+
+              ${
+                tieneOferta
+                  ? `
+                    <span class="oferta">
+                      🔥 OFERTA
+                    </span>
+                  `
+                  : ""
+              }
+
+              <h3>
+                ${escapeHTML(producto.nombre)}
+              </h3>
+
+              <p>
+                ${escapeHTML(producto.descripcion || "")}
+              </p>
+
+              ${
+                tieneOferta
+                  ? `
+                    <div class="precio-anterior">
+                      $${Number(
+                        producto.precio_anterior
+                      ).toLocaleString("es-AR")}
+                    </div>
+                  `
+                  : ""
+              }
+
+              <div class="precio">
+                $${Number(
+                  producto.precio
+                ).toLocaleString("es-AR")}
+              </div>
+
+              <button
+                class="agregar"
+                onclick="agregarCarrito(
+                  '${nombreSeguro}',
+                  ${Number(producto.precio)}
+                )">
+
+                🛒 Agregar al carrito
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+
+    /* =========================
+       ESCAPAR HTML
+    ========================= */
+
+    function escapeHTML(text) {
+
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================
+       GUARDAR PRODUCTO
+    ========================= */
+
+    async function guardarProducto() {
+
+      const nombre =
+        document.getElementById(
+          "nombre"
+        ).value.trim();
+
+      const precio =
+        Number(
+          document.getElementById(
+            "precio"
+          ).value
+        );
+
+      const precioAnteriorValor =
+        document.getElementById(
+          "precioAnterior"
+        ).value;
+
+      const precioAnterior =
+        precioAnteriorValor
+          ? Number(precioAnteriorValor)
+          : null;
+
+      const categoria =
+        document.getElementById(
+          "categoria"
+        ).value;
+
+      const descripcion =
+        document.getElementById(
+          "descripcion"
+        ).value.trim();
+
+      const imagen =
+        document.getElementById(
+          "imagen"
+        ).value.trim();
+
+      const errorBox =
+        document.getElementById(
+          "productoError"
+        );
+
+      const exitoBox =
+        document.getElementById(
+          "productoExito"
+        );
+
+      errorBox.style.display = "none";
+      exitoBox.style.display = "none";
+
+      if (!nombre || !precio) {
+
+        errorBox.textContent =
+          "Completá el nombre y el precio.";
+
+        errorBox.style.display = "block";
+
+        return;
+      }
+
+      const session =
+        await verificarSesion();
+
+      if (!session) {
+
+        errorBox.textContent =
+          "Tu sesión expiró. Volvé a iniciar sesión.";
+
+        errorBox.style.display = "block";
+
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("productos")
+          .insert({
+
+            nombre,
+            precio,
+            precio_anterior: precioAnterior,
+            categoria,
+            descripcion,
+            imagen
+
+          });
+
+      if (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+          "No se pudo guardar el producto: " +
+          error.message;
+
+        errorBox.style.display = "block";
+
+        return;
+      }
+
+      exitoBox.textContent =
+        "✅ Producto guardado correctamente.";
+
+      exitoBox.style.display = "block";
+
+      document.getElementById("nombre").value = "";
+      document.getElementById("precio").value = "";
+      document.getElementById("precioAnterior").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("imagen").value = "";
+
+      await cargarProductos();
+      await cargarListaAdmin();
+
+    }
+
+
+    /* =========================
+       LISTA ADMIN
+    ========================= */
+
+    async function cargarListaAdmin() {
+
+      const lista =
+        document.getElementById(
+          "adminLista"
+        );
+
+      lista.innerHTML =
+        "Cargando...";
 
       const {
         data,
@@ -1120,940 +1449,53 @@
           .from("productos")
           .select("*")
           .order("id", {
-            ascending: true
+            ascending: false
           });
 
       if (error) {
-        throw error;
+
+        lista.innerHTML =
+          "No se pudieron cargar los productos.";
+
+        console.error(error);
+
+        return;
       }
 
-      productos = data || [];
+      if (!data.length) {
 
-      mostrarProductos(productos);
+        lista.innerHTML =
+          "No hay productos.";
 
-    } catch (error) {
-
-      console.error(
-        "Error productos:",
-        error
-      );
-
-      document.getElementById(
-        "productos"
-      ).innerHTML =
-        "<p>No se pudieron cargar los productos.</p>";
-
-    }
-
-  }
-
-
-  /* =========================
-     MOSTRAR PRODUCTOS
-  ========================= */
-
-  function mostrarProductos(lista) {
-
-    const contenedor =
-      document.getElementById(
-        "productos"
-      );
-
-    contenedor.innerHTML = "";
-
-    if (!lista.length) {
-
-      contenedor.innerHTML =
-        "<p>No hay productos cargados todavía.</p>";
-
-      return;
-    }
-
-    lista.forEach(producto => {
-
-      const tieneOferta =
-        producto.precio_anterior &&
-        Number(producto.precio_anterior) >
-        Number(producto.precio);
-
-      const imagen =
-        producto.imagen ||
-        "https://via.placeholder.com/500x500?text=Producto";
-
-      const nombreSeguro =
-        String(producto.nombre)
-          .replace(/\\/g, "\\\\")
-          .replace(/'/g, "\\'");
-
-      contenedor.innerHTML += `
-
-        <div
-          class="producto"
-          data-categoria="${producto.categoria || ""}"
-        >
-
-          <img
-            src="${imagen}"
-            alt="${escapeHTML(producto.nombre)}"
-          >
-
-          <div class="producto-info">
-
-            ${
-              tieneOferta
-                ? `
-                  <span class="oferta">
-                    🔥 OFERTA
-                  </span>
-                `
-                : ""
-            }
-
-            <h3>
-              ${escapeHTML(producto.nombre)}
-            </h3>
-
-            <p>
-              ${escapeHTML(producto.descripcion || "")}
-            </p>
-
-            ${
-              tieneOferta
-                ? `
-                  <div class="precio-anterior">
-                    $${Number(
-                      producto.precio_anterior
-                    ).toLocaleString("es-AR")}
-                  </div>
-                `
-                : ""
-            }
-
-            <div class="precio">
-              $${Number(
-                producto.precio
-              ).toLocaleString("es-AR")}
-            </div>
-
-            <button
-              class="agregar"
-              onclick="agregarCarrito(
-                '${nombreSeguro}',
-                ${Number(producto.precio)}
-              )">
-
-              🛒 Agregar al carrito
-
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    });
-
-  }
-
-
-  /* =========================
-     ESCAPAR HTML
-  ========================= */
-
-  function escapeHTML(text) {
-
-    return String(text)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  /* =========================
-     GUARDAR PRODUCTO
-  ========================= */
-
-  async function guardarProducto() {
-
-    const nombre =
-      document.getElementById(
-        "nombre"
-      ).value.trim();
-
-    const precio =
-      Number(
-        document.getElementById(
-          "precio"
-        ).value
-      );
-
-    const precioAnteriorValor =
-      document.getElementById(
-        "precioAnterior"
-      ).value;
-
-    const precioAnterior =
-      precioAnteriorValor
-        ? Number(precioAnteriorValor)
-        : null;
-
-    const categoria =
-      document.getElementById(
-        "categoria"
-      ).value;
-
-    const descripcion =
-      document.getElementById(
-        "descripcion"
-      ).value.trim();
-
-    const imagen =
-      document.getElementById(
-        "imagen"
-      ).value.trim();
-
-    const errorBox =
-      document.getElementById(
-        "productoError"
-      );
-
-    const exitoBox =
-      document.getElementById(
-        "productoExito"
-      );
-
-    errorBox.style.display = "none";
-    exitoBox.style.display = "none";
-
-    if (!nombre || !precio) {
-
-      errorBox.textContent =
-        "Completá el nombre y el precio.";
-
-      errorBox.style.display = "block";
-
-      return;
-    }
-
-    const session =
-      await verificarSesion();
-
-    if (!session) {
-
-      errorBox.textContent =
-        "Tu sesión expiró. Volvé a iniciar sesión.";
-
-      errorBox.style.display = "block";
-
-      return;
-    }
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("productos")
-        .insert({
-
-          nombre: nombre,
-
-          precio: precio,
-
-          precio_anterior:
-            precioAnterior,
-
-          categoria: categoria,
-
-          descripcion: descripcion,
-
-          imagen: imagen
-
-        });
-
-    if (error) {
-
-      console.error(error);
-
-      errorBox.textContent =
-        "No se pudo guardar el producto: " +
-        error.message;
-
-      errorBox.style.display = "block";
-
-      return;
-    }
-
-    exitoBox.textContent =
-      "✅ Producto guardado correctamente.";
-
-    exitoBox.style.display = "block";
-
-    document.getElementById(
-      "nombre"
-    ).value = "";
-
-    document.getElementById(
-      "precio"
-    ).value = "";
-
-    document.getElementById(
-      "precioAnterior"
-    ).value = "";
-
-    document.getElementById(
-      "descripcion"
-    ).value = "";
-
-    document.getElementById(
-      "imagen"
-    ).value = "";
-
-    await cargarProductos();
-
-    await cargarListaAdmin();
-
-  }
-
-
-  /* =========================
-     LISTA ADMIN
-  ========================= */
-
-  async function cargarListaAdmin() {
-
-    const lista =
-      document.getElementById(
-        "adminLista"
-      );
-
-    lista.innerHTML =
-      "Cargando...";
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("productos")
-        .select("*")
-        .order("id", {
-          ascending: false
-        });
-
-    if (error) {
-
-      lista.innerHTML =
-        "No se pudieron cargar los productos.";
-
-      console.error(error);
-
-      return;
-    }
-
-    if (!data.length) {
-
-      lista.innerHTML =
-        "No hay productos.";
-
-      return;
-    }
-
-    lista.innerHTML = "";
-
-    data.forEach(producto => {
-
-      lista.innerHTML += `
-
-        <div class="admin-producto">
-
-          <div>
-
-            <strong>
-              ${escapeHTML(producto.nombre)}
-            </strong>
-
-            <br>
-
-            $${Number(
-              producto.precio
-            ).toLocaleString("es-AR")}
-
-          </div>
-
-          <button
-            onclick="eliminarProductoAdmin(${producto.id})">
-
-            🗑️ Eliminar
-
-          </button>
-
-        </div>
-
-      `;
-
-    });
-
-  }
-
-
-  /* =========================
-     ELIMINAR PRODUCTO
-  ========================= */
-
-  async function eliminarProductoAdmin(id) {
-
-    const confirmar =
-      confirm(
-        "¿Seguro que querés eliminar este producto?"
-      );
-
-    if (!confirmar) {
-      return;
-    }
-
-    const session =
-      await verificarSesion();
-
-    if (!session) {
-
-      alert(
-        "Tu sesión expiró."
-      );
-
-      return;
-    }
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("productos")
-        .delete()
-        .eq("id", id);
-
-    if (error) {
-
-      console.error(error);
-
-      alert(
-        "No se pudo eliminar: " +
-        error.message
-      );
-
-      return;
-    }
-
-    alert(
-      "🗑️ Producto eliminado."
-    );
-
-    await cargarProductos();
-
-    await cargarListaAdmin();
-
-  }
-
-
-  /* =========================
-     CARGAR BANNERS
-  ========================= */
-
-  async function cargarBanners() {
-
-    try {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("banners")
-          .select("*")
-          .eq("activo", true)
-          .order("id", {
-            ascending: true
-          });
-
-      if (error) {
-        throw error;
+        return;
       }
 
-      banners = data || [];
+      lista.innerHTML = "";
 
-      bannerActual = 0;
-
-      mostrarBanner();
-
-    } catch (error) {
-
-      console.error(
-        "Error banners:",
-        error
-      );
-
-    }
-
-  }
-
-
-  /* =========================
-     MOSTRAR BANNER
-  ========================= */
-
-  function mostrarBanner() {
-
-    const slider =
-      document.getElementById(
-        "bannerSlider"
-      );
-
-    const dots =
-      document.getElementById(
-        "bannerDots"
-      );
-
-    if (!slider || !dots) {
-      return;
-    }
-
-    if (!banners.length) {
-
-      slider.innerHTML = "";
-
-      dots.innerHTML = "";
-
-      clearInterval(
-        bannerInterval
-      );
-
-      return;
-    }
-
-    const banner =
-      banners[bannerActual];
-
-    const enlace =
-      banner.enlace || "#";
-
-    slider.innerHTML = `
-
-      <a
-        href="${escapeHTML(enlace)}"
-        ${
-          banner.enlace
-            ? 'target="_blank" rel="noopener noreferrer"'
-            : ""
-        }
-      >
-
-        <img
-          src="${escapeHTML(banner.imagen)}"
-          alt="${escapeHTML(
-            banner.titulo ||
-            "Banner Tekno Activa"
-          )}"
-        >
-
-        ${
-          banner.titulo ||
-          banner.texto
-            ? `
-              <div class="banner-texto">
-
-                ${
-                  banner.titulo
-                    ? `
-                      <h2>
-                        ${escapeHTML(
-                          banner.titulo
-                        )}
-                      </h2>
-                    `
-                    : ""
-                }
-
-                ${
-                  banner.texto
-                    ? `
-                      <p>
-                        ${escapeHTML(
-                          banner.texto
-                        )}
-                      </p>
-                    `
-                    : ""
-                }
-
-              </div>
-            `
-            : ""
-        }
-
-      </a>
-
-    `;
-
-    dots.innerHTML =
-      banners.map(
-        (_, index) => `
-
-          <button
-            class="${
-              index === bannerActual
-                ? "activo"
-                : ""
-            }"
-            onclick="irABanner(${index})">
-          </button>
-
-        `
-      ).join("");
-
-    clearInterval(
-      bannerInterval
-    );
-
-    if (banners.length > 1) {
-
-      bannerInterval =
-        setInterval(
-          bannerSiguiente,
-          5000
-        );
-
-    }
-
-  }
-
-
-  /* =========================
-     SIGUIENTE BANNER
-  ========================= */
-
-  function bannerSiguiente() {
-
-    if (!banners.length) {
-      return;
-    }
-
-    bannerActual =
-      (bannerActual + 1) %
-      banners.length;
-
-    mostrarBanner();
-
-  }
-
-
-  /* =========================
-     ANTERIOR BANNER
-  ========================= */
-
-  function bannerAnterior() {
-
-    if (!banners.length) {
-      return;
-    }
-
-    bannerActual =
-      (bannerActual - 1 +
-        banners.length) %
-      banners.length;
-
-    mostrarBanner();
-
-  }
-
-
-  /* =========================
-     IR A BANNER
-  ========================= */
-
-  function irABanner(index) {
-
-    bannerActual = index;
-
-    mostrarBanner();
-
-  }
-
-
-  /* =========================
-     GUARDAR BANNER
-  ========================= */
-
-  async function guardarBanner() {
-
-    const imagen =
-      document.getElementById(
-        "bannerImagen"
-      ).value.trim();
-
-    const titulo =
-      document.getElementById(
-        "bannerTitulo"
-      ).value.trim();
-
-    const texto =
-      document.getElementById(
-        "bannerTexto"
-      ).value.trim();
-
-    const enlace =
-      document.getElementById(
-        "bannerEnlace"
-      ).value.trim();
-
-    const errorBox =
-      document.getElementById(
-        "bannerError"
-      );
-
-    const exitoBox =
-      document.getElementById(
-        "bannerExito"
-      );
-
-    errorBox.style.display = "none";
-    exitoBox.style.display = "none";
-
-    if (!imagen) {
-
-      errorBox.textContent =
-        "Ingresá la URL de la imagen.";
-
-      errorBox.style.display =
-        "block";
-
-      return;
-    }
-
-    const session =
-      await verificarSesion();
-
-    if (!session) {
-
-      errorBox.textContent =
-        "Tu sesión expiró.";
-
-      errorBox.style.display =
-        "block";
-
-      return;
-    }
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("banners")
-        .insert({
-
-          imagen: imagen,
-
-          titulo: titulo,
-
-          texto: texto,
-
-          enlace: enlace || null,
-
-          activo: true
-
-        });
-
-    if (error) {
-
-      console.error(error);
-
-      errorBox.textContent =
-        "No se pudo guardar el banner: " +
-        error.message;
-
-      errorBox.style.display =
-        "block";
-
-      return;
-    }
-
-    exitoBox.textContent =
-      "✅ Banner guardado correctamente.";
-
-    exitoBox.style.display =
-      "block";
-
-    document.getElementById(
-      "bannerImagen"
-    ).value = "";
-
-    document.getElementById(
-      "bannerTitulo"
-    ).value = "";
-
-    document.getElementById(
-      "bannerTexto"
-    ).value = "";
-
-    document.getElementById(
-      "bannerEnlace"
-    ).value = "";
-
-    await cargarBanners();
-
-  }
-
-
-  /* =========================
-     FILTROS
-  ========================= */
-
-  function filtrar(categoria) {
-
-    if (categoria === "todos") {
-
-      mostrarProductos(
-        productos
-      );
-
-      return;
-    }
-
-    const filtrados =
-      productos.filter(
-        producto =>
-          producto.categoria ===
-          categoria
-      );
-
-    mostrarProductos(
-      filtrados
-    );
-
-  }
-
-
-  /* =========================
-     AGREGAR AL CARRITO
-  ========================= */
-
-  function agregarCarrito(
-    nombre,
-    precio
-  ) {
-
-    const producto =
-      carrito.find(
-        item =>
-          item.nombre ===
-          nombre
-      );
-
-    if (producto) {
-
-      producto.cantidad++;
-
-    } else {
-
-      carrito.push({
-
-        nombre: nombre,
-
-        precio: Number(precio),
-
-        cantidad: 1
-
-      });
-
-    }
-
-    actualizarCarrito();
-
-    alert(
-      "Producto agregado 🛒"
-    );
-
-  }
-
-
-  /* =========================
-     ACTUALIZAR CARRITO
-  ========================= */
-
-  function actualizarCarrito() {
-
-    const lista =
-      document.getElementById(
-        "listaCarrito"
-      );
-
-    lista.innerHTML = "";
-
-    let total = 0;
-
-    let cantidadTotal = 0;
-
-    carrito.forEach(
-      (item, index) => {
-
-        const subtotal =
-          item.precio *
-          item.cantidad;
-
-        total += subtotal;
-
-        cantidadTotal +=
-          item.cantidad;
+      data.forEach(producto => {
 
         lista.innerHTML += `
 
-          <div class="item-carrito">
+          <div class="admin-producto">
 
             <div>
 
               <strong>
-                ${escapeHTML(item.nombre)}
+                ${escapeHTML(producto.nombre)}
               </strong>
 
               <br>
 
-              $${item.precio.toLocaleString(
-                "es-AR"
-              )}
-
-            </div>
-
-            <div class="cantidad">
-
-              <button
-                onclick="cambiarCantidad(
-                  ${index},
-                  -1
-                )">
-                −
-              </button>
-
-              ${item.cantidad}
-
-              <button
-                onclick="cambiarCantidad(
-                  ${index},
-                  1
-                )">
-                +
-              </button>
+              $${Number(
+                producto.precio
+              ).toLocaleString("es-AR")}
 
             </div>
 
             <button
-              class="eliminar"
-              onclick="eliminarDelCarrito(
-                ${index}
-              )">
+              onclick="eliminarProductoAdmin(${producto.id})">
 
-              🗑️
+              🗑️ Eliminar
 
             </button>
 
@@ -2061,39 +1503,615 @@
 
         `;
 
-      }
-    );
+      });
 
-    document.getElementById(
-      "total"
-    ).textContent =
-      total.toLocaleString(
-        "es-AR"
+    }
+
+
+    /* =========================
+       ELIMINAR PRODUCTO
+    ========================= */
+
+    async function eliminarProductoAdmin(id) {
+
+      const confirmar =
+        confirm(
+          "¿Seguro que querés eliminar este producto?"
+        );
+
+      if (!confirmar) {
+        return;
+      }
+
+      const session =
+        await verificarSesion();
+
+      if (!session) {
+
+        alert(
+          "Tu sesión expiró."
+        );
+
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("productos")
+          .delete()
+          .eq("id", id);
+
+      if (error) {
+
+        console.error(error);
+
+        alert(
+          "No se pudo eliminar: " +
+          error.message
+        );
+
+        return;
+      }
+
+      alert(
+        "🗑️ Producto eliminado."
       );
 
-    document.getElementById(
-      "contador"
-    ).textContent =
-      cantidadTotal;
+      await cargarProductos();
+      await cargarListaAdmin();
 
-  }
+    }
 
 
-  /* =========================
-     CAMBIAR CANTIDAD
-  ========================= */
+    /* =========================
+       CARGAR BANNERS
+    ========================= */
 
-  function cambiarCantidad(
-    index,
-    cambio
-  ) {
+    async function cargarBanners() {
 
-    carrito[index].cantidad +=
-      cambio;
+      try {
 
-    if (
-      carrito[index].cantidad <=
-      0
+        const {
+          data,
+          error
+        } =
+          await supabaseClient
+            .from("banners")
+            .select("*")
+            .eq("activo", true)
+            .order("id", {
+              ascending: true
+            });
+
+        if (error) {
+          throw error;
+        }
+
+        banners = data || [];
+        bannerActual = 0;
+
+        mostrarBanner();
+
+      } catch (error) {
+
+        console.error(
+          "Error banners:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       MOSTRAR BANNER
+    ========================= */
+
+    function mostrarBanner() {
+
+      const slider =
+        document.getElementById(
+          "bannerSlider"
+        );
+
+      const dots =
+        document.getElementById(
+          "bannerDots"
+        );
+
+      if (!slider || !dots) {
+        return;
+      }
+
+      if (!banners.length) {
+
+        slider.innerHTML = "";
+        dots.innerHTML = "";
+
+        clearInterval(
+          bannerInterval
+        );
+
+        return;
+      }
+
+      const banner =
+        banners[bannerActual];
+
+      const enlace =
+        banner.enlace || "#";
+
+      slider.innerHTML = `
+
+        <a
+          href="${escapeHTML(enlace)}"
+          ${
+            banner.enlace
+              ? 'target="_blank" rel="noopener noreferrer"'
+              : ""
+          }
+        >
+
+          <img
+            src="${escapeHTML(banner.imagen)}"
+            alt="${escapeHTML(
+              banner.titulo ||
+              "Banner Tekno Activa"
+            )}"
+          >
+
+          ${
+            banner.titulo ||
+            banner.texto
+              ? `
+                <div class="banner-texto">
+
+                  ${
+                    banner.titulo
+                      ? `
+                        <h2>
+                          ${escapeHTML(
+                            banner.titulo
+                          )}
+                        </h2>
+                      `
+                      : ""
+                  }
+
+                  ${
+                    banner.texto
+                      ? `
+                        <p>
+                          ${escapeHTML(
+                            banner.texto
+                          )}
+                        </p>
+                      `
+                      : ""
+                  }
+
+                </div>
+              `
+              : ""
+          }
+
+        </a>
+
+      `;
+
+      dots.innerHTML =
+        banners.map(
+          (_, index) => `
+
+            <button
+              class="${
+                index === bannerActual
+                  ? "activo"
+                  : ""
+              }"
+              onclick="irABanner(${index})">
+            </button>
+
+          `
+        ).join("");
+
+      clearInterval(
+        bannerInterval
+      );
+
+      if (banners.length > 1) {
+
+        bannerInterval =
+          setInterval(
+            bannerSiguiente,
+            5000
+          );
+
+      }
+
+    }
+
+
+    /* =========================
+       SIGUIENTE BANNER
+    ========================= */
+
+    function bannerSiguiente() {
+
+      if (!banners.length) {
+        return;
+      }
+
+      bannerActual =
+        (bannerActual + 1) %
+        banners.length;
+
+      mostrarBanner();
+
+    }
+
+
+    /* =========================
+       ANTERIOR BANNER
+    ========================= */
+
+    function bannerAnterior() {
+
+      if (!banners.length) {
+        return;
+      }
+
+      bannerActual =
+        (bannerActual - 1 +
+          banners.length) %
+        banners.length;
+
+      mostrarBanner();
+
+    }
+
+
+    /* =========================
+       IR A BANNER
+    ========================= */
+
+    function irABanner(index) {
+
+      bannerActual = index;
+
+      mostrarBanner();
+
+    }
+
+
+    /* =========================
+       GUARDAR BANNER
+    ========================= */
+
+    async function guardarBanner() {
+
+      const imagen =
+        document.getElementById(
+          "bannerImagen"
+        ).value.trim();
+
+      const titulo =
+        document.getElementById(
+          "bannerTitulo"
+        ).value.trim();
+
+      const texto =
+        document.getElementById(
+          "bannerTexto"
+        ).value.trim();
+
+      const enlace =
+        document.getElementById(
+          "bannerEnlace"
+        ).value.trim();
+
+      const errorBox =
+        document.getElementById(
+          "bannerError"
+        );
+
+      const exitoBox =
+        document.getElementById(
+          "bannerExito"
+        );
+
+      errorBox.style.display = "none";
+      exitoBox.style.display = "none";
+
+      if (!imagen) {
+
+        errorBox.textContent =
+          "Ingresá la URL de la imagen.";
+
+        errorBox.style.display =
+          "block";
+
+        return;
+      }
+
+      const session =
+        await verificarSesion();
+
+      if (!session) {
+
+        errorBox.textContent =
+          "Tu sesión expiró.";
+
+        errorBox.style.display =
+          "block";
+
+        return;
+      }
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("banners")
+          .insert({
+
+            imagen,
+            titulo,
+            texto,
+            enlace: enlace || null,
+            activo: true
+
+          });
+
+      if (error) {
+
+        console.error(error);
+
+        errorBox.textContent =
+          "No se pudo guardar el banner: " +
+          error.message;
+
+        errorBox.style.display =
+          "block";
+
+        return;
+      }
+
+      exitoBox.textContent =
+        "✅ Banner guardado correctamente.";
+
+      exitoBox.style.display =
+        "block";
+
+      document.getElementById(
+        "bannerImagen"
+      ).value = "";
+
+      document.getElementById(
+        "bannerTitulo"
+      ).value = "";
+
+      document.getElementById(
+        "bannerTexto"
+      ).value = "";
+
+      document.getElementById(
+        "bannerEnlace"
+      ).value = "";
+
+      await cargarBanners();
+
+    }
+
+
+    /* =========================
+       FILTROS
+    ========================= */
+
+    function filtrar(categoria) {
+
+      if (categoria === "todos") {
+
+        mostrarProductos(
+          productos
+        );
+
+        return;
+      }
+
+      const filtrados =
+        productos.filter(
+          producto =>
+            producto.categoria ===
+            categoria
+        );
+
+      mostrarProductos(
+        filtrados
+      );
+
+    }
+
+
+    /* =========================
+       CARRITO
+    ========================= */
+
+    function agregarCarrito(
+      nombre,
+      precio
+    ) {
+
+      const producto =
+        carrito.find(
+          item =>
+            item.nombre ===
+            nombre
+        );
+
+      if (producto) {
+
+        producto.cantidad++;
+
+      } else {
+
+        carrito.push({
+
+          nombre,
+          precio: Number(precio),
+          cantidad: 1
+
+        });
+
+      }
+
+      actualizarCarrito();
+
+      alert(
+        "Producto agregado 🛒"
+      );
+
+    }
+
+
+    /* =========================
+       ACTUALIZAR CARRITO
+    ========================= */
+
+    function actualizarCarrito() {
+
+      const lista =
+        document.getElementById(
+          "listaCarrito"
+        );
+
+      lista.innerHTML = "";
+
+      let total = 0;
+      let cantidadTotal = 0;
+
+      carrito.forEach(
+        (item, index) => {
+
+          const subtotal =
+            item.precio *
+            item.cantidad;
+
+          total += subtotal;
+
+          cantidadTotal +=
+            item.cantidad;
+
+          lista.innerHTML += `
+
+            <div class="item-carrito">
+
+              <div>
+
+                <strong>
+                  ${escapeHTML(item.nombre)}
+                </strong>
+
+                <br>
+
+                $${item.precio.toLocaleString(
+                  "es-AR"
+                )}
+
+              </div>
+
+              <div class="cantidad">
+
+                <button
+                  onclick="cambiarCantidad(
+                    ${index},
+                    -1
+                  )">
+                  −
+                </button>
+
+                ${item.cantidad}
+
+                <button
+                  onclick="cambiarCantidad(
+                    ${index},
+                    1
+                  )">
+                  +
+                </button>
+
+              </div>
+
+              <button
+                class="eliminar"
+                onclick="eliminarDelCarrito(
+                  ${index}
+                )">
+
+                🗑️
+
+              </button>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+      document.getElementById(
+        "total"
+      ).textContent =
+        total.toLocaleString(
+          "es-AR"
+        );
+
+      document.getElementById(
+        "contador"
+      ).textContent =
+        cantidadTotal;
+
+    }
+
+
+    /* =========================
+       CAMBIAR CANTIDAD
+    ========================= */
+
+    function cambiarCantidad(
+      index,
+      cambio
+    ) {
+
+      carrito[index].cantidad +=
+        cambio;
+
+      if (
+        carrito[index].cantidad <=
+        0
+      ) {
+
+        carrito.splice(
+          index,
+          1
+        );
+
+      }
+
+      actualizarCarrito();
+
+    }
+
+
+    /* =========================
+       ELIMINAR DEL CARRITO
+    ========================= */
+
+    function eliminarDelCarrito(
+      index
     ) {
 
       carrito.splice(
@@ -2101,133 +2119,144 @@
         1
       );
 
+      actualizarCarrito();
+
     }
 
-    actualizarCarrito();
 
-  }
+    /* =========================
+       ABRIR CARRITO
+    ========================= */
 
+    function abrirCarrito() {
 
-  /* =========================
-     ELIMINAR DEL CARRITO
-  ========================= */
+      document.getElementById(
+        "modalCarrito"
+      ).style.display =
+        "block";
 
-  function eliminarDelCarrito(
-    index
-  ) {
+      actualizarCarrito();
 
-    carrito.splice(
-      index,
-      1
-    );
-
-    actualizarCarrito();
-
-  }
+    }
 
 
-  /* =========================
-     ABRIR CARRITO
-  ========================= */
+    /* =========================
+       CERRAR CARRITO
+    ========================= */
 
-  function abrirCarrito() {
+    function cerrarCarrito() {
 
-    document.getElementById(
-      "modalCarrito"
-    ).style.display =
-      "block";
+      document.getElementById(
+        "modalCarrito"
+      ).style.display =
+        "none";
 
-    actualizarCarrito();
-
-  }
+    }
 
 
-  /* =========================
-     CERRAR CARRITO
-  ========================= */
+    /* =========================
+       WHATSAPP
+    ========================= */
 
-  function cerrarCarrito() {
+    function enviarWhatsApp() {
 
-    document.getElementById(
-      "modalCarrito"
-    ).style.display =
-      "none";
+      if (
+        carrito.length === 0
+      ) {
 
-  }
+        alert(
+          "El carrito está vacío."
+        );
 
+        return;
+      }
 
-  /* =========================
-     WHATSAPP
-  ========================= */
+      let mensaje =
+        "Hola Tekno Activa! 👋\n\n";
 
-  function enviarWhatsApp() {
+      mensaje +=
+        "Quiero realizar este pedido:\n\n";
 
-    if (
-      carrito.length === 0
-    ) {
+      let total = 0;
 
-      alert(
-        "El carrito está vacío."
+      carrito.forEach(
+        item => {
+
+          const subtotal =
+            item.precio *
+            item.cantidad;
+
+          total += subtotal;
+
+          mensaje +=
+            "📦 " +
+            item.nombre +
+            " x" +
+            item.cantidad +
+            " - $" +
+            subtotal.toLocaleString(
+              "es-AR"
+            ) +
+            "\n";
+
+        }
       );
 
-      return;
+      mensaje +=
+        "\n💰 TOTAL: $" +
+        total.toLocaleString(
+          "es-AR"
+        );
+
+      window.open(
+        "https://wa.me/5492646181163?text=" +
+        encodeURIComponent(mensaje),
+        "_blank"
+      );
+
     }
 
-    let mensaje =
-      "Hola Tekno Activa! 👋\n\n";
 
-    mensaje +=
-      "Quiero realizar este pedido:\n\n";
+    /* =========================
+       LOGO
+    ========================= */
 
-    let total = 0;
+    function configurarLogo() {
 
-    carrito.forEach(
-      item => {
+      const logoUrl = "";
 
-        const subtotal =
-          item.precio *
-          item.cantidad;
+      const logo =
+        document.getElementById(
+          "logoImagen"
+        );
 
-        total += subtotal;
+      const texto =
+        document.getElementById(
+          "logoTexto"
+        );
 
-        mensaje +=
-          "📦 " +
-          item.nombre +
-          " x" +
-          item.cantidad +
-          " - $" +
-          subtotal.toLocaleString(
-            "es-AR"
-          ) +
-          "\n";
+      if (logoUrl) {
+
+        logo.src = logoUrl;
+        logo.style.display = "inline-block";
+        texto.style.display = "none";
 
       }
-    );
 
-    mensaje +=
-      "\n💰 TOTAL: $" +
-      total.toLocaleString(
-        "es-AR"
-      );
-
-    window.open(
-      "https://wa.me/5492646181163?text=" +
-      encodeURIComponent(mensaje),
-      "_blank"
-    );
-
-  }
+    }
 
 
-  /* =========================
-     INICIO
-  ========================= */
+    /* =========================
+       INICIO
+    ========================= */
 
-  cargarProductos();
+    configurarLogo();
 
-  cargarBanners();
+    cargarProductos();
 
-</script>
+    cargarBanners();
+
+  </script>
 
 </body>
 </html>
