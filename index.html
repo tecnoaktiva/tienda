@@ -36,6 +36,118 @@
       color: #ccc;
     }
 
+    /* =========================
+       BANNER
+    ========================= */
+
+    .banner-container {
+      position: relative;
+      max-width: 1100px;
+      height: 320px;
+      margin: 20px auto 30px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 4px 15px #ccc;
+    }
+
+    .banner-slider {
+      width: 100%;
+      height: 100%;
+    }
+
+    .banner-slider a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      color: white;
+      text-decoration: none;
+    }
+
+    .banner-slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .banner-texto {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 25px;
+      color: white;
+      background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, .75)
+      );
+    }
+
+    .banner-texto h2 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .banner-texto p {
+      font-size: 16px;
+    }
+
+    .banner-prev,
+    .banner-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: rgba(0, 0, 0, .55);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .banner-prev {
+      left: 15px;
+    }
+
+    .banner-next {
+      right: 15px;
+    }
+
+    .banner-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 6;
+    }
+
+    .banner-dots button {
+      width: 9px;
+      height: 9px;
+      border: none;
+      border-radius: 50%;
+      margin: 0 4px;
+      padding: 0;
+      background: white;
+      opacity: .5;
+      cursor: pointer;
+    }
+
+    .banner-dots button.activo {
+      opacity: 1;
+      transform: scale(1.3);
+    }
+
+    /* =========================
+       CONTENEDOR
+    ========================= */
+
     .contenedor {
       max-width: 1100px;
       margin: auto;
@@ -73,9 +185,14 @@
       color: white;
     }
 
+    /* =========================
+       PRODUCTOS
+    ========================= */
+
     .productos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
     }
 
@@ -146,6 +263,10 @@
       background: #333;
     }
 
+    /* =========================
+       CARRITO
+    ========================= */
+
     .carrito-btn {
       position: fixed;
       right: 20px;
@@ -168,11 +289,15 @@
       margin-left: 5px;
     }
 
+    /* =========================
+       MODALES
+    ========================= */
+
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.65);
+      background: rgba(0, 0, 0, .65);
       z-index: 20;
       padding: 20px;
     }
@@ -280,6 +405,38 @@
       color: #777;
     }
 
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .banner-container {
+        height: 210px;
+        margin: 15px 10px 25px;
+      }
+
+      .banner-texto {
+        padding: 15px;
+      }
+
+      .banner-texto h2 {
+        font-size: 20px;
+      }
+
+      .banner-texto p {
+        font-size: 13px;
+      }
+
+      .banner-prev,
+      .banner-next {
+        width: 36px;
+        height: 36px;
+        font-size: 25px;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -289,6 +446,36 @@
   <h1>TEKNO ACTIVA</h1>
   <p>Tecnología, hogar y belleza</p>
 </header>
+
+<!-- =========================
+     BANNER
+========================= -->
+
+<div class="banner-container">
+
+  <div
+    id="bannerSlider"
+    class="banner-slider">
+  </div>
+
+  <button
+    class="banner-prev"
+    onclick="bannerAnterior()">
+    ‹
+  </button>
+
+  <button
+    class="banner-next"
+    onclick="bannerSiguiente()">
+    ›
+  </button>
+
+  <div
+    id="bannerDots"
+    class="banner-dots">
+  </div>
+
+</div>
 
 
 <div class="contenedor">
@@ -319,8 +506,9 @@
 
     </div>
 
-
-    <button class="admin-btn" onclick="abrirAdmin()">
+    <button
+      class="admin-btn"
+      onclick="abrirAdmin()">
       ⚙️ Administrar
     </button>
 
@@ -329,27 +517,30 @@
 
   <div
     id="productos"
-    class="productos"
-  ></div>
+    class="productos">
+  </div>
 
 </div>
 
 
-<!-- CARRITO -->
+<!-- =========================
+     CARRITO
+========================= -->
 
 <button
   class="carrito-btn"
-  onclick="abrirCarrito()"
->
+  onclick="abrirCarrito()">
+
   🛒 Carrito
+
   <span id="contador">0</span>
+
 </button>
 
 
 <div
   class="modal"
-  id="modalCarrito"
->
+  id="modalCarrito">
 
   <div class="modal-contenido">
 
@@ -363,16 +554,18 @@
 
     <button
       class="whatsapp"
-      onclick="enviarWhatsApp()"
-    >
+      onclick="enviarWhatsApp()">
+
       📲 Enviar pedido por WhatsApp
+
     </button>
 
     <button
       class="cerrar"
-      onclick="cerrarCarrito()"
-    >
+      onclick="cerrarCarrito()">
+
       Cerrar
+
     </button>
 
   </div>
@@ -380,25 +573,24 @@
 </div>
 
 
-<!-- ADMINISTRACIÓN -->
+<!-- =========================
+     ADMINISTRACIÓN
+========================= -->
 
 <div
   class="modal"
-  id="modalAdmin"
->
+  id="modalAdmin">
 
   <div class="modal-contenido">
 
     <h2>⚙️ Agregar producto</h2>
-
 
     <label>Nombre</label>
 
     <input
       id="nombre"
       type="text"
-      placeholder="Ej: Auricular A6S"
-    >
+      placeholder="Ej: Auricular A6S">
 
 
     <label>Precio</label>
@@ -406,8 +598,7 @@
     <input
       id="precio"
       type="number"
-      placeholder="9999"
-    >
+      placeholder="9999">
 
 
     <label>Precio anterior</label>
@@ -415,8 +606,7 @@
     <input
       id="precioAnterior"
       type="number"
-      placeholder="11500"
-    >
+      placeholder="11500">
 
 
     <label>Categoría</label>
@@ -446,8 +636,8 @@
 
     <textarea
       id="descripcion"
-      placeholder="Descripción del producto"
-    ></textarea>
+      placeholder="Descripción del producto">
+    </textarea>
 
 
     <label>URL de imagen</label>
@@ -455,23 +645,24 @@
     <input
       id="imagen"
       type="text"
-      placeholder="https://..."
-    >
+      placeholder="https://...">
 
 
     <button
       class="guardar"
-      onclick="guardarProducto()"
-    >
+      onclick="guardarProducto()">
+
       ➕ Guardar producto
+
     </button>
 
 
     <button
       class="cerrar"
-      onclick="cerrarAdmin()"
-    >
+      onclick="cerrarAdmin()">
+
       Cerrar
+
     </button>
 
   </div>
@@ -491,10 +682,11 @@
 ========================= */
 
 const SUPABASE_URL =
-  "https://emjknuwvbvqonafckwce.supabase.co"
+  "https://emjknuwvbvqonafckwce.supabase.co";
 
 const SUPABASE_KEY =
   "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
+
 
 /* =========================
    PRODUCTOS
@@ -503,13 +695,28 @@ const SUPABASE_KEY =
 let productos = [];
 
 
-async function cargarProductos() {
+/* =========================
+   BANNERS
+========================= */
+
+let banners = [];
+
+let bannerActual = 0;
+
+let bannerInterval;
+
+
+/* =========================
+   CARGAR BANNERS
+========================= */
+
+async function cargarBanners() {
 
   try {
 
     const respuesta = await fetch(
       SUPABASE_URL +
-      "/rest/v1/productos?select=*",
+      "/rest/v1/banners?select=*&activo=eq.true&order=id.asc",
       {
         headers: {
           "apikey": SUPABASE_KEY,
@@ -518,6 +725,219 @@ async function cargarProductos() {
         }
       }
     );
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "No se pudieron cargar los banners"
+      );
+
+    }
+
+    banners =
+      await respuesta.json();
+
+    mostrarBanner();
+
+  } catch (error) {
+
+    console.error(
+      "Error banners:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================
+   MOSTRAR BANNER
+========================= */
+
+function mostrarBanner() {
+
+  const slider =
+    document.getElementById(
+      "bannerSlider"
+    );
+
+  const dots =
+    document.getElementById(
+      "bannerDots"
+    );
+
+  if (!slider || !dots) {
+    return;
+  }
+
+  if (banners.length === 0) {
+
+    slider.innerHTML = "";
+
+    dots.innerHTML = "";
+
+    return;
+  }
+
+  const banner =
+    banners[bannerActual];
+
+
+  slider.innerHTML = `
+
+    <a
+      href="${banner.enlace || '#'}"
+      ${banner.enlace
+        ? 'target="_blank"'
+        : ''}
+    >
+
+      <img
+        src="${banner.imagen}"
+        alt="${banner.titulo || 'Banner Tekno Activa'}"
+      >
+
+      ${
+        banner.titulo ||
+        banner.texto
+        ? `
+
+          <div class="banner-texto">
+
+            ${
+              banner.titulo
+              ? `<h2>${banner.titulo}</h2>`
+              : ""
+            }
+
+            ${
+              banner.texto
+              ? `<p>${banner.texto}</p>`
+              : ""
+            }
+
+          </div>
+
+        `
+        : ""
+      }
+
+    </a>
+
+  `;
+
+
+  dots.innerHTML =
+    banners.map(
+      (_, index) => `
+
+        <button
+          class="${
+            index === bannerActual
+            ? "activo"
+            : ""
+          }"
+          onclick="irABanner(${index})">
+        </button>
+
+      `
+    ).join("");
+
+
+  clearInterval(
+    bannerInterval
+  );
+
+
+  if (banners.length > 1) {
+
+    bannerInterval =
+      setInterval(
+        bannerSiguiente,
+        5000
+      );
+
+  }
+
+}
+
+
+/* =========================
+   BANNER SIGUIENTE
+========================= */
+
+function bannerSiguiente() {
+
+  if (banners.length === 0) {
+    return;
+  }
+
+  bannerActual =
+    (bannerActual + 1) %
+    banners.length;
+
+  mostrarBanner();
+
+}
+
+
+/* =========================
+   BANNER ANTERIOR
+========================= */
+
+function bannerAnterior() {
+
+  if (banners.length === 0) {
+    return;
+  }
+
+  bannerActual =
+    (bannerActual - 1 +
+      banners.length) %
+    banners.length;
+
+  mostrarBanner();
+
+}
+
+
+/* =========================
+   IR A BANNER
+========================= */
+
+function irABanner(index) {
+
+  bannerActual = index;
+
+  mostrarBanner();
+
+}
+
+
+/* =========================
+   CARGAR PRODUCTOS
+========================= */
+
+async function cargarProductos() {
+
+  try {
+
+    const respuesta =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/productos?select=*",
+        {
+          headers: {
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          }
+        }
+      );
 
 
     if (!respuesta.ok) {
@@ -533,7 +953,9 @@ async function cargarProductos() {
       await respuesta.json();
 
 
-    mostrarProductos(productos);
+    mostrarProductos(
+      productos
+    );
 
 
   } catch (error) {
@@ -550,97 +972,122 @@ async function cargarProductos() {
 }
 
 
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
+
 function mostrarProductos(lista) {
 
   const contenedor =
-    document.getElementById("productos");
+    document.getElementById(
+      "productos"
+    );
 
   contenedor.innerHTML = "";
 
 
-  lista.forEach(producto => {
+  lista.forEach(
+    producto => {
 
-    const tieneOferta =
-      producto.precio_anterior &&
-      Number(producto.precio_anterior) >
-      Number(producto.precio);
+      const tieneOferta =
+        producto.precio_anterior &&
+        Number(
+          producto.precio_anterior
+        ) >
+        Number(
+          producto.precio
+        );
 
 
-    contenedor.innerHTML += `
+      contenedor.innerHTML += `
 
-      <div
-        class="producto"
-        data-categoria="${producto.categoria}"
-      >
-
-        <img
-          src="${
-            producto.imagen ||
-            'https://via.placeholder.com/500x500?text=Producto'
-          }"
-          alt="${producto.nombre}"
+        <div
+          class="producto"
+          data-categoria="${producto.categoria}"
         >
 
-
-        <div class="producto-info">
-
-          ${
-            tieneOferta
-            ? '<span class="oferta">🔥 OFERTA</span>'
-            : ''
-          }
-
-
-          <h3>
-            ${producto.nombre}
-          </h3>
-
-
-          <p>
-            ${producto.descripcion || ""}
-          </p>
-
-
-          ${
-            tieneOferta
-            ? `
-              <div class="precio-anterior">
-                $${Number(
-                  producto.precio_anterior
-                ).toLocaleString("es-AR")}
-              </div>
-            `
-            : ""
-          }
-
-
-          <div class="precio">
-            $${Number(
-              producto.precio
-            ).toLocaleString("es-AR")}
-          </div>
-
-
-          <button
-            class="agregar"
-            onclick="agregarCarrito(
-              '${producto.nombre.replace(
-                /'/g,
-                "\\'"
-              )}',
-              ${producto.precio}
-            )"
+          <img
+            src="${
+              producto.imagen ||
+              "https://via.placeholder.com/500x500?text=Producto"
+            }"
+            alt="${producto.nombre}"
           >
-            🛒 Agregar al carrito
-          </button>
+
+
+          <div class="producto-info">
+
+            ${
+              tieneOferta
+              ? `
+                <span class="oferta">
+                  🔥 OFERTA
+                </span>
+              `
+              : ""
+            }
+
+
+            <h3>
+              ${producto.nombre}
+            </h3>
+
+
+            <p>
+              ${producto.descripcion || ""}
+            </p>
+
+
+            ${
+              tieneOferta
+              ? `
+
+                <div class="precio-anterior">
+
+                  $${Number(
+                    producto.precio_anterior
+                  ).toLocaleString("es-AR")}
+
+                </div>
+
+              `
+              : ""
+            }
+
+
+            <div class="precio">
+
+              $${Number(
+                producto.precio
+              ).toLocaleString("es-AR")}
+
+            </div>
+
+
+            <button
+              class="agregar"
+              onclick="agregarCarrito(
+                '${String(
+                  producto.nombre
+                ).replace(
+                  /'/g,
+                  "\\'"
+                )}',
+                ${producto.precio}
+              )">
+
+              🛒 Agregar al carrito
+
+            </button>
+
+          </div>
 
         </div>
 
-      </div>
+      `;
 
-    `;
-
-  });
+    }
+  );
 
 }
 
@@ -729,7 +1176,6 @@ async function guardarProducto() {
 
           },
 
-
           body:
             JSON.stringify({
 
@@ -786,21 +1232,17 @@ async function guardarProducto() {
       "nombre"
     ).value = "";
 
-
     document.getElementById(
       "precio"
     ).value = "";
-
 
     document.getElementById(
       "precioAnterior"
     ).value = "";
 
-
     document.getElementById(
       "descripcion"
     ).value = "";
-
 
     document.getElementById(
       "imagen"
@@ -914,6 +1356,10 @@ function agregarCarrito(
 }
 
 
+/* =========================
+   ACTUALIZAR CARRITO
+========================= */
+
 function actualizarCarrito() {
 
   const lista =
@@ -938,9 +1384,7 @@ function actualizarCarrito() {
         item.cantidad;
 
 
-      total +=
-        subtotal;
-
+      total += subtotal;
 
       cantidadTotal +=
         item.cantidad;
@@ -971,9 +1415,10 @@ function actualizarCarrito() {
               onclick="cambiarCantidad(
                 ${index},
                 -1
-              )"
-            >
+              )">
+
               -
+
             </button>
 
 
@@ -984,9 +1429,10 @@ function actualizarCarrito() {
               onclick="cambiarCantidad(
                 ${index},
                 1
-              )"
-            >
+              )">
+
               +
+
             </button>
 
           </div>
@@ -996,9 +1442,10 @@ function actualizarCarrito() {
             class="eliminar"
             onclick="eliminarProducto(
               ${index}
-            )"
-          >
+            )">
+
             🗑️
+
           </button>
 
         </div>
@@ -1024,6 +1471,10 @@ function actualizarCarrito() {
 
 }
 
+
+/* =========================
+   CAMBIAR CANTIDAD
+========================= */
 
 function cambiarCantidad(
   index,
@@ -1052,6 +1503,10 @@ function cambiarCantidad(
 }
 
 
+/* =========================
+   ELIMINAR PRODUCTO
+========================= */
+
 function eliminarProducto(
   index
 ) {
@@ -1067,6 +1522,10 @@ function eliminarProducto(
 }
 
 
+/* =========================
+   ABRIR CARRITO
+========================= */
+
 function abrirCarrito() {
 
   document.getElementById(
@@ -1079,6 +1538,10 @@ function abrirCarrito() {
 
 }
 
+
+/* =========================
+   CERRAR CARRITO
+========================= */
 
 function cerrarCarrito() {
 
@@ -1111,11 +1574,11 @@ function enviarWhatsApp() {
 
 
   let mensaje =
-    "Hola Tekno Activa! 👋%0A%0A";
+    "Hola Tekno Activa! 👋\n\n";
 
 
   mensaje +=
-    "Quiero realizar este pedido:%0A%0A";
+    "Quiero realizar este pedido:\n\n";
 
 
   let total = 0;
@@ -1142,14 +1605,14 @@ function enviarWhatsApp() {
         subtotal.toLocaleString(
           "es-AR"
         ) +
-        "%0A";
+        "\n";
 
     }
   );
 
 
   mensaje +=
-    "%0A💰 TOTAL: $" +
+    "\n💰 TOTAL: $" +
     total.toLocaleString(
       "es-AR"
     );
@@ -1157,7 +1620,7 @@ function enviarWhatsApp() {
 
   window.open(
     "https://wa.me/5492646181163?text=" +
-    mensaje,
+    encodeURIComponent(mensaje),
     "_blank"
   );
 
@@ -1193,6 +1656,8 @@ function cerrarAdmin() {
 ========================= */
 
 cargarProductos();
+
+cargarBanners();
 
 </script>
 
