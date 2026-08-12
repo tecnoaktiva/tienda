@@ -7,7 +7,6 @@
   <title>Tekno Activa</title>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -222,6 +221,7 @@
     .producto p {
       color: #666;
       font-size: 14px;
+      min-height: 20px;
     }
 
     .oferta {
@@ -300,6 +300,7 @@
       background: rgba(0, 0, 0, .65);
       z-index: 20;
       padding: 20px;
+      overflow-y: auto;
     }
 
     .modal-contenido {
@@ -352,6 +353,14 @@
       cursor: pointer;
     }
 
+    .cerrar:hover {
+      background: #ccc;
+    }
+
+    /* =========================
+       CARRITO INTERNO
+    ========================= */
+
     .item-carrito {
       border-bottom: 1px solid #ddd;
       padding: 12px 0;
@@ -359,6 +368,12 @@
       justify-content: space-between;
       gap: 10px;
       align-items: center;
+    }
+
+    .cantidad {
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
 
     .cantidad button {
@@ -399,6 +414,72 @@
       cursor: pointer;
     }
 
+    /* =========================
+       ADMIN
+    ========================= */
+
+    .admin-estado {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .logout {
+      width: 100%;
+      border: none;
+      background: #e53935;
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .exito {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .admin-lista {
+      margin-top: 20px;
+    }
+
+    .admin-producto {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-producto button {
+      border: none;
+      background: #e53935;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
     footer {
       text-align: center;
       padding: 35px;
@@ -410,6 +491,10 @@
     ========================= */
 
     @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 28px;
+      }
 
       .banner-container {
         height: 210px;
@@ -435,8 +520,15 @@
         font-size: 25px;
       }
 
-    }
+      .carrito-btn {
+        right: 12px;
+        bottom: 12px;
+      }
 
+      .item-carrito {
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 
@@ -477,7 +569,6 @@
 
 </div>
 
-
 <div class="contenedor">
 
   <div class="barra">
@@ -514,14 +605,12 @@
 
   </div>
 
-
   <div
     id="productos"
     class="productos">
   </div>
 
 </div>
-
 
 <!-- =========================
      CARRITO
@@ -536,7 +625,6 @@
   <span id="contador">0</span>
 
 </button>
-
 
 <div
   class="modal"
@@ -572,6 +660,62 @@
 
 </div>
 
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
+
+<div
+  class="modal"
+  id="modalLogin">
+
+  <div class="modal-contenido">
+
+    <h2>🔐 Administrador</h2>
+
+    <p style="margin-bottom:15px;">
+      Ingresá con tu cuenta de administrador.
+    </p>
+
+    <div
+      id="loginError"
+      class="error">
+    </div>
+
+    <label>Email</label>
+
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="tu@email.com"
+      autocomplete="username">
+
+    <label>Contraseña</label>
+
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Tu contraseña"
+      autocomplete="current-password">
+
+    <button
+      class="guardar"
+      onclick="iniciarSesion()">
+
+      🔐 Ingresar
+
+    </button>
+
+    <button
+      class="cerrar"
+      onclick="cerrarLogin()">
+
+      Cancelar
+
+    </button>
+
+  </div>
+
+</div>
 
 <!-- =========================
      ADMINISTRACIÓN
@@ -585,9 +729,25 @@
 
     <h2>⚙️ Administrar Tekno Activa</h2>
 
-<hr>
+    <div class="admin-estado">
+      🔓 Sesión de administrador activa
+    </div>
 
-<h3>📦 Agregar producto</h3>
+    <hr>
+
+    <h3 style="margin:20px 0 10px;">
+      📦 Agregar producto
+    </h3>
+
+    <div
+      id="productoError"
+      class="error">
+    </div>
+
+    <div
+      id="productoExito"
+      class="exito">
+    </div>
 
     <label>Nombre</label>
 
@@ -596,7 +756,6 @@
       type="text"
       placeholder="Ej: Auricular A6S">
 
-
     <label>Precio</label>
 
     <input
@@ -604,14 +763,12 @@
       type="number"
       placeholder="9999">
 
-
     <label>Precio anterior</label>
 
     <input
       id="precioAnterior"
       type="number"
       placeholder="11500">
-
 
     <label>Categoría</label>
 
@@ -635,7 +792,6 @@
 
     </select>
 
-
     <label>Descripción</label>
 
     <textarea
@@ -643,14 +799,12 @@
       placeholder="Descripción del producto">
     </textarea>
 
-
     <label>URL de imagen</label>
 
     <input
       id="imagen"
       type="text"
       placeholder="https://...">
-
 
     <button
       class="guardar"
@@ -660,50 +814,82 @@
 
     </button>
 
-<hr style="margin:25px 0;">
+    <hr style="margin:25px 0;">
 
-<h3>🖼️ Agregar banner</h3>
+    <h3 style="margin-bottom:10px;">
+      🖼️ Agregar banner
+    </h3>
 
-<label>URL de imagen</label>
+    <div
+      id="bannerError"
+      class="error">
+    </div>
 
-<input
-  id="bannerImagen"
-  type="text"
-  placeholder="https://...">
+    <div
+      id="bannerExito"
+      class="exito">
+    </div>
 
-<label>Título</label>
+    <label>URL de imagen</label>
 
-<input
-  id="bannerTitulo"
-  type="text"
-  placeholder="Ej: ¡Ofertas de la semana!">
+    <input
+      id="bannerImagen"
+      type="text"
+      placeholder="https://...">
 
-<label>Texto</label>
+    <label>Título</label>
 
-<input
-  id="bannerTexto"
-  type="text"
-  placeholder="Ej: Hasta 30% de descuento">
+    <input
+      id="bannerTitulo"
+      type="text"
+      placeholder="Ej: ¡Ofertas de la semana!">
 
-<label>Enlace opcional</label>
+    <label>Texto</label>
 
-<input
-  id="bannerEnlace"
-  type="text"
-  placeholder="https://...">
+    <input
+      id="bannerTexto"
+      type="text"
+      placeholder="Ej: Hasta 30% de descuento">
 
-<button
-  class="guardar"
-  onclick="guardarBanner()">
+    <label>Enlace opcional</label>
 
-  🖼️ Guardar banner
+    <input
+      id="bannerEnlace"
+      type="text"
+      placeholder="https://...">
 
-</button>
+    <button
+      class="guardar"
+      onclick="guardarBanner()">
+
+      🖼️ Guardar banner
+
+    </button>
+
+    <hr style="margin:25px 0;">
+
+    <h3 style="margin-bottom:10px;">
+      📋 Productos actuales
+    </h3>
+
+    <div
+      id="adminLista"
+      class="admin-lista">
+    </div>
+
+    <button
+      class="logout"
+      onclick="cerrarSesion()">
+
+      🔒 Cerrar sesión
+
+    </button>
+
     <button
       class="cerrar"
       onclick="cerrarAdmin()">
 
-      Cerrar
+      Cerrar panel
 
     </button>
 
@@ -711,411 +897,349 @@
 
 </div>
 
-
 <footer>
   © 2026 Tekno Activa
 </footer>
 
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
+  /* =========================
+     CONFIGURACIÓN SUPABASE
+  ========================= */
 
-const SUPABASE_URL =
-  "https://emjknuwvbvqonafckwce.supabase.co";
+  const SUPABASE_URL =
+    "https://emjknuwvbvqonafckwce.supabase.co";
 
-const SUPABASE_KEY =
-  "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
+  const SUPABASE_KEY =
+    "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
 
-
-/* =========================
-   PRODUCTOS
-========================= */
-
-let productos = [];
-
-
-/* =========================
-   BANNERS
-========================= */
-
-let banners = [];
-
-let bannerActual = 0;
-
-let bannerInterval;
-
-
-/* =========================
-   CARGAR BANNERS
-========================= */
-
-async function cargarBanners() {
-
-  try {
-
-    const respuesta = await fetch(
-      SUPABASE_URL +
-      "/rest/v1/banners?select=*&activo=eq.true&order=id.asc",
-      {
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-        }
-      }
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
     );
 
-    if (!respuesta.ok) {
 
-      throw new Error(
-        "No se pudieron cargar los banners"
-      );
+  /* =========================
+     VARIABLES
+  ========================= */
 
+  let productos = [];
+
+  let banners = [];
+
+  let bannerActual = 0;
+
+  let bannerInterval;
+
+  let carrito = [];
+
+
+  /* =========================
+     SESIÓN
+  ========================= */
+
+  async function verificarSesion() {
+
+    const {
+      data: {
+        session
+      }
+    } =
+      await supabaseClient.auth.getSession();
+
+    return session;
+  }
+
+
+  /* =========================
+     ABRIR ADMIN
+  ========================= */
+
+  async function abrirAdmin() {
+
+    const session =
+      await verificarSesion();
+
+    if (!session) {
+
+      document.getElementById(
+        "modalLogin"
+      ).style.display = "block";
+
+      return;
     }
 
-    banners =
-      await respuesta.json();
+    document.getElementById(
+      "modalAdmin"
+    ).style.display = "block";
 
-    mostrarBanner();
+    cargarListaAdmin();
+  }
 
-  } catch (error) {
 
-    console.error(
-      "Error banners:",
+  /* =========================
+     CERRAR ADMIN
+  ========================= */
+
+  function cerrarAdmin() {
+
+    document.getElementById(
+      "modalAdmin"
+    ).style.display = "none";
+
+  }
+
+
+  /* =========================
+     LOGIN
+  ========================= */
+
+  async function iniciarSesion() {
+
+    const email =
+      document.getElementById(
+        "loginEmail"
+      ).value.trim();
+
+    const password =
+      document.getElementById(
+        "loginPassword"
+      ).value;
+
+    const errorBox =
+      document.getElementById(
+        "loginError"
+      );
+
+    errorBox.style.display = "none";
+
+    if (!email || !password) {
+
+      errorBox.textContent =
+        "Completá el email y la contraseña.";
+
+      errorBox.style.display = "block";
+
+      return;
+    }
+
+    const {
+      data,
       error
-    );
+    } =
+      await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
 
-  }
+    if (error) {
 
-}
+      console.error(error);
 
+      errorBox.textContent =
+        "Email o contraseña incorrectos.";
 
-/* =========================
-   MOSTRAR BANNER
-========================= */
+      errorBox.style.display = "block";
 
-function mostrarBanner() {
+      return;
+    }
 
-  const slider =
-    document.getElementById(
-      "bannerSlider"
-    );
+    if (data.session) {
 
-  const dots =
-    document.getElementById(
-      "bannerDots"
-    );
+      document.getElementById(
+        "modalLogin"
+      ).style.display = "none";
 
-  if (!slider || !dots) {
-    return;
-  }
+      document.getElementById(
+        "loginPassword"
+      ).value = "";
 
-  if (banners.length === 0) {
+      document.getElementById(
+        "modalAdmin"
+      ).style.display = "block";
 
-    slider.innerHTML = "";
-
-    dots.innerHTML = "";
-
-    return;
-  }
-
-  const banner =
-    banners[bannerActual];
-
-
-  slider.innerHTML = `
-
-    <a
-      href="${banner.enlace || '#'}"
-      ${banner.enlace
-        ? 'target="_blank"'
-        : ''}
-    >
-
-      <img
-        src="${banner.imagen}"
-        alt="${banner.titulo || 'Banner Tekno Activa'}"
-      >
-
-      ${
-        banner.titulo ||
-        banner.texto
-        ? `
-
-          <div class="banner-texto">
-
-            ${
-              banner.titulo
-              ? `<h2>${banner.titulo}</h2>`
-              : ""
-            }
-
-            ${
-              banner.texto
-              ? `<p>${banner.texto}</p>`
-              : ""
-            }
-
-          </div>
-
-        `
-        : ""
-      }
-
-    </a>
-
-  `;
-
-
-  dots.innerHTML =
-    banners.map(
-      (_, index) => `
-
-        <button
-          class="${
-            index === bannerActual
-            ? "activo"
-            : ""
-          }"
-          onclick="irABanner(${index})">
-        </button>
-
-      `
-    ).join("");
-
-
-  clearInterval(
-    bannerInterval
-  );
-
-
-  if (banners.length > 1) {
-
-    bannerInterval =
-      setInterval(
-        bannerSiguiente,
-        5000
-      );
-
-  }
-
-}
-
-
-/* =========================
-   BANNER SIGUIENTE
-========================= */
-
-function bannerSiguiente() {
-
-  if (banners.length === 0) {
-    return;
-  }
-
-  bannerActual =
-    (bannerActual + 1) %
-    banners.length;
-
-  mostrarBanner();
-
-}
-
-
-/* =========================
-   BANNER ANTERIOR
-========================= */
-
-function bannerAnterior() {
-
-  if (banners.length === 0) {
-    return;
-  }
-
-  bannerActual =
-    (bannerActual - 1 +
-      banners.length) %
-    banners.length;
-
-  mostrarBanner();
-
-}
-
-
-/* =========================
-   IR A BANNER
-========================= */
-
-function irABanner(index) {
-
-  bannerActual = index;
-
-  mostrarBanner();
-
-}
-
-
-/* =========================
-   CARGAR PRODUCTOS
-========================= */
-
-async function cargarProductos() {
-
-  try {
-
-    const respuesta =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/productos?select=*",
-        {
-          headers: {
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY
-          }
-        }
-      );
-
-
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "No se pudieron cargar los productos"
-      );
+      cargarListaAdmin();
 
     }
 
-
-    productos =
-      await respuesta.json();
+  }
 
 
-    mostrarProductos(
-      productos
-    );
+  /* =========================
+     CERRAR LOGIN
+  ========================= */
 
-
-  } catch (error) {
-
-    console.error(error);
+  function cerrarLogin() {
 
     document.getElementById(
-      "productos"
-    ).innerHTML =
-      "<p>No se pudieron cargar los productos.</p>";
+      "modalLogin"
+    ).style.display = "none";
+
+    document.getElementById(
+      "loginError"
+    ).style.display = "none";
 
   }
 
-}
+
+  /* =========================
+     CERRAR SESIÓN
+  ========================= */
+
+  async function cerrarSesion() {
+
+    await supabaseClient.auth.signOut();
+
+    cerrarAdmin();
+
+    alert("🔒 Sesión cerrada.");
+
+  }
 
 
-/* =========================
-   MOSTRAR PRODUCTOS
-========================= */
+  /* =========================
+     CARGAR PRODUCTOS
+  ========================= */
 
-function mostrarProductos(lista) {
+  async function cargarProductos() {
 
-  const contenedor =
-    document.getElementById(
-      "productos"
-    );
+    try {
 
-  contenedor.innerHTML = "";
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("productos")
+          .select("*")
+          .order("id", {
+            ascending: true
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      productos = data || [];
+
+      mostrarProductos(productos);
+
+    } catch (error) {
+
+      console.error(
+        "Error productos:",
+        error
+      );
+
+      document.getElementById(
+        "productos"
+      ).innerHTML =
+        "<p>No se pudieron cargar los productos.</p>";
+
+    }
+
+  }
 
 
-  lista.forEach(
-    producto => {
+  /* =========================
+     MOSTRAR PRODUCTOS
+  ========================= */
+
+  function mostrarProductos(lista) {
+
+    const contenedor =
+      document.getElementById(
+        "productos"
+      );
+
+    contenedor.innerHTML = "";
+
+    if (!lista.length) {
+
+      contenedor.innerHTML =
+        "<p>No hay productos cargados todavía.</p>";
+
+      return;
+    }
+
+    lista.forEach(producto => {
 
       const tieneOferta =
         producto.precio_anterior &&
-        Number(
-          producto.precio_anterior
-        ) >
-        Number(
-          producto.precio
-        );
+        Number(producto.precio_anterior) >
+        Number(producto.precio);
 
+      const imagen =
+        producto.imagen ||
+        "https://via.placeholder.com/500x500?text=Producto";
+
+      const nombreSeguro =
+        String(producto.nombre)
+          .replace(/\\/g, "\\\\")
+          .replace(/'/g, "\\'");
 
       contenedor.innerHTML += `
 
         <div
           class="producto"
-          data-categoria="${producto.categoria}"
+          data-categoria="${producto.categoria || ""}"
         >
 
           <img
-            src="${
-              producto.imagen ||
-              "https://via.placeholder.com/500x500?text=Producto"
-            }"
-            alt="${producto.nombre}"
+            src="${imagen}"
+            alt="${escapeHTML(producto.nombre)}"
           >
-
 
           <div class="producto-info">
 
             ${
               tieneOferta
-              ? `
-                <span class="oferta">
-                  🔥 OFERTA
-                </span>
-              `
-              : ""
+                ? `
+                  <span class="oferta">
+                    🔥 OFERTA
+                  </span>
+                `
+                : ""
             }
 
-
             <h3>
-              ${producto.nombre}
+              ${escapeHTML(producto.nombre)}
             </h3>
 
-
             <p>
-              ${producto.descripcion || ""}
+              ${escapeHTML(producto.descripcion || "")}
             </p>
-
 
             ${
               tieneOferta
-              ? `
-
-                <div class="precio-anterior">
-
-                  $${Number(
-                    producto.precio_anterior
-                  ).toLocaleString("es-AR")}
-
-                </div>
-
-              `
-              : ""
+                ? `
+                  <div class="precio-anterior">
+                    $${Number(
+                      producto.precio_anterior
+                    ).toLocaleString("es-AR")}
+                  </div>
+                `
+                : ""
             }
 
-
             <div class="precio">
-
               $${Number(
                 producto.precio
               ).toLocaleString("es-AR")}
-
             </div>
-
 
             <button
               class="agregar"
               onclick="agregarCarrito(
-                '${String(
-                  producto.nombre
-                ).replace(
-                  /'/g,
-                  "\\'"
-                )}',
-                ${producto.precio}
+                '${nombreSeguro}',
+                ${Number(producto.precio)}
               )">
 
               🛒 Agregar al carrito
@@ -1128,147 +1252,145 @@ function mostrarProductos(lista) {
 
       `;
 
-    }
-  );
-
-}
-
-
-/* =========================
-   GUARDAR PRODUCTO
-========================= */
-
-async function guardarProducto() {
-
-  const nombre =
-    document.getElementById(
-      "nombre"
-    ).value.trim();
-
-
-  const precio =
-    Number(
-      document.getElementById(
-        "precio"
-      ).value
-    );
-
-
-  const precioAnterior =
-    Number(
-      document.getElementById(
-        "precioAnterior"
-      ).value
-    ) || null;
-
-
-  const categoria =
-    document.getElementById(
-      "categoria"
-    ).value;
-
-
-  const descripcion =
-    document.getElementById(
-      "descripcion"
-    ).value.trim();
-
-
-  const imagen =
-    document.getElementById(
-      "imagen"
-    ).value.trim();
-
-
-  if (!nombre || !precio) {
-
-    alert(
-      "Completá el nombre y el precio."
-    );
-
-    return;
+    });
 
   }
 
 
-  try {
+  /* =========================
+     ESCAPAR HTML
+  ========================= */
 
-    const respuesta =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/productos",
-        {
+  function escapeHTML(text) {
 
-          method: "POST",
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 
-          headers: {
+  }
 
-            "apikey":
-              SUPABASE_KEY,
 
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY,
+  /* =========================
+     GUARDAR PRODUCTO
+  ========================= */
 
-            "Content-Type":
-              "application/json",
+  async function guardarProducto() {
 
-            "Prefer":
-              "return=minimal"
+    const nombre =
+      document.getElementById(
+        "nombre"
+      ).value.trim();
 
-          },
-
-          body:
-            JSON.stringify({
-
-              nombre:
-                nombre,
-
-              precio:
-                precio,
-
-              precio_anterior:
-                precioAnterior,
-
-              categoria:
-                categoria,
-
-              descripcion:
-                descripcion,
-
-              imagen:
-                imagen
-
-            })
-
-        }
+    const precio =
+      Number(
+        document.getElementById(
+          "precio"
+        ).value
       );
 
+    const precioAnteriorValor =
+      document.getElementById(
+        "precioAnterior"
+      ).value;
 
-    if (!respuesta.ok) {
+    const precioAnterior =
+      precioAnteriorValor
+        ? Number(precioAnteriorValor)
+        : null;
 
-      const error =
-        await respuesta.text();
+    const categoria =
+      document.getElementById(
+        "categoria"
+      ).value;
 
-      console.error(
-        "Supabase:",
-        error
+    const descripcion =
+      document.getElementById(
+        "descripcion"
+      ).value.trim();
+
+    const imagen =
+      document.getElementById(
+        "imagen"
+      ).value.trim();
+
+    const errorBox =
+      document.getElementById(
+        "productoError"
       );
 
-      alert(
-        "No se pudo guardar:\n\n" +
-        error
+    const exitoBox =
+      document.getElementById(
+        "productoExito"
       );
+
+    errorBox.style.display = "none";
+    exitoBox.style.display = "none";
+
+    if (!nombre || !precio) {
+
+      errorBox.textContent =
+        "Completá el nombre y el precio.";
+
+      errorBox.style.display = "block";
 
       return;
-
     }
 
+    const session =
+      await verificarSesion();
 
-    alert(
-      "✅ Producto guardado."
-    );
+    if (!session) {
 
+      errorBox.textContent =
+        "Tu sesión expiró. Volvé a iniciar sesión.";
+
+      errorBox.style.display = "block";
+
+      return;
+    }
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("productos")
+        .insert({
+
+          nombre: nombre,
+
+          precio: precio,
+
+          precio_anterior:
+            precioAnterior,
+
+          categoria: categoria,
+
+          descripcion: descripcion,
+
+          imagen: imagen
+
+        });
+
+    if (error) {
+
+      console.error(error);
+
+      errorBox.textContent =
+        "No se pudo guardar el producto: " +
+        error.message;
+
+      errorBox.style.display = "block";
+
+      return;
+    }
+
+    exitoBox.textContent =
+      "✅ Producto guardado correctamente.";
+
+    exitoBox.style.display = "block";
 
     document.getElementById(
       "nombre"
@@ -1290,203 +1412,82 @@ async function guardarProducto() {
       "imagen"
     ).value = "";
 
+    await cargarProductos();
 
-    cerrarAdmin();
+    await cargarListaAdmin();
+
+  }
 
 
-    cargarProductos();
+  /* =========================
+     LISTA ADMIN
+  ========================= */
 
+  async function cargarListaAdmin() {
 
-  } catch (error) {
+    const lista =
+      document.getElementById(
+        "adminLista"
+      );
 
-    console.error(
-      "ERROR COMPLETO:",
+    lista.innerHTML =
+      "Cargando...";
+
+    const {
+      data,
       error
-    );
+    } =
+      await supabaseClient
+        .from("productos")
+        .select("*")
+        .order("id", {
+          ascending: false
+        });
 
-    alert(
-      "ERROR: " +
-      error.message
-    );
+    if (error) {
 
-  }
+      lista.innerHTML =
+        "No se pudieron cargar los productos.";
 
-}
+      console.error(error);
 
+      return;
+    }
 
-/* =========================
-   FILTROS
-========================= */
+    if (!data.length) {
 
-function filtrar(categoria) {
+      lista.innerHTML =
+        "No hay productos.";
 
-  if (categoria === "todos") {
+      return;
+    }
 
-    mostrarProductos(
-      productos
-    );
+    lista.innerHTML = "";
 
-    return;
-
-  }
-
-
-  const filtrados =
-    productos.filter(
-      producto =>
-        producto.categoria ===
-        categoria
-    );
-
-
-  mostrarProductos(
-    filtrados
-  );
-
-}
-
-
-/* =========================
-   CARRITO
-========================= */
-
-let carrito = [];
-
-
-function agregarCarrito(
-  nombre,
-  precio
-) {
-
-  const producto =
-    carrito.find(
-      item =>
-        item.nombre ===
-        nombre
-    );
-
-
-  if (producto) {
-
-    producto.cantidad++;
-
-  } else {
-
-    carrito.push({
-
-      nombre:
-        nombre,
-
-      precio:
-        Number(precio),
-
-      cantidad:
-        1
-
-    });
-
-  }
-
-
-  actualizarCarrito();
-
-
-  alert(
-    "Producto agregado 🛒"
-  );
-
-}
-
-
-/* =========================
-   ACTUALIZAR CARRITO
-========================= */
-
-function actualizarCarrito() {
-
-  const lista =
-    document.getElementById(
-      "listaCarrito"
-    );
-
-
-  lista.innerHTML = "";
-
-
-  let total = 0;
-
-  let cantidadTotal = 0;
-
-
-  carrito.forEach(
-    (item, index) => {
-
-      const subtotal =
-        item.precio *
-        item.cantidad;
-
-
-      total += subtotal;
-
-      cantidadTotal +=
-        item.cantidad;
-
+    data.forEach(producto => {
 
       lista.innerHTML += `
 
-        <div class="item-carrito">
+        <div class="admin-producto">
 
           <div>
 
             <strong>
-              ${item.nombre}
+              ${escapeHTML(producto.nombre)}
             </strong>
 
             <br>
 
-            $${item.precio.toLocaleString(
-              "es-AR"
-            )}
+            $${Number(
+              producto.precio
+            ).toLocaleString("es-AR")}
 
           </div>
-
-
-          <div class="cantidad">
-
-            <button
-              onclick="cambiarCantidad(
-                ${index},
-                -1
-              )">
-
-              -
-
-            </button>
-
-
-            ${item.cantidad}
-
-
-            <button
-              onclick="cambiarCantidad(
-                ${index},
-                1
-              )">
-
-              +
-
-            </button>
-
-          </div>
-
 
           <button
-            class="eliminar"
-            onclick="eliminarProducto(
-              ${index}
-            )">
+            onclick="eliminarProductoAdmin(${producto.id})">
 
-            🗑️
+            🗑️ Eliminar
 
           </button>
 
@@ -1494,42 +1495,625 @@ function actualizarCarrito() {
 
       `;
 
+    });
+
+  }
+
+
+  /* =========================
+     ELIMINAR PRODUCTO
+  ========================= */
+
+  async function eliminarProductoAdmin(id) {
+
+    const confirmar =
+      confirm(
+        "¿Seguro que querés eliminar este producto?"
+      );
+
+    if (!confirmar) {
+      return;
     }
-  );
 
+    const session =
+      await verificarSesion();
 
-  document.getElementById(
-    "total"
-  ).textContent =
-    total.toLocaleString(
-      "es-AR"
+    if (!session) {
+
+      alert(
+        "Tu sesión expiró."
+      );
+
+      return;
+    }
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("productos")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+
+      console.error(error);
+
+      alert(
+        "No se pudo eliminar: " +
+        error.message
+      );
+
+      return;
+    }
+
+    alert(
+      "🗑️ Producto eliminado."
     );
 
+    await cargarProductos();
 
-  document.getElementById(
-    "contador"
-  ).textContent =
-    cantidadTotal;
+    await cargarListaAdmin();
 
-}
+  }
 
 
-/* =========================
-   CAMBIAR CANTIDAD
-========================= */
+  /* =========================
+     CARGAR BANNERS
+  ========================= */
 
-function cambiarCantidad(
-  index,
-  cambio
-) {
+  async function cargarBanners() {
 
-  carrito[index].cantidad +=
-    cambio;
+    try {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("banners")
+          .select("*")
+          .eq("activo", true)
+          .order("id", {
+            ascending: true
+          });
+
+      if (error) {
+        throw error;
+      }
+
+      banners = data || [];
+
+      bannerActual = 0;
+
+      mostrarBanner();
+
+    } catch (error) {
+
+      console.error(
+        "Error banners:",
+        error
+      );
+
+    }
+
+  }
 
 
-  if (
-    carrito[index].cantidad <=
-    0
+  /* =========================
+     MOSTRAR BANNER
+  ========================= */
+
+  function mostrarBanner() {
+
+    const slider =
+      document.getElementById(
+        "bannerSlider"
+      );
+
+    const dots =
+      document.getElementById(
+        "bannerDots"
+      );
+
+    if (!slider || !dots) {
+      return;
+    }
+
+    if (!banners.length) {
+
+      slider.innerHTML = "";
+
+      dots.innerHTML = "";
+
+      clearInterval(
+        bannerInterval
+      );
+
+      return;
+    }
+
+    const banner =
+      banners[bannerActual];
+
+    const enlace =
+      banner.enlace || "#";
+
+    slider.innerHTML = `
+
+      <a
+        href="${escapeHTML(enlace)}"
+        ${
+          banner.enlace
+            ? 'target="_blank" rel="noopener noreferrer"'
+            : ""
+        }
+      >
+
+        <img
+          src="${escapeHTML(banner.imagen)}"
+          alt="${escapeHTML(
+            banner.titulo ||
+            "Banner Tekno Activa"
+          )}"
+        >
+
+        ${
+          banner.titulo ||
+          banner.texto
+            ? `
+              <div class="banner-texto">
+
+                ${
+                  banner.titulo
+                    ? `
+                      <h2>
+                        ${escapeHTML(
+                          banner.titulo
+                        )}
+                      </h2>
+                    `
+                    : ""
+                }
+
+                ${
+                  banner.texto
+                    ? `
+                      <p>
+                        ${escapeHTML(
+                          banner.texto
+                        )}
+                      </p>
+                    `
+                    : ""
+                }
+
+              </div>
+            `
+            : ""
+        }
+
+      </a>
+
+    `;
+
+    dots.innerHTML =
+      banners.map(
+        (_, index) => `
+
+          <button
+            class="${
+              index === bannerActual
+                ? "activo"
+                : ""
+            }"
+            onclick="irABanner(${index})">
+          </button>
+
+        `
+      ).join("");
+
+    clearInterval(
+      bannerInterval
+    );
+
+    if (banners.length > 1) {
+
+      bannerInterval =
+        setInterval(
+          bannerSiguiente,
+          5000
+        );
+
+    }
+
+  }
+
+
+  /* =========================
+     SIGUIENTE BANNER
+  ========================= */
+
+  function bannerSiguiente() {
+
+    if (!banners.length) {
+      return;
+    }
+
+    bannerActual =
+      (bannerActual + 1) %
+      banners.length;
+
+    mostrarBanner();
+
+  }
+
+
+  /* =========================
+     ANTERIOR BANNER
+  ========================= */
+
+  function bannerAnterior() {
+
+    if (!banners.length) {
+      return;
+    }
+
+    bannerActual =
+      (bannerActual - 1 +
+        banners.length) %
+      banners.length;
+
+    mostrarBanner();
+
+  }
+
+
+  /* =========================
+     IR A BANNER
+  ========================= */
+
+  function irABanner(index) {
+
+    bannerActual = index;
+
+    mostrarBanner();
+
+  }
+
+
+  /* =========================
+     GUARDAR BANNER
+  ========================= */
+
+  async function guardarBanner() {
+
+    const imagen =
+      document.getElementById(
+        "bannerImagen"
+      ).value.trim();
+
+    const titulo =
+      document.getElementById(
+        "bannerTitulo"
+      ).value.trim();
+
+    const texto =
+      document.getElementById(
+        "bannerTexto"
+      ).value.trim();
+
+    const enlace =
+      document.getElementById(
+        "bannerEnlace"
+      ).value.trim();
+
+    const errorBox =
+      document.getElementById(
+        "bannerError"
+      );
+
+    const exitoBox =
+      document.getElementById(
+        "bannerExito"
+      );
+
+    errorBox.style.display = "none";
+    exitoBox.style.display = "none";
+
+    if (!imagen) {
+
+      errorBox.textContent =
+        "Ingresá la URL de la imagen.";
+
+      errorBox.style.display =
+        "block";
+
+      return;
+    }
+
+    const session =
+      await verificarSesion();
+
+    if (!session) {
+
+      errorBox.textContent =
+        "Tu sesión expiró.";
+
+      errorBox.style.display =
+        "block";
+
+      return;
+    }
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("banners")
+        .insert({
+
+          imagen: imagen,
+
+          titulo: titulo,
+
+          texto: texto,
+
+          enlace: enlace || null,
+
+          activo: true
+
+        });
+
+    if (error) {
+
+      console.error(error);
+
+      errorBox.textContent =
+        "No se pudo guardar el banner: " +
+        error.message;
+
+      errorBox.style.display =
+        "block";
+
+      return;
+    }
+
+    exitoBox.textContent =
+      "✅ Banner guardado correctamente.";
+
+    exitoBox.style.display =
+      "block";
+
+    document.getElementById(
+      "bannerImagen"
+    ).value = "";
+
+    document.getElementById(
+      "bannerTitulo"
+    ).value = "";
+
+    document.getElementById(
+      "bannerTexto"
+    ).value = "";
+
+    document.getElementById(
+      "bannerEnlace"
+    ).value = "";
+
+    await cargarBanners();
+
+  }
+
+
+  /* =========================
+     FILTROS
+  ========================= */
+
+  function filtrar(categoria) {
+
+    if (categoria === "todos") {
+
+      mostrarProductos(
+        productos
+      );
+
+      return;
+    }
+
+    const filtrados =
+      productos.filter(
+        producto =>
+          producto.categoria ===
+          categoria
+      );
+
+    mostrarProductos(
+      filtrados
+    );
+
+  }
+
+
+  /* =========================
+     AGREGAR AL CARRITO
+  ========================= */
+
+  function agregarCarrito(
+    nombre,
+    precio
+  ) {
+
+    const producto =
+      carrito.find(
+        item =>
+          item.nombre ===
+          nombre
+      );
+
+    if (producto) {
+
+      producto.cantidad++;
+
+    } else {
+
+      carrito.push({
+
+        nombre: nombre,
+
+        precio: Number(precio),
+
+        cantidad: 1
+
+      });
+
+    }
+
+    actualizarCarrito();
+
+    alert(
+      "Producto agregado 🛒"
+    );
+
+  }
+
+
+  /* =========================
+     ACTUALIZAR CARRITO
+  ========================= */
+
+  function actualizarCarrito() {
+
+    const lista =
+      document.getElementById(
+        "listaCarrito"
+      );
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    let cantidadTotal = 0;
+
+    carrito.forEach(
+      (item, index) => {
+
+        const subtotal =
+          item.precio *
+          item.cantidad;
+
+        total += subtotal;
+
+        cantidadTotal +=
+          item.cantidad;
+
+        lista.innerHTML += `
+
+          <div class="item-carrito">
+
+            <div>
+
+              <strong>
+                ${escapeHTML(item.nombre)}
+              </strong>
+
+              <br>
+
+              $${item.precio.toLocaleString(
+                "es-AR"
+              )}
+
+            </div>
+
+            <div class="cantidad">
+
+              <button
+                onclick="cambiarCantidad(
+                  ${index},
+                  -1
+                )">
+                −
+              </button>
+
+              ${item.cantidad}
+
+              <button
+                onclick="cambiarCantidad(
+                  ${index},
+                  1
+                )">
+                +
+              </button>
+
+            </div>
+
+            <button
+              class="eliminar"
+              onclick="eliminarDelCarrito(
+                ${index}
+              )">
+
+              🗑️
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+    );
+
+    document.getElementById(
+      "total"
+    ).textContent =
+      total.toLocaleString(
+        "es-AR"
+      );
+
+    document.getElementById(
+      "contador"
+    ).textContent =
+      cantidadTotal;
+
+  }
+
+
+  /* =========================
+     CAMBIAR CANTIDAD
+  ========================= */
+
+  function cambiarCantidad(
+    index,
+    cambio
+  ) {
+
+    carrito[index].cantidad +=
+      cambio;
+
+    if (
+      carrito[index].cantidad <=
+      0
+    ) {
+
+      carrito.splice(
+        index,
+        1
+      );
+
+    }
+
+    actualizarCarrito();
+
+  }
+
+
+  /* =========================
+     ELIMINAR DEL CARRITO
+  ========================= */
+
+  function eliminarDelCarrito(
+    index
   ) {
 
     carrito.splice(
@@ -1537,169 +2121,111 @@ function cambiarCantidad(
       1
     );
 
-  }
-
-
-  actualizarCarrito();
-
-}
-
-
-/* =========================
-   ELIMINAR PRODUCTO
-========================= */
-
-function eliminarProducto(
-  index
-) {
-
-  carrito.splice(
-    index,
-    1
-  );
-
-
-  actualizarCarrito();
-
-}
-
-
-/* =========================
-   ABRIR CARRITO
-========================= */
-
-function abrirCarrito() {
-
-  document.getElementById(
-    "modalCarrito"
-  ).style.display =
-    "block";
-
-
-  actualizarCarrito();
-
-}
-
-
-/* =========================
-   CERRAR CARRITO
-========================= */
-
-function cerrarCarrito() {
-
-  document.getElementById(
-    "modalCarrito"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =========================
-   WHATSAPP
-========================= */
-
-function enviarWhatsApp() {
-
-  if (
-    carrito.length ===
-    0
-  ) {
-
-    alert(
-      "El carrito está vacío."
-    );
-
-    return;
+    actualizarCarrito();
 
   }
 
 
-  let mensaje =
-    "Hola Tekno Activa! 👋\n\n";
+  /* =========================
+     ABRIR CARRITO
+  ========================= */
+
+  function abrirCarrito() {
+
+    document.getElementById(
+      "modalCarrito"
+    ).style.display =
+      "block";
+
+    actualizarCarrito();
+
+  }
 
 
-  mensaje +=
-    "Quiero realizar este pedido:\n\n";
+  /* =========================
+     CERRAR CARRITO
+  ========================= */
+
+  function cerrarCarrito() {
+
+    document.getElementById(
+      "modalCarrito"
+    ).style.display =
+      "none";
+
+  }
 
 
-  let total = 0;
+  /* =========================
+     WHATSAPP
+  ========================= */
 
+  function enviarWhatsApp() {
 
-  carrito.forEach(
-    item => {
+    if (
+      carrito.length === 0
+    ) {
 
-      const subtotal =
-        item.precio *
-        item.cantidad;
+      alert(
+        "El carrito está vacío."
+      );
 
-
-      total +=
-        subtotal;
-
-
-      mensaje +=
-        "📦 " +
-        item.nombre +
-        " x" +
-        item.cantidad +
-        " - $" +
-        subtotal.toLocaleString(
-          "es-AR"
-        ) +
-        "\n";
-
+      return;
     }
-  );
 
+    let mensaje =
+      "Hola Tekno Activa! 👋\n\n";
 
-  mensaje +=
-    "\n💰 TOTAL: $" +
-    total.toLocaleString(
-      "es-AR"
+    mensaje +=
+      "Quiero realizar este pedido:\n\n";
+
+    let total = 0;
+
+    carrito.forEach(
+      item => {
+
+        const subtotal =
+          item.precio *
+          item.cantidad;
+
+        total += subtotal;
+
+        mensaje +=
+          "📦 " +
+          item.nombre +
+          " x" +
+          item.cantidad +
+          " - $" +
+          subtotal.toLocaleString(
+            "es-AR"
+          ) +
+          "\n";
+
+      }
     );
 
+    mensaje +=
+      "\n💰 TOTAL: $" +
+      total.toLocaleString(
+        "es-AR"
+      );
 
-  window.open(
-    "https://wa.me/5492646181163?text=" +
-    encodeURIComponent(mensaje),
-    "_blank"
-  );
+    window.open(
+      "https://wa.me/5492646181163?text=" +
+      encodeURIComponent(mensaje),
+      "_blank"
+    );
 
-}
-
-
-/* =========================
-   MODALES
-========================= */
-
-function abrirAdmin() {
-
-  document.getElementById(
-    "modalAdmin"
-  ).style.display =
-    "block";
-
-}
+  }
 
 
-function cerrarAdmin() {
+  /* =========================
+     INICIO
+  ========================= */
 
-  document.getElementById(
-    "modalAdmin"
-  ).style.display =
-    "none";
+  cargarProductos();
 
-}
-
-
-/* =========================
-   INICIO
-========================= */
-
-cargarProductos();
-
-cargarBanners();
+  cargarBanners();
 
 </script>
 
