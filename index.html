@@ -681,12 +681,13 @@ async function guardarProducto() {
 
   } catch (error) {
 
-    console.error(error);
+  console.error("ERROR COMPLETO:", error);
 
-    alert(
-      "Ocurrió un error al guardar."
-    );
+  alert(
+    "ERROR: " + error.message
+  );
 
+}
   }
 
 }
