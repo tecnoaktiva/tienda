@@ -583,7 +583,11 @@
 
   <div class="modal-contenido">
 
-    <h2>⚙️ Agregar producto</h2>
+    <h2>⚙️ Administrar Tekno Activa</h2>
+
+<hr>
+
+<h3>📦 Agregar producto</h3>
 
     <label>Nombre</label>
 
@@ -656,7 +660,45 @@
 
     </button>
 
+<hr style="margin:25px 0;">
 
+<h3>🖼️ Agregar banner</h3>
+
+<label>URL de imagen</label>
+
+<input
+  id="bannerImagen"
+  type="text"
+  placeholder="https://...">
+
+<label>Título</label>
+
+<input
+  id="bannerTitulo"
+  type="text"
+  placeholder="Ej: ¡Ofertas de la semana!">
+
+<label>Texto</label>
+
+<input
+  id="bannerTexto"
+  type="text"
+  placeholder="Ej: Hasta 30% de descuento">
+
+<label>Enlace opcional</label>
+
+<input
+  id="bannerEnlace"
+  type="text"
+  placeholder="https://...">
+
+<button
+  class="guardar"
+  onclick="guardarBanner()">
+
+  🖼️ Guardar banner
+
+</button>
     <button
       class="cerrar"
       onclick="cerrarAdmin()">
