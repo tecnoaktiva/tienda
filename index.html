@@ -20,14 +20,26 @@
     }
 
     /* =========================
-       ENCABEZADO - SOLO LOGO
+       ENCABEZADO Y BUSCADOR
     ========================= */
 
     header {
       background: #111;
       color: white;
+      padding: 20px 15px;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .logo-container {
       text-align: center;
-      padding: 18px 15px;
     }
 
     .logo {
@@ -40,6 +52,40 @@
       color: white;
       font-size: 30px;
       font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* BUSCADOR CON LUPA EN EL HEADER */
+    .buscador-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px; /* Tamaño máximo en PC */
+    }
+
+    .buscador-box input {
+      width: 100%;
+      padding: 13px 16px 13px 42px;
+      border: none;
+      border-radius: 25px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+
+    .buscador-box input:focus {
+      box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+    }
+
+    .buscador-box .icon-lupa {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #555;
+      pointer-events: none;
     }
 
     /* =========================
@@ -50,7 +96,7 @@
       position: relative;
       max-width: 1100px;
       height: 320px;
-      margin: 20px auto 30px;
+      margin: 25px auto 30px;
       border-radius: 18px;
       overflow: hidden;
       background: #111;
@@ -152,57 +198,23 @@
     .contenedor {
       max-width: 1100px;
       margin: auto;
-      padding: 25px 15px;
+      padding: 10px 15px 40px;
     }
 
     .barra {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       gap: 15px;
       margin-bottom: 25px;
       flex-wrap: wrap;
     }
 
-    /* BUSCADOR CON LUPA */
-    .buscador-box {
-      position: relative;
-      flex: 1;
-      min-width: 260px;
-    }
-
-    .buscador-box input {
-      width: 100%;
-      padding: 12px 16px 12px 42px;
-      border: 1px solid #e0e0e0;
-      border-radius: 25px;
-      font-size: 14px;
-      outline: none;
-      background: white;
-      box-shadow: 0 2px 8px #eee;
-      margin: 0;
-      transition: all 0.2s ease;
-    }
-
-    .buscador-box input:focus {
-      border-color: #111;
-      box-shadow: 0 4px 12px #ddd;
-    }
-
-    .buscador-box .icon-lupa {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #777;
-      pointer-events: none;
-    }
-
     .categorias {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      margin-bottom: 25px;
     }
 
     .categorias button,
@@ -573,9 +585,15 @@
     @media (max-width: 600px) {
       header { padding: 15px; }
 
+      .header-inner { gap: 12px; }
+
       .logo {
         max-width: 180px;
         max-height: 60px;
+      }
+
+      .logo-texto {
+        font-size: 24px;
       }
 
       .banner-container {
@@ -586,6 +604,8 @@
       .banner-texto { padding: 15px; }
       .banner-texto h2 { font-size: 20px; }
       .banner-texto p { font-size: 13px; }
+
+      .barra { justify-content: center; }
 
       .banner-prev, .banner-next {
         width: 36px;
@@ -610,20 +630,26 @@
 <body>
 
   <!-- =========================
-       LOGO
+       ENCABEZADO (LOGO Y BUSCADOR)
   ========================= -->
 
   <header>
-    <img
-      class="logo"
-      src=""
-      alt="Tekno Activa"
-      id="logoImagen"
-      style="display:none;"
-    >
+    <div class="header-inner">
+      <div class="logo-container">
+        <img class="logo" src="" alt="Tekno Activa" id="logoImagen" style="display:none;">
+        <div class="logo-texto" id="logoTexto">TEKNO ACTIVA</div>
+      </div>
 
-    <div class="logo-texto" id="logoTexto">
-      TEKNO ACTIVA
+      <!-- Buscador con Lupa Arriba -->
+      <div class="buscador-box">
+        <span class="icon-lupa">🔍</span>
+        <input 
+          type="text" 
+          id="buscadorInput" 
+          placeholder="Buscar productos..." 
+          oninput="filtrarProductos()"
+        >
+      </div>
     </div>
   </header>
 
@@ -643,22 +669,10 @@
   <div class="contenedor">
 
     <!-- =========================
-         BARRA DE BÚSQUEDA Y NAVEGACIÓN
+         BOTONES DE ACCIÓN RÁPIDA
     ========================= -->
 
     <div class="barra">
-      
-      <!-- Buscador con Lupa -->
-      <div class="buscador-box">
-        <span class="icon-lupa">🔍</span>
-        <input 
-          type="text" 
-          id="buscadorInput" 
-          placeholder="Buscar productos..." 
-          oninput="filtrarProductos()"
-        >
-      </div>
-
       <button class="info-btn" onclick="abrirModalPagos()">
         💳 Formas de Pago
       </button>
@@ -666,11 +680,10 @@
       <button class="admin-btn" onclick="abrirAdmin()">
         ⚙️ Administrar
       </button>
-
     </div>
 
     <!-- Categorías -->
-    <div class="categorias" style="margin-bottom: 25px;">
+    <div class="categorias">
       <button class="btn-cat activo-cat" onclick="filtrarCategoria('todos', this)">🛍️ Todos</button>
       <button class="btn-cat" onclick="filtrarCategoria('auriculares', this)">🎧 Auriculares</button>
       <button class="btn-cat" onclick="filtrarCategoria('cargadores', this)">🔌 Cargadores</button>
@@ -990,7 +1003,6 @@
     function filtrarCategoria(cat, elemento) {
       categoriaActiva = cat;
       
-      // Actualizar botón activo
       const btns = document.querySelectorAll('.btn-cat');
       btns.forEach(b => b.classList.remove('activo-cat'));
       if(elemento) elemento.classList.add('activo-cat');
@@ -1002,10 +1014,7 @@
       const textoBusqueda = document.getElementById("buscadorInput").value.toLowerCase().trim();
 
       const resultado = productos.filter(p => {
-        // Filtro Categoria
         const coincideCategoria = (categoriaActiva === "todos" || p.categoria === categoriaActiva);
-        
-        // Filtro Buscador por Lupa (Nombre o Descripción)
         const coincideTexto = p.nombre.toLowerCase().includes(textoBusqueda) || 
                                (p.descripcion && p.descripcion.toLowerCase().includes(textoBusqueda));
 
