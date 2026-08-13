@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tekno Activa</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -26,10 +19,7 @@ body{
   color:#222;
 }
 
-/* =========================
-   HEADER
-========================= */
-
+/* HEADER */
 header{
   background:#111;
   color:#fff;
@@ -50,10 +40,7 @@ header{
   letter-spacing:1px;
 }
 
-/* =========================
-   BANNER
-========================= */
-
+/* BANNER */
 .banner-container{
   position:relative;
   width:calc(100% - 30px);
@@ -66,16 +53,15 @@ header{
   box-shadow:0 8px 25px rgba(0,0,0,.15);
 }
 
-.banner-slider{
+.banner-slider,
+.banner-slider a{
   width:100%;
   height:100%;
+  display:block;
+  position:relative;
 }
 
 .banner-slider a{
-  display:block;
-  width:100%;
-  height:100%;
-  position:relative;
   color:#fff;
   text-decoration:none;
 }
@@ -94,10 +80,7 @@ header{
   bottom:0;
   padding:70px 40px 35px;
   color:#fff;
-  background:linear-gradient(
-    transparent,
-    rgba(0,0,0,.85)
-  );
+  background:linear-gradient(transparent,rgba(0,0,0,.85));
 }
 
 .banner-texto h2{
@@ -125,13 +108,8 @@ header{
   z-index:5;
 }
 
-.banner-prev{
-  left:18px;
-}
-
-.banner-next{
-  right:18px;
-}
+.banner-prev{left:18px}
+.banner-next{right:18px}
 
 .banner-dots{
   position:absolute;
@@ -159,10 +137,7 @@ header{
   transform:scale(1.3);
 }
 
-/* =========================
-   CONTENEDOR
-========================= */
-
+/* CONTENEDOR */
 .contenedor{
   max-width:1200px;
   margin:auto;
@@ -183,10 +158,7 @@ header{
   color:#777;
 }
 
-/* =========================
-   BUSCADOR
-========================= */
-
+/* BUSCADOR */
 .buscador{
   width:100%;
   max-width:550px;
@@ -201,7 +173,6 @@ header{
   background:#fff;
   font-size:15px;
   outline:none;
-  margin:0;
   box-shadow:0 2px 10px rgba(0,0,0,.05);
 }
 
@@ -209,10 +180,7 @@ header{
   border-color:#111;
 }
 
-/* =========================
-   BENEFICIOS
-========================= */
-
+/* BENEFICIOS */
 .beneficios{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -243,10 +211,7 @@ header{
   font-size:13px;
 }
 
-/* =========================
-   BARRA
-========================= */
-
+/* CATEGORIAS */
 .barra{
   display:flex;
   justify-content:space-between;
@@ -279,10 +244,7 @@ header{
   border-color:#111;
 }
 
-/* =========================
-   PRODUCTOS
-========================= */
-
+/* PRODUCTOS */
 .productos{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -366,10 +328,7 @@ header{
   background:#333;
 }
 
-/* =========================
-   CARRITO
-========================= */
-
+/* CARRITO */
 .carrito-btn{
   position:fixed;
   right:20px;
@@ -393,10 +352,7 @@ header{
   margin-left:5px;
 }
 
-/* =========================
-   MODALES
-========================= */
-
+/* MODALES */
 .modal{
   display:none;
   position:fixed;
@@ -458,10 +414,7 @@ textarea{
   cursor:pointer;
 }
 
-/* =========================
-   CARRITO INTERNO
-========================= */
-
+/* CARRITO INTERNO */
 .item-carrito{
   border-bottom:1px solid #ddd;
   padding:12px 0;
@@ -515,10 +468,7 @@ textarea{
   cursor:pointer;
 }
 
-/* =========================
-   ADMIN
-========================= */
-
+/* ADMIN */
 .admin-estado{
   background:#e8f5e9;
   padding:10px;
@@ -581,10 +531,7 @@ textarea{
   cursor:pointer;
 }
 
-/* =========================
-   PAGOS
-========================= */
-
+/* PAGOS */
 .pagos{
   background:#111;
   color:#fff;
@@ -624,10 +571,7 @@ textarea{
   margin-top:7px;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
+/* FOOTER */
 footer{
   background:#090909;
   color:#999;
@@ -651,10 +595,6 @@ footer{
   color:#bbb;
 }
 
-/* =========================
-   ACCESO USUARIO
-========================= */
-
 .usuario-secreto{
   margin:20px auto 15px;
   width:34px;
@@ -666,7 +606,6 @@ footer{
   font-size:17px;
   cursor:pointer;
   opacity:.45;
-  transition:.2s;
 }
 
 .usuario-secreto:hover{
@@ -678,10 +617,6 @@ footer{
 .copyright{
   margin-top:5px;
 }
-
-/* =========================
-   MENSAJES
-========================= */
 
 .sin-productos{
   grid-column:1/-1;
@@ -699,12 +634,8 @@ footer{
   color:#777;
 }
 
-/* =========================
-   CELULAR
-========================= */
-
+/* CELULAR */
 @media(max-width:1000px){
-
   .productos{
     grid-template-columns:repeat(3,1fr);
   }
@@ -712,11 +643,9 @@ footer{
   .beneficios{
     grid-template-columns:repeat(2,1fr);
   }
-
 }
 
 @media(max-width:700px){
-
   .banner-container{
     height:230px;
     margin:15px 10px 25px;
@@ -781,11 +710,8 @@ footer{
     right:12px;
     bottom:12px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
@@ -810,9 +736,7 @@ footer{
 </header>
 
 
-<!-- =========================
-     BANNER
-========================= -->
+<!-- BANNER -->
 
 <div class="banner-container">
 
@@ -843,9 +767,7 @@ footer{
 </div>
 
 
-<!-- =========================
-     CONTENIDO
-========================= -->
+<!-- CONTENIDO -->
 
 <div class="contenedor">
 
@@ -1008,9 +930,7 @@ footer{
 </div>
 
 
-<!-- =========================
-     PAGOS
-========================= -->
+<!-- PAGOS -->
 
 <section class="pagos">
 
@@ -1057,21 +977,14 @@ footer{
 </section>
 
 
-<!-- =========================
-     CARRITO
-========================= -->
+<!-- CARRITO -->
 
 <button
   class="carrito-btn"
   onclick="abrirCarrito()"
 >
-
   🛒 Carrito
-
-  <span id="contador">
-    0
-  </span>
-
+  <span id="contador">0</span>
 </button>
 
 
@@ -1098,24 +1011,18 @@ footer{
 
     </div>
 
-
     <button
       class="whatsapp"
       onclick="enviarWhatsApp()"
     >
-
       📲 Enviar pedido por WhatsApp
-
     </button>
-
 
     <button
       class="cerrar"
       onclick="cerrarCarrito()"
     >
-
       Cerrar
-
     </button>
 
   </div>
@@ -1123,9 +1030,7 @@ footer{
 </div>
 
 
-<!-- =========================
-     LOGIN
-========================= -->
+<!-- LOGIN -->
 
 <div
   class="modal"
@@ -1142,12 +1047,10 @@ footer{
       Ingresá con tu cuenta.
     </p>
 
-
     <div
       id="loginError"
       class="error"
     ></div>
-
 
     <label>
       Email
@@ -1160,7 +1063,6 @@ footer{
       autocomplete="username"
     >
 
-
     <label>
       Contraseña
     </label>
@@ -1172,24 +1074,18 @@ footer{
       autocomplete="current-password"
     >
 
-
     <button
       class="guardar"
       onclick="iniciarSesion()"
     >
-
       🔐 Ingresar
-
     </button>
-
 
     <button
       class="cerrar"
       onclick="cerrarLogin()"
     >
-
       Cancelar
-
     </button>
 
   </div>
@@ -1197,9 +1093,7 @@ footer{
 </div>
 
 
-<!-- =========================
-     ADMIN
-========================= -->
+<!-- ADMIN -->
 
 <div
   class="modal"
@@ -1212,33 +1106,25 @@ footer{
       ⚙️ Panel de gestión
     </h2>
 
-
     <div class="admin-estado">
-
       🔓 Sesión activa
-
     </div>
 
-
     <hr>
-
 
     <h3 style="margin:20px 0 10px;">
       📦 Agregar producto
     </h3>
-
 
     <div
       id="productoError"
       class="error"
     ></div>
 
-
     <div
       id="productoExito"
       class="exito"
     ></div>
-
 
     <label>
       Nombre
@@ -1250,7 +1136,6 @@ footer{
       placeholder="Ej: Auricular A6S"
     >
 
-
     <label>
       Precio
     </label>
@@ -1261,7 +1146,6 @@ footer{
       placeholder="9999"
     >
 
-
     <label>
       Precio anterior
     </label>
@@ -1271,7 +1155,6 @@ footer{
       type="number"
       placeholder="11500"
     >
-
 
     <label>
       Categoría
@@ -1297,7 +1180,6 @@ footer{
 
     </select>
 
-
     <label>
       Descripción
     </label>
@@ -1306,7 +1188,6 @@ footer{
       id="descripcion"
       placeholder="Descripción del producto"
     ></textarea>
-
 
     <label>
       URL de imagen
@@ -1318,36 +1199,28 @@ footer{
       placeholder="https://..."
     >
 
-
     <button
       class="guardar"
       onclick="guardarProducto()"
     >
-
       ➕ Guardar producto
-
     </button>
 
-
     <hr style="margin:25px 0;">
-
 
     <h3 style="margin-bottom:10px;">
       🖼️ Agregar banner
     </h3>
-
 
     <div
       id="bannerError"
       class="error"
     ></div>
 
-
     <div
       id="bannerExito"
       class="exito"
     ></div>
-
 
     <label>
       URL de imagen
@@ -1359,7 +1232,6 @@ footer{
       placeholder="https://..."
     >
 
-
     <label>
       Título
     </label>
@@ -1369,7 +1241,6 @@ footer{
       type="text"
       placeholder="Ej: ¡Ofertas de la semana!"
     >
-
 
     <label>
       Texto
@@ -1381,7 +1252,6 @@ footer{
       placeholder="Ej: Hasta 30% de descuento"
     >
 
-
     <label>
       Enlace opcional
     </label>
@@ -1392,48 +1262,36 @@ footer{
       placeholder="https://..."
     >
 
-
     <button
       class="guardar"
       onclick="guardarBanner()"
     >
-
       🖼️ Guardar banner
-
     </button>
 
-
     <hr style="margin:25px 0;">
-
 
     <h3 style="margin-bottom:10px;">
       📋 Productos actuales
     </h3>
-
 
     <div
       id="adminLista"
       class="admin-lista"
     ></div>
 
-
     <button
       class="logout"
       onclick="cerrarSesion()"
     >
-
       🔒 Cerrar sesión
-
     </button>
-
 
     <button
       class="cerrar"
       onclick="cerrarAdmin()"
     >
-
       Cerrar panel
-
     </button>
 
   </div>
@@ -1441,9 +1299,7 @@ footer{
 </div>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -1457,26 +1313,12 @@ footer{
 
   <div class="footer-links">
 
-    <span>
-      📲 WhatsApp
-    </span>
-
-    <span>
-      📦 Envíos
-    </span>
-
-    <span>
-      💳 Pagos
-    </span>
-
-    <span>
-      🛒 Compras
-    </span>
+    <span>📲 WhatsApp</span>
+    <span>📦 Envíos</span>
+    <span>💳 Pagos</span>
+    <span>🛒 Compras</span>
 
   </div>
-
-
-  <!-- ACCESO OCULTO -->
 
   <button
     class="usuario-secreto"
@@ -1487,7 +1329,6 @@ footer{
     👤
   </button>
 
-
   <div class="copyright">
     © 2026 Tekno Activa
   </div>
@@ -1495,746 +1336,7 @@ footer{
 </footer>
 
 
-<!-- =========================
-     SUPABASE
-========================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-
-<body>
-
-<header>
-
-  <img
-    class="logo"
-    src=""
-    alt="Tekno Activa"
-    id="logoImagen"
-    style="display:none;"
-  >
-
-  <div
-    class="logo-texto"
-    id="logoTexto"
-  >
-    TEKNO ACTIVA
-  </div>
-
-</header>
-
-
-<!-- =========================
-     BANNER
-========================= -->
-
-<div class="banner-container">
-
-  <div
-    id="bannerSlider"
-    class="banner-slider"
-  ></div>
-
-  <button
-    class="banner-prev"
-    onclick="bannerAnterior()"
-  >
-    ‹
-  </button>
-
-  <button
-    class="banner-next"
-    onclick="bannerSiguiente()"
-  >
-    ›
-  </button>
-
-  <div
-    id="bannerDots"
-    class="banner-dots"
-  ></div>
-
-</div>
-
-
-<!-- =========================
-     CONTENIDO
-========================= -->
-
-<div class="contenedor">
-
-  <div class="titulo-seccion">
-
-    <h1>
-      Productos destacados
-    </h1>
-
-    <p>
-      Tecnología y accesorios para tu día a día
-    </p>
-
-  </div>
-
-
-  <!-- BUSCADOR -->
-
-  <div class="buscador">
-
-    <input
-      type="search"
-      id="busqueda"
-      placeholder="🔎 Buscar productos..."
-      oninput="buscarProductos()"
-    >
-
-  </div>
-
-
-  <!-- BENEFICIOS -->
-
-  <div class="beneficios">
-
-    <div class="beneficio">
-
-      <div class="beneficio-icono">
-        🚚
-      </div>
-
-      <strong>
-        Envíos
-      </strong>
-
-      <span>
-        Recibí tu pedido de forma segura.
-      </span>
-
-    </div>
-
-
-    <div class="beneficio">
-
-      <div class="beneficio-icono">
-        💳
-      </div>
-
-      <strong>
-        Medios de pago
-      </strong>
-
-      <span>
-        Elegí la forma de pago que prefieras.
-      </span>
-
-    </div>
-
-
-    <div class="beneficio">
-
-      <div class="beneficio-icono">
-        🔒
-      </div>
-
-      <strong>
-        Compra segura
-      </strong>
-
-      <span>
-        Comprá con tranquilidad.
-      </span>
-
-    </div>
-
-
-    <div class="beneficio">
-
-      <div class="beneficio-icono">
-        📲
-      </div>
-
-      <strong>
-        WhatsApp
-      </strong>
-
-      <span>
-        Consultanos directamente.
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       CATEGORÍAS
-  ========================= -->
-
-  <div class="barra">
-
-    <div class="categorias">
-
-      <button
-        class="activo"
-        onclick="filtrar('todos')"
-      >
-        🛍️ Todos
-      </button>
-
-      <button
-        onclick="filtrar('auriculares')"
-      >
-        🎧 Auriculares
-      </button>
-
-      <button
-        onclick="filtrar('cargadores')"
-      >
-        🔌 Cargadores
-      </button>
-
-      <button
-        onclick="filtrar('hogar')"
-      >
-        🏠 Hogar
-      </button>
-
-      <button
-        onclick="filtrar('belleza')"
-      >
-        💄 Belleza
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       PRODUCTOS
-  ========================= -->
-
-  <div
-    id="productos"
-    class="productos"
-  >
-
-    <div class="cargando">
-      Cargando productos...
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     PAGOS
-========================= -->
-
-<section class="pagos">
-
-  <h2>
-    Formas de pago
-  </h2>
-
-  <p>
-    Elegí la opción que te resulte más cómoda.
-  </p>
-
-  <div class="pagos-grid">
-
-    <div class="pago">
-
-      💵
-
-      <strong>
-        Efectivo
-      </strong>
-
-    </div>
-
-
-    <div class="pago">
-
-      🏦
-
-      <strong>
-        Transferencia
-      </strong>
-
-    </div>
-
-
-    <div class="pago">
-
-      💳
-
-      <strong>
-        Tarjetas
-      </strong>
-
-    </div>
-
-
-    <div class="pago">
-
-      📲
-
-      <strong>
-        Mercado Pago
-      </strong>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     CARRITO
-========================= -->
-
-<button
-  class="carrito-btn"
-  onclick="abrirCarrito()"
->
-
-  🛒 Carrito
-
-  <span id="contador">
-    0
-  </span>
-
-</button>
-
-
-<div
-  class="modal"
-  id="modalCarrito"
->
-
-  <div class="modal-contenido">
-
-    <h2>
-      🛒 Tu carrito
-    </h2>
-
-    <div id="listaCarrito"></div>
-
-    <div class="total">
-
-      Total: $
-
-      <span id="total">
-        0
-      </span>
-
-    </div>
-
-
-    <button
-      class="whatsapp"
-      onclick="enviarWhatsApp()"
-    >
-
-      📲 Enviar pedido por WhatsApp
-
-    </button>
-
-
-    <button
-      class="cerrar"
-      onclick="cerrarCarrito()"
-    >
-
-      Cerrar
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     LOGIN ADMIN
-========================= -->
-
-<div
-  class="modal"
-  id="modalLogin"
->
-
-  <div class="modal-contenido">
-
-    <h2>
-      🔐 Ingreso
-    </h2>
-
-    <p style="margin-bottom:15px;">
-      Ingresá con tu cuenta.
-    </p>
-
-
-    <div
-      id="loginError"
-      class="error"
-    ></div>
-
-
-    <label>
-      Email
-    </label>
-
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="tu@email.com"
-      autocomplete="username"
-    >
-
-
-    <label>
-      Contraseña
-    </label>
-
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Tu contraseña"
-      autocomplete="current-password"
-    >
-
-
-    <button
-      class="guardar"
-      onclick="iniciarSesion()"
-    >
-
-      🔐 Ingresar
-
-    </button>
-
-
-    <button
-      class="cerrar"
-      onclick="cerrarLogin()"
-    >
-
-      Cancelar
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     ADMIN
-========================= -->
-
-<div
-  class="modal"
-  id="modalAdmin"
->
-
-  <div class="modal-contenido">
-
-    <h2>
-      ⚙️ Panel privado
-    </h2>
-
-
-    <div class="admin-estado">
-
-      🔓 Sesión activa
-
-    </div>
-
-
-    <hr>
-
-
-    <!-- AGREGAR PRODUCTO -->
-
-    <h3 style="margin:20px 0 10px;">
-      📦 Agregar producto
-    </h3>
-
-
-    <div
-      id="productoError"
-      class="error"
-    ></div>
-
-
-    <div
-      id="productoExito"
-      class="exito"
-    ></div>
-
-
-    <label>
-      Nombre
-    </label>
-
-    <input
-      id="nombre"
-      type="text"
-      placeholder="Ej: Auricular A6S"
-    >
-
-
-    <label>
-      Precio
-    </label>
-
-    <input
-      id="precio"
-      type="number"
-      placeholder="9999"
-    >
-
-
-    <label>
-      Precio anterior
-    </label>
-
-    <input
-      id="precioAnterior"
-      type="number"
-      placeholder="11500"
-    >
-
-
-    <label>
-      Categoría
-    </label>
-
-    <select id="categoria">
-
-      <option value="auriculares">
-        Auriculares
-      </option>
-
-      <option value="cargadores">
-        Cargadores
-      </option>
-
-      <option value="hogar">
-        Hogar
-      </option>
-
-      <option value="belleza">
-        Belleza
-      </option>
-
-    </select>
-
-
-    <label>
-      Descripción
-    </label>
-
-    <textarea
-      id="descripcion"
-      placeholder="Descripción del producto"
-    ></textarea>
-
-
-    <label>
-      URL de imagen
-    </label>
-
-    <input
-      id="imagen"
-      type="text"
-      placeholder="https://..."
-    >
-
-
-    <button
-      class="guardar"
-      onclick="guardarProducto()"
-    >
-
-      ➕ Guardar producto
-
-    </button>
-
-
-    <hr style="margin:25px 0;">
-
-
-    <!-- AGREGAR BANNER -->
-
-    <h3 style="margin-bottom:10px;">
-      🖼️ Agregar banner
-    </h3>
-
-
-    <div
-      id="bannerError"
-      class="error"
-    ></div>
-
-
-    <div
-      id="bannerExito"
-      class="exito"
-    ></div>
-
-
-    <label>
-      URL de imagen
-    </label>
-
-    <input
-      id="bannerImagen"
-      type="text"
-      placeholder="https://..."
-    >
-
-
-    <label>
-      Título
-    </label>
-
-    <input
-      id="bannerTitulo"
-      type="text"
-      placeholder="Ej: ¡Ofertas de la semana!"
-    >
-
-
-    <label>
-      Texto
-    </label>
-
-    <input
-      id="bannerTexto"
-      type="text"
-      placeholder="Ej: Hasta 30% de descuento"
-    >
-
-
-    <label>
-      Enlace opcional
-    </label>
-
-    <input
-      id="bannerEnlace"
-      type="text"
-      placeholder="https://..."
-    >
-
-
-    <button
-      class="guardar"
-      onclick="guardarBanner()"
-    >
-
-      🖼️ Guardar banner
-
-    </button>
-
-
-    <hr style="margin:25px 0;">
-
-
-    <!-- PRODUCTOS ACTUALES -->
-
-    <h3 style="margin-bottom:10px;">
-      📋 Productos actuales
-    </h3>
-
-
-    <div
-      id="adminLista"
-      class="admin-lista"
-    ></div>
-
-
-    <button
-      class="logout"
-      onclick="cerrarSesion()"
-    >
-
-      🔒 Cerrar sesión
-
-    </button>
-
-
-    <button
-      class="cerrar"
-      onclick="cerrarAdmin()"
-    >
-
-      Cerrar panel
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-  <div class="footer-logo">
-    TEKNO ACTIVA
-  </div>
-
-  <div>
-    Tecnología y accesorios para vos.
-  </div>
-
-  <div class="footer-links">
-
-    <span>
-      📲 WhatsApp
-    </span>
-
-    <span>
-      📦 Envíos
-    </span>
-
-    <span>
-      💳 Pagos
-    </span>
-
-    <span>
-      🛒 Compras
-    </span>
-
-  </div>
-
-
-  © 2026 Tekno Activa
-
-
-  <!--
-    ICONO PRIVADO DE ADMINISTRACIÓN.
-    Los clientes solamente verán un pequeño ícono.
-  -->
-
-  <div
-    class="admin-icono"
-    onclick="abrirAdmin()"
-    title="Acceso"
-  >
-    👤
-  </div>
-
-</footer>
-<!-- =========================
-     SUPABASE
-========================= -->
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -2250,7 +1352,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
 
-
 const supabaseCliente =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -2263,9 +1364,10 @@ const supabaseCliente =
 ===================================================== */
 
 /*
-   CAMBIÁ ESTO POR TU NÚMERO.
+   IMPORTANTE:
+   Cambiá solamente este número.
 
-   Ejemplo San Juan:
+   Ejemplo:
    5492641234567
 */
 
@@ -2278,15 +1380,10 @@ const NUMERO_WHATSAPP =
 ===================================================== */
 
 let productos = [];
-
 let banners = [];
-
 let carrito = [];
-
 let categoriaActual = "todos";
-
 let bannerActual = 0;
-
 let intervaloBanner = null;
 
 
@@ -2311,7 +1408,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   CARGAR PRODUCTOS
+   PRODUCTOS
 ===================================================== */
 
 async function cargarProductos(){
@@ -2330,7 +1427,6 @@ async function cargarProductos(){
       resultado.error
     );
 
-
     document.getElementById(
       "productos"
     ).innerHTML = `
@@ -2340,7 +1436,9 @@ async function cargarProductos(){
         ⚠️ No se pudieron cargar los productos.
 
         <p style="margin-top:10px;">
-          ${resultado.error.message}
+          ${escaparHTML(
+            resultado.error.message
+          )}
         </p>
 
       </div>
@@ -2348,7 +1446,6 @@ async function cargarProductos(){
     `;
 
     return;
-
   }
 
 
@@ -2389,19 +1486,17 @@ function mostrarProductos(){
       const coincideCategoria =
         categoriaActual === "todos" ||
         String(producto.categoria || "")
-          .toLowerCase()
-          === categoriaActual;
+          .toLowerCase() === categoriaActual;
 
 
-      const texto = (
-
-        String(producto.nombre || "") +
-        " " +
-        String(producto.descripcion || "") +
-        " " +
-        String(producto.categoria || "")
-
-      ).toLowerCase();
+      const texto =
+        (
+          String(producto.nombre || "") +
+          " " +
+          String(producto.descripcion || "") +
+          " " +
+          String(producto.categoria || "")
+        ).toLowerCase();
 
 
       return (
@@ -2431,7 +1526,6 @@ function mostrarProductos(){
     `;
 
     return;
-
   }
 
 
@@ -2440,7 +1534,6 @@ function mostrarProductos(){
 
       const precio =
         Number(producto.precio || 0);
-
 
       const precioAnterior =
         Number(
@@ -2493,15 +1586,15 @@ function mostrarProductos(){
 
           <img
             src="${escaparHTML(imagen)}"
-            alt="${escaparHTML(producto.nombre || "Producto")}"
+            alt="${escaparHTML(
+              producto.nombre || "Producto"
+            )}"
             onerror="this.src='https://via.placeholder.com/500x400?text=Imagen+no+disponible'"
           >
-
 
           <div class="producto-info">
 
             ${oferta}
-
 
             <h3>
               ${escaparHTML(
@@ -2509,31 +1602,23 @@ function mostrarProductos(){
               )}
             </h3>
 
-
             <p>
               ${escaparHTML(
                 producto.descripcion || ""
               )}
             </p>
 
-
             ${anterior}
 
-
             <div class="precio">
-
               $${formatearPrecio(precio)}
-
             </div>
-
 
             <button
               class="agregar"
               onclick="agregarAlCarrito(${Number(producto.id)})"
             >
-
               🛒 Agregar al carrito
-
             </button>
 
           </div>
@@ -2566,29 +1651,25 @@ function filtrar(categoria){
     });
 
 
-  const botones =
-    document.querySelectorAll(
-      ".categorias button"
-    );
+  document
+    .querySelectorAll(".categorias button")
+    .forEach(function(boton){
+
+      const accion =
+        boton.getAttribute("onclick") || "";
 
 
-  botones.forEach(function(boton){
+      if(
+        accion.includes(
+          "'" + categoria + "'"
+        )
+      ){
 
-    const accion =
-      boton.getAttribute("onclick") || "";
+        boton.classList.add("activo");
 
+      }
 
-    if(
-      accion.includes(
-        "'" + categoria + "'"
-      )
-    ){
-
-      boton.classList.add("activo");
-
-    }
-
-  });
+    });
 
 
   mostrarProductos();
@@ -2608,7 +1689,7 @@ function buscarProductos(){
 
 
 /* =====================================================
-   FORMATEAR PRECIO
+   PRECIO
 ===================================================== */
 
 function formatearPrecio(numero){
@@ -2620,7 +1701,7 @@ function formatearPrecio(numero){
 
 
 /* =====================================================
-   ESCAPAR HTML
+   SEGURIDAD HTML
 ===================================================== */
 
 function escaparHTML(texto){
@@ -2676,7 +1757,7 @@ function guardarCarrito(){
 
 
 /* =====================================================
-   AGREGAR AL CARRITO
+   AGREGAR
 ===================================================== */
 
 function agregarAlCarrito(id){
@@ -2696,7 +1777,6 @@ function agregarAlCarrito(id){
     );
 
     return;
-
   }
 
 
@@ -2734,7 +1814,6 @@ function agregarAlCarrito(id){
   guardarCarrito();
 
   actualizarCarrito();
-
 
   alert(
     "✅ " +
@@ -2789,9 +1868,7 @@ function actualizarCarrito(){
           color:#777;
         "
       >
-
         🛒 Tu carrito está vacío.
-
       </div>
 
     `;
@@ -2803,7 +1880,6 @@ function actualizarCarrito(){
 
 
     return;
-
   }
 
 
@@ -2837,12 +1913,10 @@ function actualizarCarrito(){
                 color:#777;
               "
             >
-
               $${formatearPrecio(
                 item.precio
               )}
               cada uno
-
             </div>
 
           </div>
@@ -2892,7 +1966,7 @@ function actualizarCarrito(){
 
 
 /* =====================================================
-   CAMBIAR CANTIDAD
+   CANTIDAD
 ===================================================== */
 
 function cambiarCantidad(index,cambio){
@@ -2922,7 +1996,7 @@ function cambiarCantidad(index,cambio){
 
 
 /* =====================================================
-   ELIMINAR DEL CARRITO
+   ELIMINAR
 ===================================================== */
 
 function eliminarDelCarrito(index){
@@ -2937,7 +2011,7 @@ function eliminarDelCarrito(index){
 
 
 /* =====================================================
-   ABRIR / CERRAR CARRITO
+   MODAL CARRITO
 ===================================================== */
 
 function abrirCarrito(){
@@ -2946,7 +2020,6 @@ function abrirCarrito(){
     "modalCarrito"
   ).style.display =
     "block";
-
 
   actualizarCarrito();
 
@@ -2976,22 +2049,18 @@ function enviarWhatsApp(){
     );
 
     return;
-
   }
 
 
   if(
-    NUMERO_WHATSAPP.includes(
-      "5492646181163"
-    )
+    NUMERO_WHATSAPP.includes("X")
   ){
 
     alert(
-      "⚠️ Falta configurar tu número de WhatsApp."
+      "⚠️ Primero configurá tu número de WhatsApp."
     );
 
     return;
-
   }
 
 
@@ -3080,7 +2149,6 @@ async function abrirAdmin(){
     ).style.display =
       "block";
 
-
     mostrarAdminProductos();
 
   }else{
@@ -3101,7 +2169,6 @@ function cerrarLogin(){
     "modalLogin"
   ).style.display =
     "none";
-
 
   ocultarMensaje(
     "loginError"
@@ -3147,7 +2214,6 @@ async function iniciarSesion(){
     );
 
     return;
-
   }
 
 
@@ -3170,7 +2236,6 @@ async function iniciarSesion(){
     );
 
     return;
-
   }
 
 
@@ -3193,7 +2258,7 @@ async function iniciarSesion(){
 
 
 /* =====================================================
-   CERRAR SESIÓN
+   CERRAR SESION
 ===================================================== */
 
 async function cerrarSesion(){
@@ -3299,7 +2364,6 @@ async function guardarProducto(){
     );
 
     return;
-
   }
 
 
@@ -3311,7 +2375,6 @@ async function guardarProducto(){
     );
 
     return;
-
   }
 
 
@@ -3353,7 +2416,6 @@ async function guardarProducto(){
     );
 
     return;
-
   }
 
 
@@ -3420,15 +2482,12 @@ function mostrarAdminProductos(){
           padding:20px;
         "
       >
-
         No hay productos todavía.
-
       </div>
 
     `;
 
     return;
-
   }
 
 
@@ -3448,11 +2507,9 @@ function mostrarAdminProductos(){
             </strong>
 
             <div style="margin-top:5px;">
-
               $${formatearPrecio(
                 producto.precio
               )}
-
             </div>
 
           </div>
@@ -3461,9 +2518,7 @@ function mostrarAdminProductos(){
           <button
             onclick="eliminarProducto(${Number(producto.id)})"
           >
-
             🗑️ Eliminar
-
           </button>
 
         </div>
@@ -3506,7 +2561,6 @@ async function eliminarProducto(id){
     );
 
     return;
-
   }
 
 
@@ -3542,7 +2596,6 @@ async function cargarBanners(){
     );
 
     return;
-
   }
 
 
@@ -3551,7 +2604,6 @@ async function cargarBanners(){
 
 
   bannerActual = 0;
-
 
   mostrarBanner();
 
@@ -3616,11 +2668,9 @@ function mostrarBanner(){
 
     dots.innerHTML = "";
 
-
     detenerBanner();
 
     return;
-
   }
 
 
@@ -3657,7 +2707,6 @@ function mostrarBanner(){
           banner.titulo || "Banner"
         )}"
       >
-
 
       <div class="banner-texto">
 
@@ -3703,6 +2752,10 @@ function mostrarBanner(){
 
 }
 
+
+/* =====================================================
+   CONTROLES BANNER
+===================================================== */
 
 function bannerSiguiente(){
 
@@ -3756,14 +2809,13 @@ function irBanner(index){
   bannerActual =
     index;
 
-
   mostrarBanner();
 
 }
 
 
 /* =====================================================
-   BANNER AUTOMÁTICO
+   BANNER AUTOMATICO
 ===================================================== */
 
 function iniciarBannerAutomatico(){
@@ -3871,7 +2923,6 @@ async function guardarBanner(){
     );
 
     return;
-
   }
 
 
@@ -3911,7 +2962,6 @@ async function guardarBanner(){
     );
 
     return;
-
   }
 
 
@@ -4060,7 +3110,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   ESTADO DE SESIÓN
+   SESION SUPABASE
 ===================================================== */
 
 supabaseCliente.auth.onAuthStateChange(
@@ -4077,5 +3127,4 @@ supabaseCliente.auth.onAuthStateChange(
 </script>
 
 </body>
-
 </html>
