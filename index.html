@@ -2,8 +2,13 @@
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>Tekno Activa</title>
 
@@ -22,19 +27,25 @@ body{
 }
 
 /* =========================
-   HEADER
+   HEADER / LOGO
 ========================= */
 
 header{
   background:#111;
   color:#fff;
-  padding:16px 20px;
+  padding:18px 20px;
   text-align:center;
+  min-height:105px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .logo{
-  max-width:230px;
-  max-height:70px;
+  max-width:250px;
+  max-height:75px;
+  width:auto;
+  height:auto;
   object-fit:contain;
 }
 
@@ -46,29 +57,101 @@ header{
 }
 
 /* =========================
+   CONTENEDOR
+========================= */
+
+.contenedor{
+  max-width:1200px;
+  margin:auto;
+  padding:25px 20px 55px;
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador{
+  width:100%;
+  max-width:600px;
+  margin:0 auto 25px;
+}
+
+.buscador input{
+  width:100%;
+  padding:15px 20px;
+  border:1px solid #ddd;
+  border-radius:30px;
+  background:#fff;
+  font-size:16px;
+  outline:none;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.buscador input:focus{
+  border-color:#111;
+}
+
+/* =========================
+   CATEGORIAS
+========================= */
+
+.barra{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+}
+
+.categorias{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.categorias button{
+  border:1px solid #ddd;
+  background:#fff;
+  padding:11px 17px;
+  border-radius:25px;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  transition:.2s;
+}
+
+.categorias button:hover,
+.categorias button.activo{
+  background:#111;
+  color:#fff;
+  border-color:#111;
+}
+
+/* =========================
    BANNER
 ========================= */
 
 .banner-container{
   position:relative;
-  width:calc(100% - 30px);
-  max-width:1200px;
+  width:100%;
   height:390px;
-  margin:22px auto 35px;
+  margin:0 auto 35px;
   border-radius:20px;
   overflow:hidden;
   background:#111;
   box-shadow:0 8px 25px rgba(0,0,0,.15);
 }
 
-.banner-slider,
+.banner-slider{
+  width:100%;
+  height:100%;
+}
+
 .banner-slider a{
   width:100%;
   height:100%;
   display:block;
-}
-
-.banner-slider a{
   position:relative;
   color:#fff;
   text-decoration:none;
@@ -86,11 +169,11 @@ header{
   left:0;
   right:0;
   bottom:0;
-  padding:70px 40px 35px;
+  padding:75px 40px 38px;
   color:#fff;
   background:linear-gradient(
     transparent,
-    rgba(0,0,0,.85)
+    rgba(0,0,0,.88)
   );
 }
 
@@ -127,6 +210,11 @@ header{
   right:18px;
 }
 
+.banner-prev:hover,
+.banner-next:hover{
+  background:rgba(0,0,0,.8);
+}
+
 .banner-dots{
   position:absolute;
   bottom:13px;
@@ -154,14 +242,8 @@ header{
 }
 
 /* =========================
-   CONTENEDOR
+   TITULO PRODUCTOS
 ========================= */
-
-.contenedor{
-  max-width:1200px;
-  margin:auto;
-  padding:0 20px 55px;
-}
 
 .titulo-seccion{
   text-align:center;
@@ -175,96 +257,6 @@ header{
 
 .titulo-seccion p{
   color:#777;
-}
-
-/* =========================
-   BUSCADOR
-========================= */
-
-.buscador{
-  width:100%;
-  max-width:550px;
-  margin:0 auto 25px;
-}
-
-.buscador input{
-  width:100%;
-  padding:14px 18px;
-  border:1px solid #ddd;
-  border-radius:30px;
-  background:#fff;
-  font-size:15px;
-  outline:none;
-  box-shadow:0 2px 10px rgba(0,0,0,.05);
-}
-
-/* =========================
-   BENEFICIOS
-========================= */
-
-.beneficios{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:35px;
-}
-
-.beneficio{
-  background:#fff;
-  border-radius:15px;
-  padding:20px 12px;
-  text-align:center;
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
-}
-
-.beneficio-icono{
-  font-size:27px;
-  margin-bottom:8px;
-}
-
-.beneficio strong{
-  display:block;
-  margin-bottom:5px;
-}
-
-.beneficio span{
-  color:#777;
-  font-size:13px;
-}
-
-/* =========================
-   CATEGORIAS
-========================= */
-
-.barra{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:25px;
-  flex-wrap:wrap;
-}
-
-.categorias{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.categorias button{
-  border:1px solid #ddd;
-  background:#fff;
-  padding:11px 16px;
-  border-radius:25px;
-  cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-
-.categorias button:hover,
-.categorias button.activo{
-  background:#111;
-  color:#fff;
-  border-color:#111;
 }
 
 /* =========================
@@ -347,6 +339,53 @@ header{
   cursor:pointer;
   font-size:15px;
   font-weight:bold;
+}
+
+.agregar:hover{
+  background:#222;
+}
+
+/* =========================
+   PAGOS
+========================= */
+
+.pagos{
+  background:#111;
+  color:#fff;
+  padding:45px 20px;
+  text-align:center;
+}
+
+.pagos h2{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.pagos p{
+  color:#bbb;
+  margin-bottom:25px;
+}
+
+.pagos-grid{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.pago{
+  min-width:150px;
+  background:#1d1d1d;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:18px;
+}
+
+.pago strong{
+  display:block;
+  margin-top:7px;
 }
 
 /* =========================
@@ -442,7 +481,7 @@ textarea{
 }
 
 /* =========================
-   BOTON IMAGEN
+   IMAGENES
 ========================= */
 
 .campo-imagen{
@@ -609,49 +648,6 @@ input[type="file"]{
 }
 
 /* =========================
-   PAGOS
-========================= */
-
-.pagos{
-  background:#111;
-  color:#fff;
-  padding:45px 20px;
-  text-align:center;
-}
-
-.pagos h2{
-  font-size:28px;
-  margin-bottom:8px;
-}
-
-.pagos p{
-  color:#bbb;
-  margin-bottom:25px;
-}
-
-.pagos-grid{
-  max-width:1000px;
-  margin:auto;
-  display:flex;
-  justify-content:center;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.pago{
-  min-width:150px;
-  background:#1d1d1d;
-  border:1px solid #333;
-  border-radius:12px;
-  padding:18px;
-}
-
-.pago strong{
-  display:block;
-  margin-top:7px;
-}
-
-/* =========================
    FOOTER
 ========================= */
 
@@ -716,18 +712,32 @@ footer{
     grid-template-columns:repeat(3,1fr);
   }
 
-  .beneficios{
-    grid-template-columns:repeat(2,1fr);
-  }
-
 }
 
 @media(max-width:700px){
 
+  header{
+    min-height:90px;
+    padding:15px;
+  }
+
+  .logo{
+    max-width:210px;
+    max-height:65px;
+  }
+
+  .logo-texto{
+    font-size:25px;
+  }
+
+  .contenedor{
+    padding:18px 12px 45px;
+  }
+
   .banner-container{
     height:230px;
-    margin:15px 10px 25px;
-    width:calc(100% - 20px);
+    margin-bottom:25px;
+    border-radius:15px;
   }
 
   .banner-texto{
@@ -742,8 +752,19 @@ footer{
     font-size:13px;
   }
 
-  .contenedor{
-    padding:0 12px 45px;
+  .banner-prev,
+  .banner-next{
+    width:38px;
+    height:38px;
+    font-size:25px;
+  }
+
+  .banner-prev{
+    left:10px;
+  }
+
+  .banner-next{
+    right:10px;
   }
 
   .productos{
@@ -772,12 +793,9 @@ footer{
     font-size:20px;
   }
 
-  .beneficios{
-    gap:10px;
-  }
-
-  .beneficio{
-    padding:15px 8px;
+  .categorias button{
+    padding:9px 13px;
+    font-size:13px;
   }
 
   .carrito-btn{
@@ -787,11 +805,41 @@ footer{
 
 }
 
+/* =========================
+   MOVIL PEQUEÑO
+========================= */
+
+@media(max-width:400px){
+
+  .productos{
+    gap:8px;
+  }
+
+  .producto img{
+    height:150px;
+  }
+
+  .producto-info{
+    padding:10px;
+  }
+
+  .agregar{
+    font-size:13px;
+    padding:10px;
+  }
+
+}
+
 </style>
 
 </head>
 
 <body>
+
+
+<!-- =========================
+     LOGO
+========================= -->
 
 <header>
 
@@ -803,38 +851,14 @@ footer{
     style="display:none;"
   >
 
-  <div class="logo-texto" id="logoTexto">
+  <div
+    class="logo-texto"
+    id="logoTexto"
+  >
     TEKNO ACTIVA
   </div>
 
 </header>
-
-
-<!-- =========================
-     BANNER
-========================= -->
-
-<div class="banner-container">
-
-  <div id="bannerSlider" class="banner-slider"></div>
-
-  <button
-    class="banner-prev"
-    onclick="bannerAnterior()"
-  >
-    ‹
-  </button>
-
-  <button
-    class="banner-next"
-    onclick="bannerSiguiente()"
-  >
-    ›
-  </button>
-
-  <div id="bannerDots" class="banner-dots"></div>
-
-</div>
 
 
 <!-- =========================
@@ -843,16 +867,8 @@ footer{
 
 <div class="contenedor">
 
-  <div class="titulo-seccion">
 
-    <h1>Productos destacados</h1>
-
-    <p>
-      Tecnología y accesorios para tu día a día
-    </p>
-
-  </div>
-
+  <!-- BUSCADOR -->
 
   <div class="buscador">
 
@@ -866,34 +882,7 @@ footer{
   </div>
 
 
-  <div class="beneficios">
-
-    <div class="beneficio">
-      <div class="beneficio-icono">🚚</div>
-      <strong>Envíos</strong>
-      <span>Recibí tu pedido de forma segura.</span>
-    </div>
-
-    <div class="beneficio">
-      <div class="beneficio-icono">💳</div>
-      <strong>Medios de pago</strong>
-      <span>Elegí la forma de pago que prefieras.</span>
-    </div>
-
-    <div class="beneficio">
-      <div class="beneficio-icono">🔒</div>
-      <strong>Compra segura</strong>
-      <span>Comprá con tranquilidad.</span>
-    </div>
-
-    <div class="beneficio">
-      <div class="beneficio-icono">📲</div>
-      <strong>WhatsApp</strong>
-      <span>Consultanos directamente.</span>
-    </div>
-
-  </div>
-
+  <!-- CATEGORIAS -->
 
   <div class="barra">
 
@@ -927,6 +916,54 @@ footer{
   </div>
 
 
+  <!-- BANNER -->
+
+  <div class="banner-container">
+
+    <div
+      id="bannerSlider"
+      class="banner-slider"
+    ></div>
+
+    <button
+      class="banner-prev"
+      onclick="bannerAnterior()"
+    >
+      ‹
+    </button>
+
+    <button
+      class="banner-next"
+      onclick="bannerSiguiente()"
+    >
+      ›
+    </button>
+
+    <div
+      id="bannerDots"
+      class="banner-dots"
+    ></div>
+
+  </div>
+
+
+  <!-- TITULO -->
+
+  <div class="titulo-seccion">
+
+    <h1>
+      Productos destacados
+    </h1>
+
+    <p>
+      Tecnología y accesorios para tu día a día
+    </p>
+
+  </div>
+
+
+  <!-- PRODUCTOS -->
+
   <div
     id="productos"
     class="productos"
@@ -942,12 +979,14 @@ footer{
 
 
 <!-- =========================
-     PAGOS
+     FORMAS DE PAGO
 ========================= -->
 
 <section class="pagos">
 
-  <h2>Formas de pago</h2>
+  <h2>
+    Formas de pago
+  </h2>
 
   <p>
     Elegí la opción que te resulte más cómoda.
@@ -989,7 +1028,11 @@ footer{
   onclick="abrirCarrito()"
 >
   🛒 Carrito
-  <span id="contador">0</span>
+
+  <span id="contador">
+    0
+  </span>
+
 </button>
 
 
@@ -1000,7 +1043,9 @@ footer{
 
   <div class="modal-contenido">
 
-    <h2>🛒 Tu carrito</h2>
+    <h2>
+      🛒 Tu carrito
+    </h2>
 
     <div id="listaCarrito"></div>
 
@@ -1008,7 +1053,9 @@ footer{
 
       Total: $
 
-      <span id="total">0</span>
+      <span id="total">
+        0
+      </span>
 
     </div>
 
@@ -1042,7 +1089,9 @@ footer{
 
   <div class="modal-contenido">
 
-    <h2>🔐 Acceso</h2>
+    <h2>
+      🔐 Acceso
+    </h2>
 
     <p style="margin-bottom:15px;">
       Ingresá con tu cuenta.
@@ -1053,7 +1102,9 @@ footer{
       class="error"
     ></div>
 
-    <label>Email</label>
+    <label>
+      Email
+    </label>
 
     <input
       id="loginEmail"
@@ -1062,7 +1113,9 @@ footer{
       autocomplete="username"
     >
 
-    <label>Contraseña</label>
+    <label>
+      Contraseña
+    </label>
 
     <input
       id="loginPassword"
@@ -1101,7 +1154,9 @@ footer{
 
   <div class="modal-contenido">
 
-    <h2>⚙️ Panel privado</h2>
+    <h2>
+      ⚙️ Panel privado
+    </h2>
 
     <div class="admin-estado">
       🔓 Sesión activa
@@ -1128,7 +1183,9 @@ footer{
     ></div>
 
 
-    <label>Nombre</label>
+    <label>
+      Nombre
+    </label>
 
     <input
       id="nombre"
@@ -1137,7 +1194,9 @@ footer{
     >
 
 
-    <label>Precio</label>
+    <label>
+      Precio
+    </label>
 
     <input
       id="precio"
@@ -1146,7 +1205,9 @@ footer{
     >
 
 
-    <label>Precio anterior</label>
+    <label>
+      Precio anterior
+    </label>
 
     <input
       id="precioAnterior"
@@ -1155,7 +1216,9 @@ footer{
     >
 
 
-    <label>Categoría</label>
+    <label>
+      Categoría
+    </label>
 
     <select id="categoria">
 
@@ -1178,7 +1241,9 @@ footer{
     </select>
 
 
-    <label>Descripción</label>
+    <label>
+      Descripción
+    </label>
 
     <textarea
       id="descripcion"
@@ -1186,9 +1251,7 @@ footer{
     ></textarea>
 
 
-    <!-- =========================
-         IMAGEN PRODUCTO
-    ========================= -->
+    <!-- IMAGEN PRODUCTO -->
 
     <div class="campo-imagen">
 
@@ -1244,9 +1307,77 @@ footer{
     <hr style="margin:25px 0;">
 
 
-    <!-- =========================
-         BANNER
-    ========================= -->
+    <!-- LOGO -->
+
+    <h3 style="margin-bottom:10px;">
+      🏷️ Logo de Tekno Activa
+    </h3>
+
+    <div
+      id="logoError"
+      class="error"
+    ></div>
+
+    <div
+      id="logoExito"
+      class="exito"
+    ></div>
+
+    <div class="campo-imagen">
+
+      <label>
+        🖼️ Imagen del logo
+      </label>
+
+      <input
+        type="file"
+        id="logoArchivo"
+        accept="image/*"
+        onchange="previsualizarImagen('logoArchivo','previewLogo')"
+      >
+
+      <img
+        id="previewLogo"
+        class="preview-imagen"
+        alt="Vista previa del logo"
+      >
+
+      <div
+        id="subiendoLogo"
+        class="subiendo"
+      >
+        ⏳ Subiendo logo...
+      </div>
+
+    </div>
+
+
+    <label>
+      URL del logo
+      <small style="color:#777;">
+        (opcional)
+      </small>
+    </label>
+
+    <input
+      id="logoUrl"
+      type="text"
+      placeholder="O pegá una URL https://..."
+    >
+
+
+    <button
+      class="guardar"
+      onclick="guardarLogo()"
+    >
+      🏷️ Guardar logo
+    </button>
+
+
+    <hr style="margin:25px 0;">
+
+
+    <!-- BANNER -->
 
     <h3 style="margin-bottom:10px;">
       🖼️ Agregar banner
@@ -1306,7 +1437,9 @@ footer{
     >
 
 
-    <label>Título</label>
+    <label>
+      Título
+    </label>
 
     <input
       id="bannerTitulo"
@@ -1315,7 +1448,9 @@ footer{
     >
 
 
-    <label>Texto</label>
+    <label>
+      Texto
+    </label>
 
     <input
       id="bannerTexto"
@@ -1324,7 +1459,9 @@ footer{
     >
 
 
-    <label>Enlace opcional</label>
+    <label>
+      Enlace opcional
+    </label>
 
     <input
       id="bannerEnlace"
@@ -1444,21 +1581,12 @@ const supabaseCliente =
    WHATSAPP
 ===================================================== */
 
-/*
-   PONÉ ACÁ TU NÚMERO.
-
-   Ejemplo:
-   5492641234567
-
-   Sin +, sin espacios y sin guiones.
-*/
-
 const NUMERO_WHATSAPP =
   "549264XXXXXXXX";
 
 
 /* =====================================================
-   CONFIGURACIÓN STORAGE
+   STORAGE
 ===================================================== */
 
 const BUCKET_IMAGENES =
@@ -1492,6 +1620,8 @@ document.addEventListener(
 
     cargarCarrito();
 
+    await cargarLogo();
+
     await cargarProductos();
 
     await cargarBanners();
@@ -1503,7 +1633,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   SUBIR IMAGEN A SUPABASE STORAGE
+   SUBIR IMAGEN
 ===================================================== */
 
 async function subirImagen(
@@ -1515,7 +1645,6 @@ async function subirImagen(
     return null;
   }
 
-
   if(!archivo.type.startsWith("image/")){
 
     throw new Error(
@@ -1524,13 +1653,11 @@ async function subirImagen(
 
   }
 
-
   const extension =
     archivo.name
       .split(".")
       .pop()
       .toLowerCase();
-
 
   const nombreArchivo =
     Date.now() +
@@ -1541,12 +1668,10 @@ async function subirImagen(
     "." +
     extension;
 
-
   const ruta =
     carpeta +
     "/" +
     nombreArchivo;
-
 
   const resultado =
     await supabaseCliente
@@ -1561,7 +1686,6 @@ async function subirImagen(
         }
       );
 
-
   if(resultado.error){
 
     throw new Error(
@@ -1570,13 +1694,11 @@ async function subirImagen(
 
   }
 
-
   const url =
     supabaseCliente
       .storage
       .from(BUCKET_IMAGENES)
       .getPublicUrl(ruta);
-
 
   return url.data.publicUrl;
 
@@ -1584,7 +1706,7 @@ async function subirImagen(
 
 
 /* =====================================================
-   PREVISUALIZAR IMAGEN
+   PREVISUALIZAR
 ===================================================== */
 
 function previsualizarImagen(
@@ -1597,7 +1719,6 @@ function previsualizarImagen(
 
   const preview =
     document.getElementById(previewId);
-
 
   if(
     !input ||
@@ -1612,14 +1733,11 @@ function previsualizarImagen(
 
   }
 
-
   const archivo =
     input.files[0];
 
-
   const lector =
     new FileReader();
-
 
   lector.onload =
     function(event){
@@ -1632,14 +1750,254 @@ function previsualizarImagen(
 
     };
 
-
   lector.readAsDataURL(archivo);
 
 }
 
 
 /* =====================================================
-   CARGAR PRODUCTOS
+   LOGO
+===================================================== */
+
+async function cargarLogo(){
+
+  const resultado =
+    await supabaseCliente
+      .from("configuracion")
+      .select("*")
+      .eq("clave","logo")
+      .maybeSingle();
+
+
+  if(resultado.error){
+
+    console.log(
+      "No se pudo cargar logo:",
+      resultado.error.message
+    );
+
+    return;
+
+  }
+
+
+  if(
+    resultado.data &&
+    resultado.data.valor
+  ){
+
+    mostrarLogo(
+      resultado.data.valor
+    );
+
+  }
+
+}
+
+
+function mostrarLogo(url){
+
+  const imagen =
+    document.getElementById(
+      "logoImagen"
+    );
+
+  const texto =
+    document.getElementById(
+      "logoTexto"
+    );
+
+
+  if(!url){
+
+    imagen.style.display =
+      "none";
+
+    texto.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  imagen.src = url;
+
+  imagen.style.display =
+    "block";
+
+  texto.style.display =
+    "none";
+
+
+  imagen.onerror =
+    function(){
+
+      imagen.style.display =
+        "none";
+
+      texto.style.display =
+        "block";
+
+    };
+
+}
+
+
+/* =====================================================
+   GUARDAR LOGO
+===================================================== */
+
+async function guardarLogo(){
+
+  const error =
+    document.getElementById(
+      "logoError"
+    );
+
+  const exito =
+    document.getElementById(
+      "logoExito"
+    );
+
+
+  ocultarMensaje(
+    "logoError"
+  );
+
+  ocultarMensaje(
+    "logoExito"
+  );
+
+
+  const url =
+    document.getElementById(
+      "logoUrl"
+    ).value.trim();
+
+
+  const archivo =
+    document.getElementById(
+      "logoArchivo"
+    ).files[0];
+
+
+  if(
+    !archivo &&
+    !url
+  ){
+
+    mostrarMensaje(
+      error,
+      "Elegí una imagen o pegá una URL."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    let imagenFinal =
+      url || null;
+
+
+    if(archivo){
+
+      document.getElementById(
+        "subiendoLogo"
+      ).style.display =
+        "block";
+
+
+      imagenFinal =
+        await subirImagen(
+          archivo,
+          "logo"
+        );
+
+
+      document.getElementById(
+        "subiendoLogo"
+      ).style.display =
+        "none";
+
+    }
+
+
+    const resultado =
+      await supabaseCliente
+        .from("configuracion")
+        .upsert(
+          {
+            clave:"logo",
+            valor:imagenFinal
+          },
+          {
+            onConflict:"clave"
+          }
+        );
+
+
+    if(resultado.error){
+
+      throw new Error(
+        resultado.error.message
+      );
+
+    }
+
+
+    mostrarLogo(
+      imagenFinal
+    );
+
+
+    mostrarMensaje(
+      exito,
+      "✅ Logo guardado correctamente."
+    );
+
+
+    document.getElementById(
+      "logoUrl"
+    ).value = "";
+
+
+    document.getElementById(
+      "logoArchivo"
+    ).value = "";
+
+
+    document.getElementById(
+      "previewLogo"
+    ).style.display =
+      "none";
+
+
+  }catch(err){
+
+    document.getElementById(
+      "subiendoLogo"
+    ).style.display =
+      "none";
+
+
+    mostrarMensaje(
+      error,
+      "❌ " + err.message
+    );
+
+    console.error(err);
+
+  }
+
+}
+
+
+/* =====================================================
+   PRODUCTOS
 ===================================================== */
 
 async function cargarProductos(){
@@ -1648,7 +2006,10 @@ async function cargarProductos(){
     await supabaseCliente
       .from("productos")
       .select("*")
-      .order("id",{ascending:false});
+      .order(
+        "id",
+        {ascending:false}
+      );
 
 
   if(resultado.error){
@@ -1705,12 +2066,18 @@ function mostrarProductos(){
     );
 
 
+  const inputBusqueda =
+    document.getElementById(
+      "busqueda"
+    );
+
+
   const busqueda =
-    document
-      .getElementById("busqueda")
-      .value
-      .toLowerCase()
-      .trim();
+    inputBusqueda
+      ? inputBusqueda.value
+          .toLowerCase()
+          .trim()
+      : "";
 
 
   const lista =
@@ -1721,7 +2088,8 @@ function mostrarProductos(){
           categoriaActual === "todos" ||
           String(
             producto.categoria || ""
-          ).toLowerCase()
+          )
+          .toLowerCase()
           === categoriaActual;
 
 
@@ -1738,7 +2106,8 @@ function mostrarProductos(){
             String(
               producto.categoria || ""
             )
-          ).toLowerCase();
+          )
+          .toLowerCase();
 
 
         return (
@@ -1791,21 +2160,25 @@ function mostrarProductos(){
 
         let oferta = "";
 
+
         if(
           precioAnterior > precio &&
           precioAnterior > 0
         ){
 
           oferta = `
+
             <span class="oferta">
               OFERTA
             </span>
+
           `;
 
         }
 
 
         let anterior = "";
+
 
         if(
           precioAnterior > precio &&
@@ -1837,7 +2210,8 @@ function mostrarProductos(){
             <img
               src="${escaparHTML(imagen)}"
               alt="${escaparHTML(
-                producto.nombre || "Producto"
+                producto.nombre ||
+                "Producto"
               )}"
               onerror="
                 this.src='https://via.placeholder.com/500x400?text=Imagen+no+disponible'
@@ -1852,14 +2226,16 @@ function mostrarProductos(){
 
               <h3>
                 ${escaparHTML(
-                  producto.nombre || "Producto"
+                  producto.nombre ||
+                  "Producto"
                 )}
               </h3>
 
 
               <p>
                 ${escaparHTML(
-                  producto.descripcion || ""
+                  producto.descripcion ||
+                  ""
                 )}
               </p>
 
@@ -1931,7 +2307,9 @@ function filtrar(categoria){
 
         if(
           accion.includes(
-            "'" + categoria + "'"
+            "'" +
+            categoria +
+            "'"
           )
         ){
 
@@ -1950,10 +2328,6 @@ function filtrar(categoria){
 }
 
 
-/* =====================================================
-   BUSCAR
-===================================================== */
-
 function buscarProductos(){
 
   mostrarProductos();
@@ -1967,8 +2341,12 @@ function buscarProductos(){
 
 function formatearPrecio(numero){
 
-  return Number(numero || 0)
-    .toLocaleString("es-AR");
+  return Number(
+    numero || 0
+  )
+  .toLocaleString(
+    "es-AR"
+  );
 
 }
 
@@ -2021,7 +2399,9 @@ function cargarCarrito(){
     if(guardado){
 
       carrito =
-        JSON.parse(guardado);
+        JSON.parse(
+          guardado
+        );
 
     }
 
@@ -2050,8 +2430,11 @@ function agregarAlCarrito(id){
     productos.find(
       function(item){
 
-        return Number(item.id)
-          === Number(id);
+        return Number(
+          item.id
+        )
+        ===
+        Number(id);
 
       }
     );
@@ -2072,8 +2455,11 @@ function agregarAlCarrito(id){
     carrito.find(
       function(item){
 
-        return Number(item.id)
-          === Number(id);
+        return Number(
+          item.id
+        )
+        ===
+        Number(id);
 
       }
     );
@@ -2106,6 +2492,7 @@ function agregarAlCarrito(id){
 
   actualizarCarrito();
 
+
   alert(
     "✅ " +
     producto.nombre +
@@ -2128,7 +2515,9 @@ function actualizarCarrito(){
       function(total,item){
 
         return total +
-          Number(item.cantidad || 0);
+          Number(
+            item.cantidad || 0
+          );
 
       },
       0
@@ -2181,8 +2570,12 @@ function actualizarCarrito(){
       function(item,index){
 
         const subtotal =
-          Number(item.precio) *
-          Number(item.cantidad);
+          Number(
+            item.precio
+          ) *
+          Number(
+            item.cantidad
+          );
 
 
         total += subtotal;
@@ -2254,7 +2647,9 @@ function actualizarCarrito(){
   document.getElementById(
     "total"
   ).textContent =
-    formatearPrecio(total);
+    formatearPrecio(
+      total
+    );
 
 }
 
@@ -2276,7 +2671,10 @@ function cambiarCantidad(
     carrito[index].cantidad <= 0
   ){
 
-    carrito.splice(index,1);
+    carrito.splice(
+      index,
+      1
+    );
 
   }
 
@@ -2344,7 +2742,7 @@ function enviarWhatsApp(){
 
   if(
     NUMERO_WHATSAPP.includes(
-      "XXXXXXXX"
+      "5492646181163"
     )
   ){
 
@@ -2404,7 +2802,9 @@ function enviarWhatsApp(){
 
   mensaje +=
     "💰 *TOTAL: $" +
-    formatearPrecio(total) +
+    formatearPrecio(
+      total
+    ) +
     "*";
 
 
@@ -2554,11 +2954,13 @@ async function iniciarSesion(){
 
   await cargarBanners();
 
+  await cargarLogo();
+
 }
 
 
 /* =====================================================
-   CERRAR SESIÓN
+   CERRAR SESION
 ===================================================== */
 
 async function cerrarSesion(){
@@ -2676,7 +3078,10 @@ async function guardarProducto(){
   }
 
 
-  if(!precio || precio <= 0){
+  if(
+    !precio ||
+    precio <= 0
+  ){
 
     mostrarMensaje(
       error,
@@ -2740,7 +3145,9 @@ async function guardarProducto(){
     const resultado =
       await supabaseCliente
         .from("productos")
-        .insert([datos]);
+        .insert([
+          datos
+        ]);
 
 
     if(resultado.error){
@@ -2914,7 +3321,10 @@ async function eliminarProducto(id){
     await supabaseCliente
       .from("productos")
       .delete()
-      .eq("id",id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if(resultado.error){
@@ -2949,8 +3359,16 @@ async function cargarBanners(){
     await supabaseCliente
       .from("banners")
       .select("*")
-      .eq("activo",true)
-      .order("id",{ascending:false});
+      .eq(
+        "activo",
+        true
+      )
+      .order(
+        "id",
+        {
+          ascending:false
+        }
+      );
 
 
   if(resultado.error){
@@ -2959,6 +3377,8 @@ async function cargarBanners(){
       "Error banners:",
       resultado.error
     );
+
+    mostrarBanner();
 
     return;
 
@@ -2993,6 +3413,19 @@ function mostrarBanner(){
     document.getElementById(
       "bannerDots"
     );
+
+
+  if(
+    !slider ||
+    !dots
+  ){
+
+    return;
+
+  }
+
+
+  detenerBanner();
 
 
   if(banners.length === 0){
@@ -3035,9 +3468,17 @@ function mostrarBanner(){
 
     dots.innerHTML = "";
 
-    detenerBanner();
-
     return;
+
+  }
+
+
+  if(
+    bannerActual < 0
+  ){
+
+    bannerActual =
+      banners.length - 1;
 
   }
 
@@ -3052,21 +3493,37 @@ function mostrarBanner(){
 
 
   const banner =
-    banners[bannerActual];
+    banners[
+      bannerActual
+    ];
 
 
   const enlace =
-    banner.enlace || "#";
+    banner.enlace || "";
+
+
+  const destino =
+    enlace
+      ? escaparHTML(enlace)
+      : "#";
+
+
+  const target =
+    enlace
+      ? 'target="_blank"'
+      : '';
 
 
   slider.innerHTML = `
 
     <a
-      href="${escaparHTML(enlace)}"
-      ${enlace !== "#" ?
-        'target="_blank"' :
-        ''
-      }
+      href="${destino}"
+      ${target}
+      onclick="${
+        enlace
+          ? ""
+          : "return false;"
+      }"
     >
 
       <img
@@ -3074,24 +3531,41 @@ function mostrarBanner(){
           banner.imagen || ""
         )}"
         alt="${escaparHTML(
-          banner.titulo || "Banner"
+          banner.titulo ||
+          "Banner"
         )}"
+        onerror="
+          this.style.display='none';
+        "
       >
 
 
       <div class="banner-texto">
 
-        <h2>
-          ${escaparHTML(
-            banner.titulo || ""
-          )}
-        </h2>
+        ${
+          banner.titulo
+            ? `
+              <h2>
+                ${escaparHTML(
+                  banner.titulo
+                )}
+              </h2>
+            `
+            : ""
+        }
 
-        <p>
-          ${escaparHTML(
-            banner.texto || ""
-          )}
-        </p>
+
+        ${
+          banner.texto
+            ? `
+              <p>
+                ${escaparHTML(
+                  banner.texto
+                )}
+              </p>
+            `
+            : ""
+        }
 
       </div>
 
@@ -3126,10 +3600,19 @@ function mostrarBanner(){
 }
 
 
+/* =====================================================
+   SIGUIENTE
+===================================================== */
+
 function bannerSiguiente(){
 
-  if(banners.length === 0)
+  if(
+    banners.length <= 1
+  ){
+
     return;
+
+  }
 
 
   bannerActual++;
@@ -3149,10 +3632,19 @@ function bannerSiguiente(){
 }
 
 
+/* =====================================================
+   ANTERIOR
+===================================================== */
+
 function bannerAnterior(){
 
-  if(banners.length === 0)
+  if(
+    banners.length <= 1
+  ){
+
     return;
+
+  }
 
 
   bannerActual--;
@@ -3173,7 +3665,21 @@ function bannerAnterior(){
 }
 
 
+/* =====================================================
+   IR A BANNER
+===================================================== */
+
 function irBanner(index){
+
+  if(
+    index < 0 ||
+    index >= banners.length
+  ){
+
+    return;
+
+  }
+
 
   bannerActual =
     index;
@@ -3185,7 +3691,7 @@ function irBanner(index){
 
 
 /* =====================================================
-   BANNER AUTOMÁTICO
+   BANNER AUTOMATICO
 ===================================================== */
 
 function iniciarBannerAutomatico(){
@@ -3193,19 +3699,36 @@ function iniciarBannerAutomatico(){
   detenerBanner();
 
 
-  if(banners.length <= 1)
+  if(
+    banners.length <= 1
+  ){
+
     return;
+
+  }
 
 
   intervaloBanner =
     setInterval(
       function(){
 
+        if(
+          banners.length <= 1
+        ){
+
+          detenerBanner();
+
+          return;
+
+        }
+
+
         bannerActual++;
 
 
         if(
-          bannerActual >= banners.length
+          bannerActual >=
+          banners.length
         ){
 
           bannerActual = 0;
@@ -3222,6 +3745,10 @@ function iniciarBannerAutomatico(){
 }
 
 
+/* =====================================================
+   DETENER BANNER
+===================================================== */
+
 function detenerBanner(){
 
   if(intervaloBanner){
@@ -3230,7 +3757,8 @@ function detenerBanner(){
       intervaloBanner
     );
 
-    intervaloBanner = null;
+    intervaloBanner =
+      null;
 
   }
 
@@ -3340,7 +3868,8 @@ async function guardarBanner(){
 
     const datos = {
 
-      imagen:imagenFinal,
+      imagen:
+        imagenFinal,
 
       titulo:
         titulo || null,
@@ -3351,7 +3880,8 @@ async function guardarBanner(){
       enlace:
         enlace || null,
 
-      activo:true
+      activo:
+        true
 
     };
 
@@ -3359,7 +3889,9 @@ async function guardarBanner(){
     const resultado =
       await supabaseCliente
         .from("banners")
-        .insert([datos]);
+        .insert([
+          datos
+        ]);
 
 
     if(resultado.error){
@@ -3451,7 +3983,9 @@ function mostrarMensaje(
 function ocultarMensaje(id){
 
   const elemento =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
 
   if(elemento){
@@ -3491,7 +4025,8 @@ window.addEventListener(
 
 
     if(
-      event.target === modalCarrito
+      event.target ===
+      modalCarrito
     ){
 
       cerrarCarrito();
@@ -3500,7 +4035,8 @@ window.addEventListener(
 
 
     if(
-      event.target === modalLogin
+      event.target ===
+      modalLogin
     ){
 
       cerrarLogin();
@@ -3509,7 +4045,8 @@ window.addEventListener(
 
 
     if(
-      event.target === modalAdmin
+      event.target ===
+      modalAdmin
     ){
 
       cerrarAdmin();
@@ -3532,7 +4069,8 @@ document.addEventListener(
       event.key === "Enter" &&
       document.getElementById(
         "modalLogin"
-      ).style.display === "block"
+      ).style.display ===
+        "block"
     ){
 
       iniciarSesion();
@@ -3544,7 +4082,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   SESIÓN
+   SESION
 ===================================================== */
 
 supabaseCliente
@@ -3563,4 +4101,5 @@ supabaseCliente
 </script>
 
 </body>
+
 </html>
