@@ -2232,3 +2232,1850 @@ footer{
   </div>
 
 </footer>
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+  "https://emjknuwvbvqonafckwce.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
+
+
+const supabaseCliente =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+/*
+   CAMBIÁ ESTO POR TU NÚMERO.
+
+   Ejemplo San Juan:
+   5492641234567
+*/
+
+const NUMERO_WHATSAPP =
+  "549264XXXXXXXX";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let productos = [];
+
+let banners = [];
+
+let carrito = [];
+
+let categoriaActual = "todos";
+
+let bannerActual = 0;
+
+let intervaloBanner = null;
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function(){
+
+    cargarCarrito();
+
+    await cargarProductos();
+
+    await cargarBanners();
+
+    actualizarCarrito();
+
+  }
+);
+
+
+/* =====================================================
+   CARGAR PRODUCTOS
+===================================================== */
+
+async function cargarProductos(){
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .select("*")
+      .order("id",{ascending:false});
+
+
+  if(resultado.error){
+
+    console.error(
+      "Error productos:",
+      resultado.error
+    );
+
+
+    document.getElementById(
+      "productos"
+    ).innerHTML = `
+
+      <div class="sin-productos">
+
+        ⚠️ No se pudieron cargar los productos.
+
+        <p style="margin-top:10px;">
+          ${resultado.error.message}
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  productos =
+    resultado.data || [];
+
+
+  mostrarProductos();
+
+  mostrarAdminProductos();
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS
+===================================================== */
+
+function mostrarProductos(){
+
+  const contenedor =
+    document.getElementById(
+      "productos"
+    );
+
+
+  const busqueda =
+    document
+      .getElementById("busqueda")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const lista =
+    productos.filter(function(producto){
+
+      const coincideCategoria =
+        categoriaActual === "todos" ||
+        String(producto.categoria || "")
+          .toLowerCase()
+          === categoriaActual;
+
+
+      const texto = (
+
+        String(producto.nombre || "") +
+        " " +
+        String(producto.descripcion || "") +
+        " " +
+        String(producto.categoria || "")
+
+      ).toLowerCase();
+
+
+      return (
+        coincideCategoria &&
+        texto.includes(busqueda)
+      );
+
+    });
+
+
+  if(lista.length === 0){
+
+    contenedor.innerHTML = `
+
+      <div class="sin-productos">
+
+        <h3>
+          😕 No encontramos productos
+        </h3>
+
+        <p style="margin-top:8px;">
+          Probá con otra búsqueda.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  contenedor.innerHTML =
+    lista.map(function(producto){
+
+      const precio =
+        Number(producto.precio || 0);
+
+
+      const precioAnterior =
+        Number(
+          producto.precio_anterior || 0
+        );
+
+
+      let oferta = "";
+
+      if(
+        precioAnterior > precio &&
+        precioAnterior > 0
+      ){
+
+        oferta = `
+          <span class="oferta">
+            OFERTA
+          </span>
+        `;
+
+      }
+
+
+      let anterior = "";
+
+      if(
+        precioAnterior > precio &&
+        precioAnterior > 0
+      ){
+
+        anterior = `
+
+          <div class="precio-anterior">
+            $${formatearPrecio(precioAnterior)}
+          </div>
+
+        `;
+
+      }
+
+
+      const imagen =
+        producto.imagen ||
+        "https://via.placeholder.com/500x400?text=Tekno+Activa";
+
+
+      return `
+
+        <div class="producto">
+
+          <img
+            src="${escaparHTML(imagen)}"
+            alt="${escaparHTML(producto.nombre || "Producto")}"
+            onerror="this.src='https://via.placeholder.com/500x400?text=Imagen+no+disponible'"
+          >
+
+
+          <div class="producto-info">
+
+            ${oferta}
+
+
+            <h3>
+              ${escaparHTML(
+                producto.nombre || "Producto"
+              )}
+            </h3>
+
+
+            <p>
+              ${escaparHTML(
+                producto.descripcion || ""
+              )}
+            </p>
+
+
+            ${anterior}
+
+
+            <div class="precio">
+
+              $${formatearPrecio(precio)}
+
+            </div>
+
+
+            <button
+              class="agregar"
+              onclick="agregarAlCarrito(${Number(producto.id)})"
+            >
+
+              🛒 Agregar al carrito
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   FILTRAR
+===================================================== */
+
+function filtrar(categoria){
+
+  categoriaActual =
+    categoria;
+
+
+  document
+    .querySelectorAll(".categorias button")
+    .forEach(function(boton){
+
+      boton.classList.remove("activo");
+
+    });
+
+
+  const botones =
+    document.querySelectorAll(
+      ".categorias button"
+    );
+
+
+  botones.forEach(function(boton){
+
+    const accion =
+      boton.getAttribute("onclick") || "";
+
+
+    if(
+      accion.includes(
+        "'" + categoria + "'"
+      )
+    ){
+
+      boton.classList.add("activo");
+
+    }
+
+  });
+
+
+  mostrarProductos();
+
+}
+
+
+/* =====================================================
+   BUSCAR
+===================================================== */
+
+function buscarProductos(){
+
+  mostrarProductos();
+
+}
+
+
+/* =====================================================
+   FORMATEAR PRECIO
+===================================================== */
+
+function formatearPrecio(numero){
+
+  return Number(numero || 0)
+    .toLocaleString("es-AR");
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escaparHTML(texto){
+
+  return String(texto)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   CARRITO
+===================================================== */
+
+function cargarCarrito(){
+
+  try{
+
+    const guardado =
+      localStorage.getItem(
+        "teknoActivaCarrito"
+      );
+
+
+    if(guardado){
+
+      carrito =
+        JSON.parse(guardado);
+
+    }
+
+  }catch(error){
+
+    carrito = [];
+
+  }
+
+}
+
+
+function guardarCarrito(){
+
+  localStorage.setItem(
+    "teknoActivaCarrito",
+    JSON.stringify(carrito)
+  );
+
+}
+
+
+/* =====================================================
+   AGREGAR AL CARRITO
+===================================================== */
+
+function agregarAlCarrito(id){
+
+  const producto =
+    productos.find(function(item){
+
+      return Number(item.id) === Number(id);
+
+    });
+
+
+  if(!producto){
+
+    alert(
+      "Producto no encontrado."
+    );
+
+    return;
+
+  }
+
+
+  const existente =
+    carrito.find(function(item){
+
+      return Number(item.id) === Number(id);
+
+    });
+
+
+  if(existente){
+
+    existente.cantidad++;
+
+  }else{
+
+    carrito.push({
+
+      id:producto.id,
+
+      nombre:producto.nombre,
+
+      precio:Number(
+        producto.precio || 0
+      ),
+
+      cantidad:1
+
+    });
+
+  }
+
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+
+  alert(
+    "✅ " +
+    producto.nombre +
+    " agregado al carrito."
+  );
+
+}
+
+
+/* =====================================================
+   ACTUALIZAR CARRITO
+===================================================== */
+
+function actualizarCarrito(){
+
+  const contador =
+    document.getElementById(
+      "contador"
+    );
+
+
+  const cantidad =
+    carrito.reduce(
+      function(total,item){
+
+        return total + item.cantidad;
+
+      },
+      0
+    );
+
+
+  contador.textContent =
+    cantidad;
+
+
+  const lista =
+    document.getElementById(
+      "listaCarrito"
+    );
+
+
+  if(carrito.length === 0){
+
+    lista.innerHTML = `
+
+      <div
+        style="
+          text-align:center;
+          padding:25px;
+          color:#777;
+        "
+      >
+
+        🛒 Tu carrito está vacío.
+
+      </div>
+
+    `;
+
+
+    document.getElementById(
+      "total"
+    ).textContent = "0";
+
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  lista.innerHTML =
+    carrito.map(function(item,index){
+
+      const subtotal =
+        item.precio *
+        item.cantidad;
+
+
+      total += subtotal;
+
+
+      return `
+
+        <div class="item-carrito">
+
+          <div style="flex:1;">
+
+            <strong>
+              ${escaparHTML(item.nombre)}
+            </strong>
+
+            <div
+              style="
+                margin-top:5px;
+                color:#777;
+              "
+            >
+
+              $${formatearPrecio(
+                item.precio
+              )}
+              cada uno
+
+            </div>
+
+          </div>
+
+
+          <div class="cantidad">
+
+            <button
+              onclick="cambiarCantidad(${index},-1)"
+            >
+              −
+            </button>
+
+            <strong>
+              ${item.cantidad}
+            </strong>
+
+            <button
+              onclick="cambiarCantidad(${index},1)"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            class="eliminar"
+            onclick="eliminarDelCarrito(${index})"
+          >
+            🗑️
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    formatearPrecio(total);
+
+}
+
+
+/* =====================================================
+   CAMBIAR CANTIDAD
+===================================================== */
+
+function cambiarCantidad(index,cambio){
+
+  if(!carrito[index])
+    return;
+
+
+  carrito[index].cantidad +=
+    cambio;
+
+
+  if(
+    carrito[index].cantidad <= 0
+  ){
+
+    carrito.splice(index,1);
+
+  }
+
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+}
+
+
+/* =====================================================
+   ELIMINAR DEL CARRITO
+===================================================== */
+
+function eliminarDelCarrito(index){
+
+  carrito.splice(index,1);
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+}
+
+
+/* =====================================================
+   ABRIR / CERRAR CARRITO
+===================================================== */
+
+function abrirCarrito(){
+
+  document.getElementById(
+    "modalCarrito"
+  ).style.display =
+    "block";
+
+
+  actualizarCarrito();
+
+}
+
+
+function cerrarCarrito(){
+
+  document.getElementById(
+    "modalCarrito"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+function enviarWhatsApp(){
+
+  if(carrito.length === 0){
+
+    alert(
+      "🛒 El carrito está vacío."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    NUMERO_WHATSAPP.includes(
+      "5492646181163"
+    )
+  ){
+
+    alert(
+      "⚠️ Falta configurar tu número de WhatsApp."
+    );
+
+    return;
+
+  }
+
+
+  let mensaje =
+    "🛍️ *NUEVO PEDIDO - TEKNO ACTIVA*%0A%0A";
+
+
+  let total = 0;
+
+
+  carrito.forEach(function(item){
+
+    const subtotal =
+      item.precio *
+      item.cantidad;
+
+
+    total += subtotal;
+
+
+    mensaje +=
+      "📦 " +
+      encodeURIComponent(
+        item.nombre
+      ) +
+      "%0A" +
+
+      "Cantidad: " +
+      item.cantidad +
+      "%0A" +
+
+      "Precio: $" +
+      formatearPrecio(
+        item.precio
+      ) +
+      "%0A" +
+
+      "Subtotal: $" +
+      formatearPrecio(
+        subtotal
+      ) +
+      "%0A%0A";
+
+  });
+
+
+  mensaje +=
+    "💰 *TOTAL: $" +
+    formatearPrecio(total) +
+    "*";
+
+
+  const url =
+    "https://wa.me/" +
+    NUMERO_WHATSAPP +
+    "?text=" +
+    mensaje;
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+async function abrirAdmin(){
+
+  const resultado =
+    await supabaseCliente.auth.getSession();
+
+
+  const session =
+    resultado.data.session;
+
+
+  if(session){
+
+    document.getElementById(
+      "modalAdmin"
+    ).style.display =
+      "block";
+
+
+    mostrarAdminProductos();
+
+  }else{
+
+    document.getElementById(
+      "modalLogin"
+    ).style.display =
+      "block";
+
+  }
+
+}
+
+
+function cerrarLogin(){
+
+  document.getElementById(
+    "modalLogin"
+  ).style.display =
+    "none";
+
+
+  ocultarMensaje(
+    "loginError"
+  );
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function iniciarSesion(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
+
+
+  const password =
+    document.getElementById(
+      "loginPassword"
+    ).value;
+
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  ocultarMensaje(
+    "loginError"
+  );
+
+
+  if(!email || !password){
+
+    mostrarMensaje(
+      error,
+      "Completá email y contraseña."
+    );
+
+    return;
+
+  }
+
+
+  const resultado =
+    await supabaseCliente.auth
+      .signInWithPassword({
+
+        email:email,
+
+        password:password
+
+      });
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    return;
+
+  }
+
+
+  cerrarLogin();
+
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "block";
+
+
+  await cargarProductos();
+
+  await cargarBanners();
+
+  mostrarAdminProductos();
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+async function cerrarSesion(){
+
+  await supabaseCliente.auth.signOut();
+
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "none";
+
+
+  alert(
+    "🔒 Sesión cerrada."
+  );
+
+}
+
+
+function cerrarAdmin(){
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   GUARDAR PRODUCTO
+===================================================== */
+
+async function guardarProducto(){
+
+  const error =
+    document.getElementById(
+      "productoError"
+    );
+
+
+  const exito =
+    document.getElementById(
+      "productoExito"
+    );
+
+
+  ocultarMensaje(
+    "productoError"
+  );
+
+  ocultarMensaje(
+    "productoExito"
+  );
+
+
+  const nombre =
+    document.getElementById(
+      "nombre"
+    ).value.trim();
+
+
+  const precio =
+    Number(
+      document.getElementById(
+        "precio"
+      ).value
+    );
+
+
+  const precioAnterior =
+    Number(
+      document.getElementById(
+        "precioAnterior"
+      ).value || 0
+    );
+
+
+  const categoria =
+    document.getElementById(
+      "categoria"
+    ).value;
+
+
+  const descripcion =
+    document.getElementById(
+      "descripcion"
+    ).value.trim();
+
+
+  const imagen =
+    document.getElementById(
+      "imagen"
+    ).value.trim();
+
+
+  if(!nombre){
+
+    mostrarMensaje(
+      error,
+      "Ingresá el nombre del producto."
+    );
+
+    return;
+
+  }
+
+
+  if(!precio || precio <= 0){
+
+    mostrarMensaje(
+      error,
+      "Ingresá un precio válido."
+    );
+
+    return;
+
+  }
+
+
+  const datos = {
+
+    nombre:nombre,
+
+    precio:precio,
+
+    precio_anterior:
+      precioAnterior || null,
+
+    categoria:categoria,
+
+    descripcion:
+      descripcion || null,
+
+    imagen:
+      imagen || null
+
+  };
+
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .insert([datos]);
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    console.error(
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensaje(
+    exito,
+    "✅ Producto guardado correctamente."
+  );
+
+
+  document.getElementById(
+    "nombre"
+  ).value = "";
+
+
+  document.getElementById(
+    "precio"
+  ).value = "";
+
+
+  document.getElementById(
+    "precioAnterior"
+  ).value = "";
+
+
+  document.getElementById(
+    "descripcion"
+  ).value = "";
+
+
+  document.getElementById(
+    "imagen"
+  ).value = "";
+
+
+  await cargarProductos();
+
+}
+
+
+/* =====================================================
+   LISTA ADMIN
+===================================================== */
+
+function mostrarAdminProductos(){
+
+  const lista =
+    document.getElementById(
+      "adminLista"
+    );
+
+
+  if(!lista)
+    return;
+
+
+  if(productos.length === 0){
+
+    lista.innerHTML = `
+
+      <div
+        style="
+          text-align:center;
+          color:#777;
+          padding:20px;
+        "
+      >
+
+        No hay productos todavía.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  lista.innerHTML =
+    productos.map(function(producto){
+
+      return `
+
+        <div class="admin-producto">
+
+          <div>
+
+            <strong>
+              ${escaparHTML(
+                producto.nombre
+              )}
+            </strong>
+
+            <div style="margin-top:5px;">
+
+              $${formatearPrecio(
+                producto.precio
+              )}
+
+            </div>
+
+          </div>
+
+
+          <button
+            onclick="eliminarProducto(${Number(producto.id)})"
+          >
+
+            🗑️ Eliminar
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   ELIMINAR PRODUCTO
+===================================================== */
+
+async function eliminarProducto(id){
+
+  const confirmar =
+    confirm(
+      "¿Seguro que querés eliminar este producto?"
+    );
+
+
+  if(!confirmar)
+    return;
+
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .delete()
+      .eq("id",id);
+
+
+  if(resultado.error){
+
+    alert(
+      "❌ Error: " +
+      resultado.error.message
+    );
+
+    return;
+
+  }
+
+
+  await cargarProductos();
+
+
+  alert(
+    "✅ Producto eliminado."
+  );
+
+}
+
+
+/* =====================================================
+   BANNERS
+===================================================== */
+
+async function cargarBanners(){
+
+  const resultado =
+    await supabaseCliente
+      .from("banners")
+      .select("*")
+      .eq("activo",true)
+      .order("id",{ascending:false});
+
+
+  if(resultado.error){
+
+    console.error(
+      "Error banners:",
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  banners =
+    resultado.data || [];
+
+
+  bannerActual = 0;
+
+
+  mostrarBanner();
+
+}
+
+
+/* =====================================================
+   MOSTRAR BANNER
+===================================================== */
+
+function mostrarBanner(){
+
+  const slider =
+    document.getElementById(
+      "bannerSlider"
+    );
+
+
+  const dots =
+    document.getElementById(
+      "bannerDots"
+    );
+
+
+  if(banners.length === 0){
+
+    slider.innerHTML = `
+
+      <div
+        style="
+          width:100%;
+          height:100%;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          color:#fff;
+          background:#111;
+        "
+      >
+
+        <div style="text-align:center;">
+
+          <h2>
+            TEKNO ACTIVA
+          </h2>
+
+          <p
+            style="
+              margin-top:8px;
+              color:#bbb;
+            "
+          >
+            Tecnología y accesorios
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    dots.innerHTML = "";
+
+
+    detenerBanner();
+
+    return;
+
+  }
+
+
+  if(
+    bannerActual >= banners.length
+  ){
+
+    bannerActual = 0;
+
+  }
+
+
+  const banner =
+    banners[bannerActual];
+
+
+  const enlace =
+    banner.enlace ||
+    "#";
+
+
+  slider.innerHTML = `
+
+    <a
+      href="${escaparHTML(enlace)}"
+      ${enlace !== "#" ? 'target="_blank"' : ''}
+    >
+
+      <img
+        src="${escaparHTML(
+          banner.imagen || ""
+        )}"
+        alt="${escaparHTML(
+          banner.titulo || "Banner"
+        )}"
+      >
+
+
+      <div class="banner-texto">
+
+        <h2>
+          ${escaparHTML(
+            banner.titulo || ""
+          )}
+        </h2>
+
+        <p>
+          ${escaparHTML(
+            banner.texto || ""
+          )}
+        </p>
+
+      </div>
+
+    </a>
+
+  `;
+
+
+  dots.innerHTML =
+    banners.map(function(_,index){
+
+      return `
+
+        <button
+          class="${
+            index === bannerActual
+              ? "activo"
+              : ""
+          }"
+          onclick="irBanner(${index})"
+        ></button>
+
+      `;
+
+    }).join("");
+
+
+  iniciarBannerAutomatico();
+
+}
+
+
+function bannerSiguiente(){
+
+  if(banners.length === 0)
+    return;
+
+
+  bannerActual++;
+
+
+  if(
+    bannerActual >= banners.length
+  ){
+
+    bannerActual = 0;
+
+  }
+
+
+  mostrarBanner();
+
+}
+
+
+function bannerAnterior(){
+
+  if(banners.length === 0)
+    return;
+
+
+  bannerActual--;
+
+
+  if(
+    bannerActual < 0
+  ){
+
+    bannerActual =
+      banners.length - 1;
+
+  }
+
+
+  mostrarBanner();
+
+}
+
+
+function irBanner(index){
+
+  bannerActual =
+    index;
+
+
+  mostrarBanner();
+
+}
+
+
+/* =====================================================
+   BANNER AUTOMÁTICO
+===================================================== */
+
+function iniciarBannerAutomatico(){
+
+  detenerBanner();
+
+
+  if(banners.length <= 1)
+    return;
+
+
+  intervaloBanner =
+    setInterval(function(){
+
+      bannerActual++;
+
+
+      if(
+        bannerActual >= banners.length
+      ){
+
+        bannerActual = 0;
+
+      }
+
+
+      mostrarBanner();
+
+    },5000);
+
+}
+
+
+function detenerBanner(){
+
+  if(intervaloBanner){
+
+    clearInterval(
+      intervaloBanner
+    );
+
+    intervaloBanner = null;
+
+  }
+
+}
+
+
+/* =====================================================
+   GUARDAR BANNER
+===================================================== */
+
+async function guardarBanner(){
+
+  const error =
+    document.getElementById(
+      "bannerError"
+    );
+
+
+  const exito =
+    document.getElementById(
+      "bannerExito"
+    );
+
+
+  ocultarMensaje(
+    "bannerError"
+  );
+
+  ocultarMensaje(
+    "bannerExito"
+  );
+
+
+  const imagen =
+    document.getElementById(
+      "bannerImagen"
+    ).value.trim();
+
+
+  const titulo =
+    document.getElementById(
+      "bannerTitulo"
+    ).value.trim();
+
+
+  const texto =
+    document.getElementById(
+      "bannerTexto"
+    ).value.trim();
+
+
+  const enlace =
+    document.getElementById(
+      "bannerEnlace"
+    ).value.trim();
+
+
+  if(!imagen){
+
+    mostrarMensaje(
+      error,
+      "Ingresá la URL de la imagen."
+    );
+
+    return;
+
+  }
+
+
+  const datos = {
+
+    imagen:imagen,
+
+    titulo:
+      titulo || null,
+
+    texto:
+      texto || null,
+
+    enlace:
+      enlace || null,
+
+    activo:true
+
+  };
+
+
+  const resultado =
+    await supabaseCliente
+      .from("banners")
+      .insert([datos]);
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    console.error(
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensaje(
+    exito,
+    "✅ Banner guardado correctamente."
+  );
+
+
+  document.getElementById(
+    "bannerImagen"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerTitulo"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerTexto"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerEnlace"
+  ).value = "";
+
+
+  await cargarBanners();
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+function mostrarMensaje(
+  elemento,
+  mensaje
+){
+
+  elemento.textContent =
+    mensaje;
+
+  elemento.style.display =
+    "block";
+
+}
+
+
+function ocultarMensaje(id){
+
+  const elemento =
+    document.getElementById(id);
+
+
+  if(elemento){
+
+    elemento.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =====================================================
+   CERRAR MODALES
+===================================================== */
+
+window.addEventListener(
+  "click",
+  function(event){
+
+    const modalCarrito =
+      document.getElementById(
+        "modalCarrito"
+      );
+
+
+    const modalLogin =
+      document.getElementById(
+        "modalLogin"
+      );
+
+
+    const modalAdmin =
+      document.getElementById(
+        "modalAdmin"
+      );
+
+
+    if(
+      event.target === modalCarrito
+    ){
+
+      cerrarCarrito();
+
+    }
+
+
+    if(
+      event.target === modalLogin
+    ){
+
+      cerrarLogin();
+
+    }
+
+
+    if(
+      event.target === modalAdmin
+    ){
+
+      cerrarAdmin();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ENTER LOGIN
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter" &&
+      document.getElementById(
+        "modalLogin"
+      ).style.display === "block"
+    ){
+
+      iniciarSesion();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESTADO DE SESIÓN
+===================================================== */
+
+supabaseCliente.auth.onAuthStateChange(
+  function(event,session){
+
+    console.log(
+      "Estado sesión:",
+      event
+    );
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
