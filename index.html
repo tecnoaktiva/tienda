@@ -1,724 +1,779 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Tekno Activa</title>
-
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Arial,Helvetica,sans-serif;
-    }
-
-    body{
-      background:#f5f5f5;
-      color:#222;
-    }
-
-    /* =========================
-       ENCABEZADO
-    ========================= */
-
-    header{
-      background:#111;
-      color:#fff;
-      padding:16px 20px;
-      text-align:center;
-    }
-
-    .logo{
-      max-width:230px;
-      max-height:70px;
-      object-fit:contain;
-    }
-
-    .logo-texto{
-      color:#fff;
-      font-size:30px;
-      font-weight:800;
-      letter-spacing:1px;
-    }
-
-    /* =========================
-       BANNER
-    ========================= */
-
-    .banner-container{
-      position:relative;
-      width:calc(100% - 30px);
-      max-width:1200px;
-      height:390px;
-      margin:22px auto 35px;
-      border-radius:20px;
-      overflow:hidden;
-      background:#111;
-      box-shadow:0 8px 25px rgba(0,0,0,.15);
-    }
-
-    .banner-slider{
-      width:100%;
-      height:100%;
-    }
-
-    .banner-slider a{
-      display:block;
-      width:100%;
-      height:100%;
-      position:relative;
-      color:#fff;
-      text-decoration:none;
-    }
-
-    .banner-slider img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .banner-texto{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      padding:70px 40px 35px;
-      color:#fff;
-      background:linear-gradient(
-        transparent,
-        rgba(0,0,0,.85)
-      );
-    }
-
-    .banner-texto h2{
-      font-size:38px;
-      margin-bottom:7px;
-    }
-
-    .banner-texto p{
-      font-size:18px;
-    }
-
-    .banner-prev,
-    .banner-next{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      border:none;
-      background:rgba(0,0,0,.55);
-      color:#fff;
-      width:45px;
-      height:45px;
-      border-radius:50%;
-      font-size:30px;
-      cursor:pointer;
-      z-index:5;
-    }
-
-    .banner-prev{
-      left:18px;
-    }
-
-    .banner-next{
-      right:18px;
-    }
-
-    .banner-dots{
-      position:absolute;
-      bottom:13px;
-      left:0;
-      right:0;
-      text-align:center;
-      z-index:6;
-    }
-
-    .banner-dots button{
-      width:9px;
-      height:9px;
-      border:none;
-      border-radius:50%;
-      margin:0 4px;
-      padding:0;
-      background:#fff;
-      opacity:.5;
-      cursor:pointer;
-    }
-
-    .banner-dots button.activo{
-      opacity:1;
-      transform:scale(1.3);
-    }
-
-    /* =========================
-       CONTENEDOR
-    ========================= */
-
-    .contenedor{
-      max-width:1200px;
-      margin:auto;
-      padding:0 20px 55px;
-    }
-
-    .titulo-seccion{
-      text-align:center;
-      margin-bottom:25px;
-    }
-
-    .titulo-seccion h1{
-      font-size:30px;
-      margin-bottom:7px;
-    }
-
-    .titulo-seccion p{
-      color:#777;
-    }
-
-    /* =========================
-       BENEFICIOS
-    ========================= */
-
-    .beneficios{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:15px;
-      margin-bottom:35px;
-    }
-
-    .beneficio{
-      background:#fff;
-      border-radius:15px;
-      padding:20px 12px;
-      text-align:center;
-      box-shadow:0 3px 12px rgba(0,0,0,.06);
-    }
-
-    .beneficio-icono{
-      font-size:27px;
-      margin-bottom:8px;
-    }
-
-    .beneficio strong{
-      display:block;
-      margin-bottom:5px;
-    }
-
-    .beneficio span{
-      color:#777;
-      font-size:13px;
-    }
-
-    /* =========================
-       BARRA
-    ========================= */
-
-    .barra{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:25px;
-      flex-wrap:wrap;
-    }
-
-    .categorias{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .categorias button,
-    .admin-btn{
-      border:1px solid #ddd;
-      background:#fff;
-      padding:11px 16px;
-      border-radius:25px;
-      cursor:pointer;
-      box-shadow:0 2px 8px rgba(0,0,0,.05);
-      transition:.2s;
-    }
-
-    .categorias button:hover,
-    .categorias button.activo,
-    .admin-btn:hover{
-      background:#111;
-      color:#fff;
-      border-color:#111;
-    }
-
-    .admin-btn{
-      background:#111;
-      color:#fff;
-    }
-
-    /* =========================
-       PRODUCTOS
-    ========================= */
-
-    .productos{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-    }
-
-    .producto{
-      background:#fff;
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(0,0,0,.07);
-      transition:.2s;
-    }
-
-    .producto:hover{
-      transform:translateY(-4px);
-      box-shadow:0 9px 22px rgba(0,0,0,.12);
-    }
-
-    .producto img{
-      width:100%;
-      height:230px;
-      object-fit:contain;
-      padding:18px;
-      background:#fff;
-    }
-
-    .producto-info{
-      padding:16px;
-    }
-
-    .producto h3{
-      margin-bottom:8px;
-      font-size:18px;
-    }
-
-    .producto p{
-      color:#666;
-      font-size:14px;
-      min-height:38px;
-      line-height:1.4;
-    }
-
-    .oferta{
-      display:inline-block;
-      background:#e53935;
-      color:#fff;
-      padding:5px 9px;
-      border-radius:6px;
-      font-size:11px;
-      font-weight:bold;
-      margin-bottom:8px;
-    }
-
-    .precio-anterior{
-      color:#888;
-      text-decoration:line-through;
-      font-size:14px;
-      margin-top:10px;
-    }
-
-    .precio{
-      font-size:23px;
-      font-weight:bold;
-      margin:5px 0 12px;
-    }
-
-    .agregar{
-      width:100%;
-      border:none;
-      background:#111;
-      color:#fff;
-      padding:12px;
-      border-radius:8px;
-      cursor:pointer;
-      font-size:15px;
-      font-weight:bold;
-    }
-
-    .agregar:hover{
-      background:#333;
-    }
-
-    /* =========================
-       CARRITO
-    ========================= */
-
-    .carrito-btn{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      background:#25D366;
-      color:#fff;
-      border:none;
-      border-radius:50px;
-      padding:15px 20px;
-      font-weight:bold;
-      cursor:pointer;
-      z-index:50;
-      box-shadow:0 5px 18px rgba(0,0,0,.2);
-    }
-
-    .carrito-btn span{
-      background:#fff;
-      color:#25D366;
-      border-radius:50%;
-      padding:3px 7px;
-      margin-left:5px;
-    }
-
-    /* =========================
-       MODALES
-    ========================= */
-
-    .modal{
-      display:none;
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.68);
-      z-index:100;
-      padding:20px;
-      overflow-y:auto;
-    }
-
-    .modal-contenido{
-      background:#fff;
-      max-width:500px;
-      margin:30px auto;
-      padding:24px;
-      border-radius:16px;
-      max-height:90vh;
-      overflow-y:auto;
-      box-shadow:0 15px 40px rgba(0,0,0,.25);
-    }
-
-    .modal-contenido h2{
-      margin-bottom:20px;
-    }
-
-    input,
-    select,
-    textarea{
-      width:100%;
-      padding:11px;
-      margin:7px 0 12px;
-      border:1px solid #ccc;
-      border-radius:8px;
-    }
-
-    textarea{
-      min-height:80px;
-      resize:vertical;
-    }
-
-    .guardar{
-      width:100%;
-      border:none;
-      background:#111;
-      color:#fff;
-      padding:13px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
-    }
-
-    .cerrar{
-      width:100%;
-      border:none;
-      background:#ddd;
-      padding:12px;
-      border-radius:8px;
-      margin-top:10px;
-      cursor:pointer;
-    }
-
-    /* =========================
-       CARRITO INTERNO
-    ========================= */
-
-    .item-carrito{
-      border-bottom:1px solid #ddd;
-      padding:12px 0;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-    }
-
-    .cantidad{
-      display:flex;
-      align-items:center;
-      gap:7px;
-    }
-
-    .cantidad button{
-      border:none;
-      background:#111;
-      color:#fff;
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      cursor:pointer;
-    }
-
-    .eliminar{
-      border:none;
-      background:#e53935;
-      color:#fff;
-      padding:6px;
-      border-radius:6px;
-      cursor:pointer;
-    }
-
-    .total{
-      text-align:right;
-      font-size:23px;
-      font-weight:bold;
-      margin:20px 0;
-    }
-
-    .whatsapp{
-      width:100%;
-      border:none;
-      background:#25D366;
-      color:#fff;
-      padding:14px;
-      border-radius:8px;
-      font-size:16px;
-      font-weight:bold;
-      cursor:pointer;
-    }
-
-    /* =========================
-       ADMIN
-    ========================= */
-
-    .admin-estado{
-      background:#e8f5e9;
-      padding:10px;
-      border-radius:8px;
-      margin-bottom:15px;
-      color:#2e7d32;
-      font-weight:bold;
-    }
-
-    .logout{
-      width:100%;
-      border:none;
-      background:#e53935;
-      color:#fff;
-      padding:12px;
-      border-radius:8px;
-      cursor:pointer;
-      margin-top:10px;
-    }
-
-    .error{
-      background:#ffebee;
-      color:#c62828;
-      padding:10px;
-      border-radius:8px;
-      margin-bottom:10px;
-      display:none;
-    }
-
-    .exito{
-      background:#e8f5e9;
-      color:#2e7d32;
-      padding:10px;
-      border-radius:8px;
-      margin-bottom:10px;
-      display:none;
-    }
-
-    .admin-lista{
-      margin-top:20px;
-    }
-
-    .admin-producto{
-      border:1px solid #ddd;
-      border-radius:10px;
-      padding:12px;
-      margin-bottom:10px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-
-    .admin-producto button{
-      border:none;
-      background:#e53935;
-      color:#fff;
-      padding:8px 10px;
-      border-radius:7px;
-      cursor:pointer;
-    }
-
-    /* =========================
-       FORMAS DE PAGO
-    ========================= */
-
-    .pagos{
-      background:#111;
-      color:#fff;
-      padding:45px 20px;
-      text-align:center;
-    }
-
-    .pagos h2{
-      font-size:28px;
-      margin-bottom:8px;
-    }
-
-    .pagos p{
-      color:#bbb;
-      margin-bottom:25px;
-    }
-
-    .pagos-grid{
-      max-width:1000px;
-      margin:auto;
-      display:flex;
-      justify-content:center;
-      gap:15px;
-      flex-wrap:wrap;
-    }
-
-    .pago{
-      min-width:150px;
-      background:#1d1d1d;
-      border:1px solid #333;
-      border-radius:12px;
-      padding:18px;
-    }
-
-    .pago strong{
-      display:block;
-      margin-top:7px;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer{
-      background:#090909;
-      color:#999;
-      text-align:center;
-      padding:35px 20px;
-    }
-
-    .footer-logo{
-      color:#fff;
-      font-size:23px;
-      font-weight:bold;
-      margin-bottom:10px;
-    }
-
-    .footer-links{
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
-      margin:18px 0;
-      color:#bbb;
-    }
-
-    /* =========================
-       CELULAR
-    ========================= */
-
-    @media(max-width:1000px){
-
-      .productos{
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .beneficios{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:700px){
-
-      .banner-container{
-        height:230px;
-        margin:15px 10px 25px;
-        width:calc(100% - 20px);
-      }
-
-      .banner-texto{
-        padding:50px 20px 25px;
-      }
-
-      .banner-texto h2{
-        font-size:22px;
-      }
-
-      .banner-texto p{
-        font-size:13px;
-      }
-
-      .contenedor{
-        padding:0 12px 45px;
-      }
-
-      .productos{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-      }
-
-      .producto img{
-        height:170px;
-        padding:12px;
-      }
-
-      .producto-info{
-        padding:12px;
-      }
-
-      .producto h3{
-        font-size:16px;
-      }
-
-      .producto p{
-        font-size:12px;
-      }
-
-      .precio{
-        font-size:20px;
-      }
-
-      .beneficios{
-        gap:10px;
-      }
-
-      .beneficio{
-        padding:15px 8px;
-      }
-
-      .barra{
-        align-items:flex-start;
-      }
-
-      .admin-btn{
-        width:100%;
-      }
-
-      .carrito-btn{
-        right:12px;
-        bottom:12px;
-      }
-    }
-  </style>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Tekno Activa</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#f5f5f5;
+  color:#222;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+  background:#111;
+  color:#fff;
+  padding:16px 20px;
+  text-align:center;
+}
+
+.logo{
+  max-width:230px;
+  max-height:70px;
+  object-fit:contain;
+}
+
+.logo-texto{
+  color:#fff;
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+/* =========================
+   BANNER
+========================= */
+
+.banner-container{
+  position:relative;
+  width:calc(100% - 30px);
+  max-width:1200px;
+  height:390px;
+  margin:22px auto 35px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#111;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+}
+
+.banner-slider{
+  width:100%;
+  height:100%;
+}
+
+.banner-slider a{
+  display:block;
+  width:100%;
+  height:100%;
+  position:relative;
+  color:#fff;
+  text-decoration:none;
+}
+
+.banner-slider img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.banner-texto{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:70px 40px 35px;
+  color:#fff;
+  background:linear-gradient(
+    transparent,
+    rgba(0,0,0,.85)
+  );
+}
+
+.banner-texto h2{
+  font-size:38px;
+  margin-bottom:7px;
+}
+
+.banner-texto p{
+  font-size:18px;
+}
+
+.banner-prev,
+.banner-next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  border:none;
+  background:rgba(0,0,0,.55);
+  color:#fff;
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  font-size:30px;
+  cursor:pointer;
+  z-index:5;
+}
+
+.banner-prev{
+  left:18px;
+}
+
+.banner-next{
+  right:18px;
+}
+
+.banner-dots{
+  position:absolute;
+  bottom:13px;
+  left:0;
+  right:0;
+  text-align:center;
+  z-index:6;
+}
+
+.banner-dots button{
+  width:9px;
+  height:9px;
+  border:none;
+  border-radius:50%;
+  margin:0 4px;
+  padding:0;
+  background:#fff;
+  opacity:.5;
+  cursor:pointer;
+}
+
+.banner-dots button.activo{
+  opacity:1;
+  transform:scale(1.3);
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.contenedor{
+  max-width:1200px;
+  margin:auto;
+  padding:0 20px 55px;
+}
+
+.titulo-seccion{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.titulo-seccion h1{
+  font-size:30px;
+  margin-bottom:7px;
+}
+
+.titulo-seccion p{
+  color:#777;
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador{
+  width:100%;
+  max-width:550px;
+  margin:0 auto 25px;
+}
+
+.buscador input{
+  width:100%;
+  padding:14px 18px;
+  border:1px solid #ddd;
+  border-radius:30px;
+  background:#fff;
+  font-size:15px;
+  outline:none;
+  margin:0;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.buscador input:focus{
+  border-color:#111;
+}
+
+/* =========================
+   BENEFICIOS
+========================= */
+
+.beneficios{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:35px;
+}
+
+.beneficio{
+  background:#fff;
+  border-radius:15px;
+  padding:20px 12px;
+  text-align:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.beneficio-icono{
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.beneficio strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.beneficio span{
+  color:#777;
+  font-size:13px;
+}
+
+/* =========================
+   BARRA
+========================= */
+
+.barra{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+}
+
+.categorias{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.categorias button,
+.admin-btn{
+  border:1px solid #ddd;
+  background:#fff;
+  padding:11px 16px;
+  border-radius:25px;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  transition:.2s;
+}
+
+.categorias button:hover,
+.categorias button.activo,
+.admin-btn:hover{
+  background:#111;
+  color:#fff;
+  border-color:#111;
+}
+
+.admin-btn{
+  background:#111;
+  color:#fff;
+}
+
+/* =========================
+   PRODUCTOS
+========================= */
+
+.productos{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.producto{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 15px rgba(0,0,0,.07);
+  transition:.2s;
+}
+
+.producto:hover{
+  transform:translateY(-4px);
+  box-shadow:0 9px 22px rgba(0,0,0,.12);
+}
+
+.producto img{
+  width:100%;
+  height:230px;
+  object-fit:contain;
+  padding:18px;
+  background:#fff;
+}
+
+.producto-info{
+  padding:16px;
+}
+
+.producto h3{
+  margin-bottom:8px;
+  font-size:18px;
+}
+
+.producto p{
+  color:#666;
+  font-size:14px;
+  min-height:38px;
+  line-height:1.4;
+}
+
+.oferta{
+  display:inline-block;
+  background:#e53935;
+  color:#fff;
+  padding:5px 9px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.precio-anterior{
+  color:#888;
+  text-decoration:line-through;
+  font-size:14px;
+  margin-top:10px;
+}
+
+.precio{
+  font-size:23px;
+  font-weight:bold;
+  margin:5px 0 12px;
+}
+
+.agregar{
+  width:100%;
+  border:none;
+  background:#111;
+  color:#fff;
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.agregar:hover{
+  background:#333;
+}
+
+/* =========================
+   CARRITO
+========================= */
+
+.carrito-btn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#25D366;
+  color:#fff;
+  border:none;
+  border-radius:50px;
+  padding:15px 20px;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:50;
+  box-shadow:0 5px 18px rgba(0,0,0,.2);
+}
+
+.carrito-btn span{
+  background:#fff;
+  color:#25D366;
+  border-radius:50%;
+  padding:3px 7px;
+  margin-left:5px;
+}
+
+/* =========================
+   MODALES
+========================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  z-index:100;
+  padding:20px;
+  overflow-y:auto;
+}
+
+.modal-contenido{
+  background:#fff;
+  max-width:500px;
+  margin:30px auto;
+  padding:24px;
+  border-radius:16px;
+  max-height:90vh;
+  overflow-y:auto;
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.modal-contenido h2{
+  margin-bottom:20px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:11px;
+  margin:7px 0 12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.guardar{
+  width:100%;
+  border:none;
+  background:#111;
+  color:#fff;
+  padding:13px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.cerrar{
+  width:100%;
+  border:none;
+  background:#ddd;
+  padding:12px;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+/* =========================
+   CARRITO INTERNO
+========================= */
+
+.item-carrito{
+  border-bottom:1px solid #ddd;
+  padding:12px 0;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.cantidad{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.cantidad button{
+  border:none;
+  background:#111;
+  color:#fff;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.eliminar{
+  border:none;
+  background:#e53935;
+  color:#fff;
+  padding:6px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.total{
+  text-align:right;
+  font-size:23px;
+  font-weight:bold;
+  margin:20px 0;
+}
+
+.whatsapp{
+  width:100%;
+  border:none;
+  background:#25D366;
+  color:#fff;
+  padding:14px;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* =========================
+   ADMIN
+========================= */
+
+.admin-estado{
+  background:#e8f5e9;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:15px;
+  color:#2e7d32;
+  font-weight:bold;
+}
+
+.logout{
+  width:100%;
+  border:none;
+  background:#e53935;
+  color:#fff;
+  padding:12px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.error{
+  background:#ffebee;
+  color:#c62828;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:10px;
+  display:none;
+}
+
+.exito{
+  background:#e8f5e9;
+  color:#2e7d32;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:10px;
+  display:none;
+}
+
+.admin-lista{
+  margin-top:20px;
+}
+
+.admin-producto{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.admin-producto button{
+  border:none;
+  background:#e53935;
+  color:#fff;
+  padding:8px 10px;
+  border-radius:7px;
+  cursor:pointer;
+}
+
+/* =========================
+   PAGOS
+========================= */
+
+.pagos{
+  background:#111;
+  color:#fff;
+  padding:45px 20px;
+  text-align:center;
+}
+
+.pagos h2{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.pagos p{
+  color:#bbb;
+  margin-bottom:25px;
+}
+
+.pagos-grid{
+  max-width:1000px;
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.pago{
+  min-width:150px;
+  background:#1d1d1d;
+  border:1px solid #333;
+  border-radius:12px;
+  padding:18px;
+}
+
+.pago strong{
+  display:block;
+  margin-top:7px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  background:#090909;
+  color:#999;
+  text-align:center;
+  padding:35px 20px;
+}
+
+.footer-logo{
+  color:#fff;
+  font-size:23px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin:18px 0;
+  color:#bbb;
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+.sin-productos{
+  grid-column:1/-1;
+  text-align:center;
+  background:#fff;
+  padding:40px;
+  border-radius:15px;
+  color:#777;
+}
+
+.cargando{
+  grid-column:1/-1;
+  text-align:center;
+  padding:50px;
+  color:#777;
+}
+
+/* =========================
+   CELULAR
+========================= */
+
+@media(max-width:1000px){
+
+  .productos{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .beneficios{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:700px){
+
+  .banner-container{
+    height:230px;
+    margin:15px 10px 25px;
+    width:calc(100% - 20px);
+  }
+
+  .banner-texto{
+    padding:50px 20px 25px;
+  }
+
+  .banner-texto h2{
+    font-size:22px;
+  }
+
+  .banner-texto p{
+    font-size:13px;
+  }
+
+  .contenedor{
+    padding:0 12px 45px;
+  }
+
+  .productos{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+
+  .producto img{
+    height:170px;
+    padding:12px;
+  }
+
+  .producto-info{
+    padding:12px;
+  }
+
+  .producto h3{
+    font-size:16px;
+  }
+
+  .producto p{
+    font-size:12px;
+  }
+
+  .precio{
+    font-size:20px;
+  }
+
+  .beneficios{
+    gap:10px;
+  }
+
+  .beneficio{
+    padding:15px 8px;
+  }
+
+  .barra{
+    align-items:flex-start;
+  }
+
+  .admin-btn{
+    width:100%;
+  }
+
+  .carrito-btn{
+    right:12px;
+    bottom:12px;
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<!-- =========================
-     LOGO
-========================= -->
 
 <header>
 
@@ -732,53 +787,71 @@
 
   <div
     class="logo-texto"
-    id="logoTexto">
+    id="logoTexto"
+  >
     TEKNO ACTIVA
   </div>
 
 </header>
 
 
-<!-- =========================
-     BANNER
-========================= -->
+<!-- BANNER -->
 
 <div class="banner-container">
 
   <div
     id="bannerSlider"
-    class="banner-slider">
-  </div>
+    class="banner-slider"
+  ></div>
 
   <button
     class="banner-prev"
-    onclick="bannerAnterior()">
+    onclick="bannerAnterior()"
+  >
     ‹
   </button>
 
   <button
     class="banner-next"
-    onclick="bannerSiguiente()">
+    onclick="bannerSiguiente()"
+  >
     ›
   </button>
 
   <div
     id="bannerDots"
-    class="banner-dots">
-  </div>
+    class="banner-dots"
+  ></div>
 
 </div>
 
 
 <div class="contenedor">
 
+
   <div class="titulo-seccion">
 
-    <h1>Productos destacados</h1>
+    <h1>
+      Productos destacados
+    </h1>
 
     <p>
       Tecnología y accesorios para tu día a día
     </p>
+
+  </div>
+
+
+  <!-- BUSCADOR -->
+
+  <div class="buscador">
+
+    <input
+      type="search"
+      id="busqueda"
+      placeholder="🔎 Buscar productos..."
+      oninput="buscarProductos()"
+    >
 
   </div>
 
@@ -788,31 +861,76 @@
   <div class="beneficios">
 
     <div class="beneficio">
-      <div class="beneficio-icono">🚚</div>
-      <strong>Envíos</strong>
-      <span>Recibí tu pedido de forma segura.</span>
+
+      <div class="beneficio-icono">
+        🚚
+      </div>
+
+      <strong>
+        Envíos
+      </strong>
+
+      <span>
+        Recibí tu pedido de forma segura.
+      </span>
+
     </div>
 
-    <div class="beneficio">
-      <div class="beneficio-icono">💳</div>
-      <strong>Medios de pago</strong>
-      <span>Elegí la forma de pago que prefieras.</span>
-    </div>
 
     <div class="beneficio">
-      <div class="beneficio-icono">🔒</div>
-      <strong>Compra segura</strong>
-      <span>Comprá con tranquilidad.</span>
+
+      <div class="beneficio-icono">
+        💳
+      </div>
+
+      <strong>
+        Medios de pago
+      </strong>
+
+      <span>
+        Elegí la forma de pago que prefieras.
+      </span>
+
     </div>
 
+
     <div class="beneficio">
-      <div class="beneficio-icono">📲</div>
-      <strong>WhatsApp</strong>
-      <span>Consultanos directamente.</span>
+
+      <div class="beneficio-icono">
+        🔒
+      </div>
+
+      <strong>
+        Compra segura
+      </strong>
+
+      <span>
+        Comprá con tranquilidad.
+      </span>
+
+    </div>
+
+
+    <div class="beneficio">
+
+      <div class="beneficio-icono">
+        📲
+      </div>
+
+      <strong>
+        WhatsApp
+      </strong>
+
+      <span>
+        Consultanos directamente.
+      </span>
+
     </div>
 
   </div>
 
+
+  <!-- CATEGORIAS -->
 
   <div class="barra">
 
@@ -820,52 +938,71 @@
 
       <button
         class="activo"
-        onclick="filtrar('todos')">
+        onclick="filtrar('todos')"
+      >
         🛍️ Todos
       </button>
 
-      <button onclick="filtrar('auriculares')">
+      <button
+        onclick="filtrar('auriculares')"
+      >
         🎧 Auriculares
       </button>
 
-      <button onclick="filtrar('cargadores')">
+      <button
+        onclick="filtrar('cargadores')"
+      >
         🔌 Cargadores
       </button>
 
-      <button onclick="filtrar('hogar')">
+      <button
+        onclick="filtrar('hogar')"
+      >
         🏠 Hogar
       </button>
 
-      <button onclick="filtrar('belleza')">
+      <button
+        onclick="filtrar('belleza')"
+      >
         💄 Belleza
       </button>
 
     </div>
 
+
     <button
       class="admin-btn"
-      onclick="abrirAdmin()">
+      onclick="abrirAdmin()"
+    >
       ⚙️ Administrar
     </button>
 
   </div>
 
 
+  <!-- PRODUCTOS -->
+
   <div
     id="productos"
-    class="productos">
+    class="productos"
+  >
+
+    <div class="cargando">
+      Cargando productos...
+    </div>
+
   </div>
 
 </div>
 
 
-<!-- =========================
-     FORMAS DE PAGO
-========================= -->
+<!-- PAGOS -->
 
 <section class="pagos">
 
-  <h2>Formas de pago</h2>
+  <h2>
+    Formas de pago
+  </h2>
 
   <p>
     Elegí la opción que te resulte más cómoda.
@@ -875,22 +1012,30 @@
 
     <div class="pago">
       💵
-      <strong>Efectivo</strong>
+      <strong>
+        Efectivo
+      </strong>
     </div>
 
     <div class="pago">
       🏦
-      <strong>Transferencia</strong>
+      <strong>
+        Transferencia
+      </strong>
     </div>
 
     <div class="pago">
       💳
-      <strong>Tarjetas</strong>
+      <strong>
+        Tarjetas
+      </strong>
     </div>
 
     <div class="pago">
       📲
-      <strong>Mercado Pago</strong>
+      <strong>
+        Mercado Pago
+      </strong>
     </div>
 
   </div>
@@ -898,46 +1043,60 @@
 </section>
 
 
-<!-- =========================
-     CARRITO
-========================= -->
+<!-- CARRITO -->
 
 <button
   class="carrito-btn"
-  onclick="abrirCarrito()">
+  onclick="abrirCarrito()"
+>
 
   🛒 Carrito
 
-  <span id="contador">0</span>
+  <span id="contador">
+    0
+  </span>
 
 </button>
 
 
 <div
   class="modal"
-  id="modalCarrito">
+  id="modalCarrito"
+>
 
   <div class="modal-contenido">
 
-    <h2>🛒 Tu carrito</h2>
+    <h2>
+      🛒 Tu carrito
+    </h2>
 
     <div id="listaCarrito"></div>
 
     <div class="total">
-      Total: $<span id="total">0</span>
+
+      Total: $
+
+      <span id="total">
+        0
+      </span>
+
     </div>
+
 
     <button
       class="whatsapp"
-      onclick="enviarWhatsApp()">
+      onclick="enviarWhatsApp()"
+    >
 
       📲 Enviar pedido por WhatsApp
 
     </button>
 
+
     <button
       class="cerrar"
-      onclick="cerrarCarrito()">
+      onclick="cerrarCarrito()"
+    >
 
       Cerrar
 
@@ -948,54 +1107,68 @@
 </div>
 
 
-<!-- =========================
-     LOGIN ADMIN
-========================= -->
+<!-- LOGIN -->
 
 <div
   class="modal"
-  id="modalLogin">
+  id="modalLogin"
+>
 
   <div class="modal-contenido">
 
-    <h2>🔐 Administrador</h2>
+    <h2>
+      🔐 Administrador
+    </h2>
 
     <p style="margin-bottom:15px;">
       Ingresá con tu cuenta de administrador.
     </p>
 
+
     <div
       id="loginError"
-      class="error">
-    </div>
+      class="error"
+    ></div>
 
-    <label>Email</label>
+
+    <label>
+      Email
+    </label>
 
     <input
       id="loginEmail"
       type="email"
       placeholder="tu@email.com"
-      autocomplete="username">
+      autocomplete="username"
+    >
 
-    <label>Contraseña</label>
+
+    <label>
+      Contraseña
+    </label>
 
     <input
       id="loginPassword"
       type="password"
       placeholder="Tu contraseña"
-      autocomplete="current-password">
+      autocomplete="current-password"
+    >
+
 
     <button
       class="guardar"
-      onclick="iniciarSesion()">
+      onclick="iniciarSesion()"
+    >
 
       🔐 Ingresar
 
     </button>
 
+
     <button
       class="cerrar"
-      onclick="cerrarLogin()">
+      onclick="cerrarLogin()"
+    >
 
       Cancelar
 
@@ -1006,60 +1179,83 @@
 </div>
 
 
-<!-- =========================
-     ADMINISTRACIÓN
-========================= -->
+<!-- ADMIN -->
 
 <div
   class="modal"
-  id="modalAdmin">
+  id="modalAdmin"
+>
 
   <div class="modal-contenido">
 
-    <h2>⚙️ Administrar Tekno Activa</h2>
+    <h2>
+      ⚙️ Administrar Tekno Activa
+    </h2>
+
 
     <div class="admin-estado">
+
       🔓 Sesión de administrador activa
+
     </div>
 
+
     <hr>
+
 
     <h3 style="margin:20px 0 10px;">
       📦 Agregar producto
     </h3>
 
+
     <div
       id="productoError"
-      class="error">
-    </div>
+      class="error"
+    ></div>
+
 
     <div
       id="productoExito"
-      class="exito">
-    </div>
+      class="exito"
+    ></div>
 
-    <label>Nombre</label>
+
+    <label>
+      Nombre
+    </label>
 
     <input
       id="nombre"
       type="text"
-      placeholder="Ej: Auricular A6S">
+      placeholder="Ej: Auricular A6S"
+    >
 
-    <label>Precio</label>
+
+    <label>
+      Precio
+    </label>
 
     <input
       id="precio"
       type="number"
-      placeholder="9999">
+      placeholder="9999"
+    >
 
-    <label>Precio anterior</label>
+
+    <label>
+      Precio anterior
+    </label>
 
     <input
       id="precioAnterior"
       type="number"
-      placeholder="11500">
+      placeholder="11500"
+    >
 
-    <label>Categoría</label>
+
+    <label>
+      Categoría
+    </label>
 
     <select id="categoria">
 
@@ -1081,102 +1277,140 @@
 
     </select>
 
-    <label>Descripción</label>
+
+    <label>
+      Descripción
+    </label>
 
     <textarea
       id="descripcion"
-      placeholder="Descripción del producto">
-    </textarea>
+      placeholder="Descripción del producto"
+    ></textarea>
 
-    <label>URL de imagen</label>
+
+    <label>
+      URL de imagen
+    </label>
 
     <input
       id="imagen"
       type="text"
-      placeholder="https://...">
+      placeholder="https://..."
+    >
+
 
     <button
       class="guardar"
-      onclick="guardarProducto()">
+      onclick="guardarProducto()"
+    >
 
       ➕ Guardar producto
 
     </button>
 
+
     <hr style="margin:25px 0;">
+
 
     <h3 style="margin-bottom:10px;">
       🖼️ Agregar banner
     </h3>
 
+
     <div
       id="bannerError"
-      class="error">
-    </div>
+      class="error"
+    ></div>
+
 
     <div
       id="bannerExito"
-      class="exito">
-    </div>
+      class="exito"
+    ></div>
 
-    <label>URL de imagen</label>
+
+    <label>
+      URL de imagen
+    </label>
 
     <input
       id="bannerImagen"
       type="text"
-      placeholder="https://...">
+      placeholder="https://..."
+    >
 
-    <label>Título</label>
+
+    <label>
+      Título
+    </label>
 
     <input
       id="bannerTitulo"
       type="text"
-      placeholder="Ej: ¡Ofertas de la semana!">
+      placeholder="Ej: ¡Ofertas de la semana!"
+    >
 
-    <label>Texto</label>
+
+    <label>
+      Texto
+    </label>
 
     <input
       id="bannerTexto"
       type="text"
-      placeholder="Ej: Hasta 30% de descuento">
+      placeholder="Ej: Hasta 30% de descuento"
+    >
 
-    <label>Enlace opcional</label>
+
+    <label>
+      Enlace opcional
+    </label>
 
     <input
       id="bannerEnlace"
       type="text"
-      placeholder="https://...">
+      placeholder="https://..."
+    >
+
 
     <button
       class="guardar"
-      onclick="guardarBanner()">
+      onclick="guardarBanner()"
+    >
 
       🖼️ Guardar banner
 
     </button>
 
+
     <hr style="margin:25px 0;">
+
 
     <h3 style="margin-bottom:10px;">
       📋 Productos actuales
     </h3>
 
+
     <div
       id="adminLista"
-      class="admin-lista">
-    </div>
+      class="admin-lista"
+    ></div>
+
 
     <button
       class="logout"
-      onclick="cerrarSesion()">
+      onclick="cerrarSesion()"
+    >
 
       🔒 Cerrar sesión
 
     </button>
 
+
     <button
       class="cerrar"
-      onclick="cerrarAdmin()">
+      onclick="cerrarAdmin()"
+    >
 
       Cerrar panel
 
@@ -1187,9 +1421,7 @@
 </div>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 
 <footer>
 
@@ -1202,10 +1434,23 @@
   </div>
 
   <div class="footer-links">
-    <span>📲 WhatsApp</span>
-    <span>📦 Envíos</span>
-    <span>💳 Pagos</span>
-    <span>🛒 Compras</span>
+
+    <span>
+      📲 WhatsApp
+    </span>
+
+    <span>
+      📦 Envíos
+    </span>
+
+    <span>
+      💳 Pagos
+    </span>
+
+    <span>
+      🛒 Compras
+    </span>
+
   </div>
 
   © 2026 Tekno Activa
@@ -1219,7 +1464,1845 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
+/* =====================================================
+   SUPABASE
+===================================================== */
+
 const SUPABASE_URL =
-  "https://emjknuwvbvqonafckwce
+  "https://emjknuwvbvqonafckwce.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
+
+
+const supabaseCliente =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+/*
+   CAMBIÁ ESTO POR TU NÚMERO.
+
+   Ejemplo San Juan:
+   5492641234567
+*/
+
+const NUMERO_WHATSAPP =
+  "549264XXXXXXXX";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let productos = [];
+
+let banners = [];
+
+let carrito = [];
+
+let categoriaActual = "todos";
+
+let bannerActual = 0;
+
+let intervaloBanner = null;
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async function(){
+
+    cargarCarrito();
+
+    await cargarProductos();
+
+    await cargarBanners();
+
+    actualizarCarrito();
+
+  }
+);
+
+
+/* =====================================================
+   CARGAR PRODUCTOS
+===================================================== */
+
+async function cargarProductos(){
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .select("*")
+      .order("id",{ascending:false});
+
+
+  if(resultado.error){
+
+    console.error(
+      "Error productos:",
+      resultado.error
+    );
+
+
+    document.getElementById(
+      "productos"
+    ).innerHTML = `
+
+      <div class="sin-productos">
+
+        ⚠️ No se pudieron cargar los productos.
+
+        <p style="margin-top:10px;">
+          ${resultado.error.message}
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  productos =
+    resultado.data || [];
+
+
+  mostrarProductos();
+
+  mostrarAdminProductos();
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS
+===================================================== */
+
+function mostrarProductos(){
+
+  const contenedor =
+    document.getElementById(
+      "productos"
+    );
+
+
+  const busqueda =
+    document
+      .getElementById("busqueda")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const lista =
+    productos.filter(function(producto){
+
+      const coincideCategoria =
+        categoriaActual === "todos" ||
+        String(producto.categoria || "")
+          .toLowerCase()
+          === categoriaActual;
+
+
+      const texto = (
+
+        String(producto.nombre || "") +
+        " " +
+        String(producto.descripcion || "") +
+        " " +
+        String(producto.categoria || "")
+
+      ).toLowerCase();
+
+
+      return (
+        coincideCategoria &&
+        texto.includes(busqueda)
+      );
+
+    });
+
+
+  if(lista.length === 0){
+
+    contenedor.innerHTML = `
+
+      <div class="sin-productos">
+
+        <h3>
+          😕 No encontramos productos
+        </h3>
+
+        <p style="margin-top:8px;">
+          Probá con otra búsqueda.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  contenedor.innerHTML =
+    lista.map(function(producto){
+
+      const precio =
+        Number(producto.precio || 0);
+
+
+      const precioAnterior =
+        Number(
+          producto.precio_anterior || 0
+        );
+
+
+      let oferta = "";
+
+      if(
+        precioAnterior > precio &&
+        precioAnterior > 0
+      ){
+
+        oferta = `
+          <span class="oferta">
+            OFERTA
+          </span>
+        `;
+
+      }
+
+
+      let anterior = "";
+
+      if(
+        precioAnterior > precio &&
+        precioAnterior > 0
+      ){
+
+        anterior = `
+
+          <div class="precio-anterior">
+            $${formatearPrecio(precioAnterior)}
+          </div>
+
+        `;
+
+      }
+
+
+      const imagen =
+        producto.imagen ||
+        "https://via.placeholder.com/500x400?text=Tekno+Activa";
+
+
+      return `
+
+        <div class="producto">
+
+          <img
+            src="${escaparHTML(imagen)}"
+            alt="${escaparHTML(producto.nombre || "Producto")}"
+            onerror="this.src='https://via.placeholder.com/500x400?text=Imagen+no+disponible'"
+          >
+
+
+          <div class="producto-info">
+
+            ${oferta}
+
+
+            <h3>
+              ${escaparHTML(
+                producto.nombre || "Producto"
+              )}
+            </h3>
+
+
+            <p>
+              ${escaparHTML(
+                producto.descripcion || ""
+              )}
+            </p>
+
+
+            ${anterior}
+
+
+            <div class="precio">
+
+              $${formatearPrecio(precio)}
+
+            </div>
+
+
+            <button
+              class="agregar"
+              onclick="agregarAlCarrito(${Number(producto.id)})"
+            >
+
+              🛒 Agregar al carrito
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   FILTRAR
+===================================================== */
+
+function filtrar(categoria){
+
+  categoriaActual =
+    categoria;
+
+
+  document
+    .querySelectorAll(".categorias button")
+    .forEach(function(boton){
+
+      boton.classList.remove("activo");
+
+    });
+
+
+  const botones =
+    document.querySelectorAll(
+      ".categorias button"
+    );
+
+
+  botones.forEach(function(boton){
+
+    const accion =
+      boton.getAttribute("onclick") || "";
+
+
+    if(
+      accion.includes(
+        "'" + categoria + "'"
+      )
+    ){
+
+      boton.classList.add("activo");
+
+    }
+
+  });
+
+
+  mostrarProductos();
+
+}
+
+
+/* =====================================================
+   BUSCAR
+===================================================== */
+
+function buscarProductos(){
+
+  mostrarProductos();
+
+}
+
+
+/* =====================================================
+   FORMATEAR PRECIO
+===================================================== */
+
+function formatearPrecio(numero){
+
+  return Number(numero || 0)
+    .toLocaleString("es-AR");
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escaparHTML(texto){
+
+  return String(texto)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   CARRITO
+===================================================== */
+
+function cargarCarrito(){
+
+  try{
+
+    const guardado =
+      localStorage.getItem(
+        "teknoActivaCarrito"
+      );
+
+
+    if(guardado){
+
+      carrito =
+        JSON.parse(guardado);
+
+    }
+
+  }catch(error){
+
+    carrito = [];
+
+  }
+
+}
+
+
+function guardarCarrito(){
+
+  localStorage.setItem(
+    "teknoActivaCarrito",
+    JSON.stringify(carrito)
+  );
+
+}
+
+
+/* =====================================================
+   AGREGAR AL CARRITO
+===================================================== */
+
+function agregarAlCarrito(id){
+
+  const producto =
+    productos.find(function(item){
+
+      return Number(item.id) === Number(id);
+
+    });
+
+
+  if(!producto){
+
+    alert(
+      "Producto no encontrado."
+    );
+
+    return;
+
+  }
+
+
+  const existente =
+    carrito.find(function(item){
+
+      return Number(item.id) === Number(id);
+
+    });
+
+
+  if(existente){
+
+    existente.cantidad++;
+
+  }else{
+
+    carrito.push({
+
+      id:producto.id,
+
+      nombre:producto.nombre,
+
+      precio:Number(
+        producto.precio || 0
+      ),
+
+      cantidad:1
+
+    });
+
+  }
+
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+
+  alert(
+    "✅ " +
+    producto.nombre +
+    " agregado al carrito."
+  );
+
+}
+
+
+/* =====================================================
+   ACTUALIZAR CARRITO
+===================================================== */
+
+function actualizarCarrito(){
+
+  const contador =
+    document.getElementById(
+      "contador"
+    );
+
+
+  const cantidad =
+    carrito.reduce(
+      function(total,item){
+
+        return total + item.cantidad;
+
+      },
+      0
+    );
+
+
+  contador.textContent =
+    cantidad;
+
+
+  const lista =
+    document.getElementById(
+      "listaCarrito"
+    );
+
+
+  if(carrito.length === 0){
+
+    lista.innerHTML = `
+
+      <div
+        style="
+          text-align:center;
+          padding:25px;
+          color:#777;
+        "
+      >
+
+        🛒 Tu carrito está vacío.
+
+      </div>
+
+    `;
+
+
+    document.getElementById(
+      "total"
+    ).textContent = "0";
+
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+
+  lista.innerHTML =
+    carrito.map(function(item,index){
+
+      const subtotal =
+        item.precio *
+        item.cantidad;
+
+
+      total += subtotal;
+
+
+      return `
+
+        <div class="item-carrito">
+
+          <div style="flex:1;">
+
+            <strong>
+              ${escaparHTML(item.nombre)}
+            </strong>
+
+            <div
+              style="
+                margin-top:5px;
+                color:#777;
+              "
+            >
+
+              $${formatearPrecio(
+                item.precio
+              )}
+              cada uno
+
+            </div>
+
+          </div>
+
+
+          <div class="cantidad">
+
+            <button
+              onclick="cambiarCantidad(${index},-1)"
+            >
+              −
+            </button>
+
+            <strong>
+              ${item.cantidad}
+            </strong>
+
+            <button
+              onclick="cambiarCantidad(${index},1)"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <button
+            class="eliminar"
+            onclick="eliminarDelCarrito(${index})"
+          >
+            🗑️
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    formatearPrecio(total);
+
+}
+
+
+/* =====================================================
+   CAMBIAR CANTIDAD
+===================================================== */
+
+function cambiarCantidad(index,cambio){
+
+  if(!carrito[index])
+    return;
+
+
+  carrito[index].cantidad +=
+    cambio;
+
+
+  if(
+    carrito[index].cantidad <= 0
+  ){
+
+    carrito.splice(index,1);
+
+  }
+
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+}
+
+
+/* =====================================================
+   ELIMINAR DEL CARRITO
+===================================================== */
+
+function eliminarDelCarrito(index){
+
+  carrito.splice(index,1);
+
+  guardarCarrito();
+
+  actualizarCarrito();
+
+}
+
+
+/* =====================================================
+   ABRIR CARRITO
+===================================================== */
+
+function abrirCarrito(){
+
+  document.getElementById(
+    "modalCarrito"
+  ).style.display =
+    "block";
+
+
+  actualizarCarrito();
+
+}
+
+
+function cerrarCarrito(){
+
+  document.getElementById(
+    "modalCarrito"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+function enviarWhatsApp(){
+
+  if(carrito.length === 0){
+
+    alert(
+      "🛒 El carrito está vacío."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    NUMERO_WHATSAPP.includes(
+      "XXXXXXXX"
+    )
+  ){
+
+    alert(
+      "⚠️ Falta configurar tu número de WhatsApp."
+    );
+
+    return;
+
+  }
+
+
+  let mensaje =
+    "🛍️ *NUEVO PEDIDO - TEKNO ACTIVA*%0A%0A";
+
+
+  let total = 0;
+
+
+  carrito.forEach(function(item){
+
+    const subtotal =
+      item.precio *
+      item.cantidad;
+
+
+    total += subtotal;
+
+
+    mensaje +=
+      "📦 " +
+      encodeURIComponent(
+        item.nombre
+      ) +
+      "%0A" +
+
+      "Cantidad: " +
+      item.cantidad +
+      "%0A" +
+
+      "Precio: $" +
+      formatearPrecio(
+        item.precio
+      ) +
+      "%0A" +
+
+      "Subtotal: $" +
+      formatearPrecio(
+        subtotal
+      ) +
+      "%0A%0A";
+
+  });
+
+
+  mensaje +=
+    "💰 *TOTAL: $" +
+    formatearPrecio(total) +
+    "*";
+
+
+  const url =
+    "https://wa.me/" +
+    NUMERO_WHATSAPP +
+    "?text=" +
+    mensaje;
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+async function abrirAdmin(){
+
+  const resultado =
+    await supabaseCliente.auth.getSession();
+
+
+  const session =
+    resultado.data.session;
+
+
+  if(session){
+
+    document.getElementById(
+      "modalAdmin"
+    ).style.display =
+      "block";
+
+
+    mostrarAdminProductos();
+
+  }else{
+
+    document.getElementById(
+      "modalLogin"
+    ).style.display =
+      "block";
+
+  }
+
+}
+
+
+function cerrarLogin(){
+
+  document.getElementById(
+    "modalLogin"
+  ).style.display =
+    "none";
+
+
+  ocultarMensaje(
+    "loginError"
+  );
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function iniciarSesion(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
+
+
+  const password =
+    document.getElementById(
+      "loginPassword"
+    ).value;
+
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  ocultarMensaje(
+    "loginError"
+  );
+
+
+  if(!email || !password){
+
+    mostrarMensaje(
+      error,
+      "Completá email y contraseña."
+    );
+
+    return;
+
+  }
+
+
+  const resultado =
+    await supabaseCliente.auth
+      .signInWithPassword({
+
+        email:email,
+
+        password:password
+
+      });
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    return;
+
+  }
+
+
+  cerrarLogin();
+
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "block";
+
+
+  await cargarProductos();
+
+  await cargarBanners();
+
+  mostrarAdminProductos();
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+async function cerrarSesion(){
+
+  await supabaseCliente.auth.signOut();
+
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "none";
+
+
+  alert(
+    "🔒 Sesión cerrada."
+  );
+
+}
+
+
+function cerrarAdmin(){
+
+  document.getElementById(
+    "modalAdmin"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =====================================================
+   GUARDAR PRODUCTO
+===================================================== */
+
+async function guardarProducto(){
+
+  const error =
+    document.getElementById(
+      "productoError"
+    );
+
+
+  const exito =
+    document.getElementById(
+      "productoExito"
+    );
+
+
+  ocultarMensaje(
+    "productoError"
+  );
+
+  ocultarMensaje(
+    "productoExito"
+  );
+
+
+  const nombre =
+    document.getElementById(
+      "nombre"
+    ).value.trim();
+
+
+  const precio =
+    Number(
+      document.getElementById(
+        "precio"
+      ).value
+    );
+
+
+  const precioAnterior =
+    Number(
+      document.getElementById(
+        "precioAnterior"
+      ).value || 0
+    );
+
+
+  const categoria =
+    document.getElementById(
+      "categoria"
+    ).value;
+
+
+  const descripcion =
+    document.getElementById(
+      "descripcion"
+    ).value.trim();
+
+
+  const imagen =
+    document.getElementById(
+      "imagen"
+    ).value.trim();
+
+
+  if(!nombre){
+
+    mostrarMensaje(
+      error,
+      "Ingresá el nombre del producto."
+    );
+
+    return;
+
+  }
+
+
+  if(!precio || precio <= 0){
+
+    mostrarMensaje(
+      error,
+      "Ingresá un precio válido."
+    );
+
+    return;
+
+  }
+
+
+  const datos = {
+
+    nombre:nombre,
+
+    precio:precio,
+
+    precio_anterior:
+      precioAnterior || null,
+
+    categoria:categoria,
+
+    descripcion:
+      descripcion || null,
+
+    imagen:
+      imagen || null
+
+  };
+
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .insert([datos]);
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    console.error(
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensaje(
+    exito,
+    "✅ Producto guardado correctamente."
+  );
+
+
+  document.getElementById(
+    "nombre"
+  ).value = "";
+
+
+  document.getElementById(
+    "precio"
+  ).value = "";
+
+
+  document.getElementById(
+    "precioAnterior"
+  ).value = "";
+
+
+  document.getElementById(
+    "descripcion"
+  ).value = "";
+
+
+  document.getElementById(
+    "imagen"
+  ).value = "";
+
+
+  await cargarProductos();
+
+}
+
+
+/* =====================================================
+   LISTA ADMIN
+===================================================== */
+
+function mostrarAdminProductos(){
+
+  const lista =
+    document.getElementById(
+      "adminLista"
+    );
+
+
+  if(!lista)
+    return;
+
+
+  if(productos.length === 0){
+
+    lista.innerHTML = `
+
+      <div
+        style="
+          text-align:center;
+          color:#777;
+          padding:20px;
+        "
+      >
+
+        No hay productos todavía.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  lista.innerHTML =
+    productos.map(function(producto){
+
+      return `
+
+        <div class="admin-producto">
+
+          <div>
+
+            <strong>
+              ${escaparHTML(
+                producto.nombre
+              )}
+            </strong>
+
+            <div style="margin-top:5px;">
+
+              $${formatearPrecio(
+                producto.precio
+              )}
+
+            </div>
+
+          </div>
+
+
+          <button
+            onclick="eliminarProducto(${Number(producto.id)})"
+          >
+
+            🗑️ Eliminar
+
+          </button>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   ELIMINAR PRODUCTO
+===================================================== */
+
+async function eliminarProducto(id){
+
+  const confirmar =
+    confirm(
+      "¿Seguro que querés eliminar este producto?"
+    );
+
+
+  if(!confirmar)
+    return;
+
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .delete()
+      .eq("id",id);
+
+
+  if(resultado.error){
+
+    alert(
+      "❌ Error: " +
+      resultado.error.message
+    );
+
+    return;
+
+  }
+
+
+  await cargarProductos();
+
+
+  alert(
+    "✅ Producto eliminado."
+  );
+
+}
+
+
+/* =====================================================
+   BANNERS
+===================================================== */
+
+async function cargarBanners(){
+
+  const resultado =
+    await supabaseCliente
+      .from("banners")
+      .select("*")
+      .eq("activo",true)
+      .order("id",{ascending:false});
+
+
+  if(resultado.error){
+
+    console.error(
+      "Error banners:",
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  banners =
+    resultado.data || [];
+
+
+  bannerActual = 0;
+
+
+  mostrarBanner();
+
+}
+
+
+/* =====================================================
+   MOSTRAR BANNER
+===================================================== */
+
+function mostrarBanner(){
+
+  const slider =
+    document.getElementById(
+      "bannerSlider"
+    );
+
+
+  const dots =
+    document.getElementById(
+      "bannerDots"
+    );
+
+
+  if(banners.length === 0){
+
+    slider.innerHTML = `
+
+      <div
+        style="
+          width:100%;
+          height:100%;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          color:#fff;
+          background:#111;
+        "
+      >
+
+        <div style="text-align:center;">
+
+          <h2>
+            TEKNO ACTIVA
+          </h2>
+
+          <p
+            style="
+              margin-top:8px;
+              color:#bbb;
+            "
+          >
+            Tecnología y accesorios
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    dots.innerHTML = "";
+
+
+    detenerBanner();
+
+    return;
+
+  }
+
+
+  if(
+    bannerActual >= banners.length
+  ){
+
+    bannerActual = 0;
+
+  }
+
+
+  const banner =
+    banners[bannerActual];
+
+
+  const enlace =
+    banner.enlace ||
+    "#";
+
+
+  slider.innerHTML = `
+
+    <a
+      href="${escaparHTML(enlace)}"
+      ${enlace !== "#" ? 'target="_blank"' : ''}
+    >
+
+      <img
+        src="${escaparHTML(
+          banner.imagen || ""
+        )}"
+        alt="${escaparHTML(
+          banner.titulo || "Banner"
+        )}"
+      >
+
+
+      <div class="banner-texto">
+
+        <h2>
+          ${escaparHTML(
+            banner.titulo || ""
+          )}
+        </h2>
+
+        <p>
+          ${escaparHTML(
+            banner.texto || ""
+          )}
+        </p>
+
+      </div>
+
+    </a>
+
+  `;
+
+
+  dots.innerHTML =
+    banners.map(function(_,index){
+
+      return `
+
+        <button
+          class="${
+            index === bannerActual
+              ? "activo"
+              : ""
+          }"
+          onclick="irBanner(${index})"
+        ></button>
+
+      `;
+
+    }).join("");
+
+
+  iniciarBannerAutomatico();
+
+}
+
+
+function bannerSiguiente(){
+
+  if(banners.length === 0)
+    return;
+
+
+  bannerActual++;
+
+
+  if(
+    bannerActual >= banners.length
+  ){
+
+    bannerActual = 0;
+
+  }
+
+
+  mostrarBanner();
+
+}
+
+
+function bannerAnterior(){
+
+  if(banners.length === 0)
+    return;
+
+
+  bannerActual--;
+
+
+  if(
+    bannerActual < 0
+  ){
+
+    bannerActual =
+      banners.length - 1;
+
+  }
+
+
+  mostrarBanner();
+
+}
+
+
+function irBanner(index){
+
+  bannerActual =
+    index;
+
+
+  mostrarBanner();
+
+}
+
+
+/* =====================================================
+   BANNER AUTOMÁTICO
+===================================================== */
+
+function iniciarBannerAutomatico(){
+
+  detenerBanner();
+
+
+  if(banners.length <= 1)
+    return;
+
+
+  intervaloBanner =
+    setInterval(function(){
+
+      bannerActual++;
+
+
+      if(
+        bannerActual >= banners.length
+      ){
+
+        bannerActual = 0;
+
+      }
+
+
+      mostrarBanner();
+
+    },5000);
+
+}
+
+
+function detenerBanner(){
+
+  if(intervaloBanner){
+
+    clearInterval(
+      intervaloBanner
+    );
+
+    intervaloBanner = null;
+
+  }
+
+}
+
+
+/* =====================================================
+   GUARDAR BANNER
+===================================================== */
+
+async function guardarBanner(){
+
+  const error =
+    document.getElementById(
+      "bannerError"
+    );
+
+
+  const exito =
+    document.getElementById(
+      "bannerExito"
+    );
+
+
+  ocultarMensaje(
+    "bannerError"
+  );
+
+  ocultarMensaje(
+    "bannerExito"
+  );
+
+
+  const imagen =
+    document.getElementById(
+      "bannerImagen"
+    ).value.trim();
+
+
+  const titulo =
+    document.getElementById(
+      "bannerTitulo"
+    ).value.trim();
+
+
+  const texto =
+    document.getElementById(
+      "bannerTexto"
+    ).value.trim();
+
+
+  const enlace =
+    document.getElementById(
+      "bannerEnlace"
+    ).value.trim();
+
+
+  if(!imagen){
+
+    mostrarMensaje(
+      error,
+      "Ingresá la URL de la imagen."
+    );
+
+    return;
+
+  }
+
+
+  const datos = {
+
+    imagen:imagen,
+
+    titulo:
+      titulo || null,
+
+    texto:
+      texto || null,
+
+    enlace:
+      enlace || null,
+
+    activo:true
+
+  };
+
+
+  const resultado =
+    await supabaseCliente
+      .from("banners")
+      .insert([datos]);
+
+
+  if(resultado.error){
+
+    mostrarMensaje(
+      error,
+      resultado.error.message
+    );
+
+    console.error(
+      resultado.error
+    );
+
+    return;
+
+  }
+
+
+  mostrarMensaje(
+    exito,
+    "✅ Banner guardado correctamente."
+  );
+
+
+  document.getElementById(
+    "bannerImagen"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerTitulo"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerTexto"
+  ).value = "";
+
+
+  document.getElementById(
+    "bannerEnlace"
+  ).value = "";
+
+
+  await cargarBanners();
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+function mostrarMensaje(
+  elemento,
+  mensaje
+){
+
+  elemento.textContent =
+    mensaje;
+
+  elemento.style.display =
+    "block";
+
+}
+
+
+function ocultarMensaje(id){
+
+  const elemento =
+    document.getElementById(id);
+
+
+  if(elemento){
+
+    elemento.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =====================================================
+   CERRAR MODALES
+===================================================== */
+
+window.addEventListener(
+  "click",
+  function(event){
+
+    const modalCarrito =
+      document.getElementById(
+        "modalCarrito"
+      );
+
+
+    const modalLogin =
+      document.getElementById(
+        "modalLogin"
+      );
+
+
+    const modalAdmin =
+      document.getElementById(
+        "modalAdmin"
+      );
+
+
+    if(
+      event.target === modalCarrito
+    ){
+
+      cerrarCarrito();
+
+    }
+
+
+    if(
+      event.target === modalLogin
+    ){
+
+      cerrarLogin();
+
+    }
+
+
+    if(
+      event.target === modalAdmin
+    ){
+
+      cerrarAdmin();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ENTER LOGIN
+===================================================== */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter" &&
+      document.getElementById(
+        "modalLogin"
+      ).style.display === "block"
+    ){
+
+      iniciarSesion();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   ESTADO DE SESIÓN
+===================================================== */
+
+supabaseCliente.auth.onAuthStateChange(
+  function(event,session){
+
+    console.log(
+      "Estado sesión:",
+      event
+    );
+
+  }
+);
+
+</script>
+
+</body>
+
+</html>
