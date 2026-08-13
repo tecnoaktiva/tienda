@@ -14,10 +14,6 @@
 
 <style>
 
-/* =====================================================
-   GENERAL
-===================================================== */
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -30,33 +26,96 @@ body{
   color:#222;
 }
 
-
-/* =====================================================
-   HEADER / LOGO REAL
-===================================================== */
+/* =========================
+   HEADER
+========================= */
 
 header{
   background:#111;
-  min-height:105px;
-  padding:15px 20px;
+  color:#fff;
+  padding:16px 30px 0;
+  min-height:145px;
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   justify-content:center;
 }
 
+.header-contenido{
+  width:100%;
+  max-width:1200px;
+}
+
+.header-superior{
+  display:flex;
+  align-items:center;
+  gap:35px;
+  width:100%;
+}
+
 .logo{
-  display:none;
-  max-width:260px;
-  max-height:78px;
+  max-width:300px;
+  max-height:90px;
   width:auto;
   height:auto;
   object-fit:contain;
+  flex-shrink:0;
 }
 
+.logo-texto{
+  color:#fff;
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:1px;
+}
 
-/* =====================================================
+.header-buscador{
+  flex:1;
+  max-width:650px;
+}
+
+.header-buscador input{
+  width:100%;
+  padding:15px 22px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#222;
+  font-size:16px;
+  outline:none;
+}
+
+.header-buscador input:focus{
+  box-shadow:0 0 0 2px #555;
+}
+
+.header-categorias{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:14px 0 15px;
+}
+
+.header-categorias button{
+  border:1px solid #333;
+  background:transparent;
+  color:#fff;
+  padding:9px 17px;
+  border-radius:22px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.header-categorias button:hover,
+.header-categorias button.activo{
+  background:#fff;
+  color:#111;
+  border-color:#fff;
+}
+
+/* =========================
    CONTENEDOR
-===================================================== */
+========================= */
 
 .contenedor{
   max-width:1200px;
@@ -64,77 +123,14 @@ header{
   padding:25px 20px 55px;
 }
 
-
-/* =====================================================
-   BUSCADOR
-===================================================== */
-
-.buscador{
-  width:100%;
-  max-width:600px;
-  margin:0 auto 25px;
-}
-
-.buscador input{
-  width:100%;
-  padding:15px 20px;
-  border:1px solid #ddd;
-  border-radius:30px;
-  background:#fff;
-  font-size:16px;
-  outline:none;
-  box-shadow:0 2px 10px rgba(0,0,0,.06);
-}
-
-.buscador input:focus{
-  border-color:#111;
-}
-
-
-/* =====================================================
-   CATEGORIAS
-===================================================== */
-
-.barra{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.categorias{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.categorias button{
-  border:1px solid #ddd;
-  background:#fff;
-  padding:11px 17px;
-  border-radius:25px;
-  cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-  transition:.2s;
-}
-
-.categorias button:hover,
-.categorias button.activo{
-  background:#111;
-  color:#fff;
-  border-color:#111;
-}
-
-
-/* =====================================================
+/* =========================
    BANNER
-===================================================== */
+========================= */
 
 .banner-container{
   position:relative;
   width:100%;
-  height:390px;
+  height:300px;
   margin:0 auto 35px;
   border-radius:20px;
   overflow:hidden;
@@ -145,25 +141,9 @@ header{
 .banner-slider{
   width:100%;
   height:100%;
-  position:relative;
 }
 
-.banner-slide{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .5s ease;
-}
-
-.banner-slide.activo{
-  opacity:1;
-  visibility:visible;
-}
-
-.banner-slide a{
+.banner-slider a{
   width:100%;
   height:100%;
   display:block;
@@ -172,7 +152,7 @@ header{
   text-decoration:none;
 }
 
-.banner-slide img{
+.banner-slider img{
   width:100%;
   height:100%;
   object-fit:cover;
@@ -184,21 +164,21 @@ header{
   left:0;
   right:0;
   bottom:0;
-  padding:80px 40px 38px;
+  padding:60px 40px 30px;
   color:#fff;
   background:linear-gradient(
     transparent,
-    rgba(0,0,0,.9)
+    rgba(0,0,0,.88)
   );
 }
 
 .banner-texto h2{
-  font-size:38px;
+  font-size:30px;
   margin-bottom:7px;
 }
 
 .banner-texto p{
-  font-size:18px;
+  font-size:17px;
 }
 
 .banner-prev,
@@ -214,7 +194,7 @@ header{
   border-radius:50%;
   font-size:30px;
   cursor:pointer;
-  z-index:10;
+  z-index:5;
 }
 
 .banner-prev{
@@ -227,7 +207,7 @@ header{
 
 .banner-prev:hover,
 .banner-next:hover{
-  background:rgba(0,0,0,.85);
+  background:rgba(0,0,0,.8);
 }
 
 .banner-dots{
@@ -236,7 +216,7 @@ header{
   left:0;
   right:0;
   text-align:center;
-  z-index:20;
+  z-index:6;
 }
 
 .banner-dots button{
@@ -256,10 +236,9 @@ header{
   transform:scale(1.3);
 }
 
-
-/* =====================================================
-   TITULO
-===================================================== */
+/* =========================
+   TITULO PRODUCTOS
+========================= */
 
 .titulo-seccion{
   text-align:center;
@@ -275,10 +254,9 @@ header{
   color:#777;
 }
 
-
-/* =====================================================
+/* =========================
    PRODUCTOS
-===================================================== */
+========================= */
 
 .productos{
   display:grid;
@@ -362,10 +340,9 @@ header{
   background:#222;
 }
 
-
-/* =====================================================
+/* =========================
    PAGOS
-===================================================== */
+========================= */
 
 .pagos{
   background:#111;
@@ -406,10 +383,9 @@ header{
   margin-top:7px;
 }
 
-
-/* =====================================================
+/* =========================
    CARRITO
-===================================================== */
+========================= */
 
 .carrito-btn{
   position:fixed;
@@ -434,10 +410,9 @@ header{
   margin-left:5px;
 }
 
-
-/* =====================================================
+/* =========================
    MODALES
-===================================================== */
+========================= */
 
 .modal{
   display:none;
@@ -500,10 +475,9 @@ textarea{
   cursor:pointer;
 }
 
-
-/* =====================================================
+/* =========================
    IMAGENES
-===================================================== */
+========================= */
 
 .campo-imagen{
   background:#f7f7f7;
@@ -545,10 +519,9 @@ input[type="file"]{
   font-weight:bold;
 }
 
-
-/* =====================================================
+/* =========================
    CARRITO INTERNO
-===================================================== */
+========================= */
 
 .item-carrito{
   border-bottom:1px solid #ddd;
@@ -603,10 +576,9 @@ input[type="file"]{
   cursor:pointer;
 }
 
-
-/* =====================================================
+/* =========================
    ADMIN
-===================================================== */
+========================= */
 
 .admin-estado{
   background:#e8f5e9;
@@ -670,34 +642,9 @@ input[type="file"]{
   cursor:pointer;
 }
 
-.admin-banner{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:10px;
-}
-
-.admin-banner img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:8px;
-  margin-bottom:8px;
-}
-
-.admin-banner button{
-  border:none;
-  background:#e53935;
-  color:#fff;
-  padding:8px 10px;
-  border-radius:7px;
-  cursor:pointer;
-}
-
-
-/* =====================================================
+/* =========================
    FOOTER
-===================================================== */
+========================= */
 
 footer{
   background:#090909;
@@ -706,12 +653,11 @@ footer{
   padding:35px 20px;
 }
 
-.footer-logo-img{
-  display:none;
-  max-width:180px;
-  max-height:55px;
-  object-fit:contain;
-  margin:0 auto 12px;
+.footer-logo{
+  color:#fff;
+  font-size:23px;
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
 .footer-links{
@@ -751,10 +697,9 @@ footer{
   color:#777;
 }
 
-
-/* =====================================================
-   CELULAR
-===================================================== */
+/* =========================
+   TABLET
+========================= */
 
 @media(max-width:1000px){
 
@@ -762,18 +707,60 @@ footer{
     grid-template-columns:repeat(3,1fr);
   }
 
+  .header-superior{
+    gap:20px;
+  }
+
+  .logo{
+    max-width:250px;
+  }
+
 }
+
+/* =========================
+   CELULAR
+========================= */
 
 @media(max-width:700px){
 
   header{
-    min-height:90px;
-    padding:15px;
+    min-height:auto;
+    padding:14px 12px 0;
+  }
+
+  .header-superior{
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
   }
 
   .logo{
-    max-width:210px;
-    max-height:65px;
+    max-width:250px;
+    max-height:75px;
+  }
+
+  .logo-texto{
+    font-size:25px;
+  }
+
+  .header-buscador{
+    width:100%;
+    max-width:none;
+  }
+
+  .header-buscador input{
+    padding:13px 18px;
+    font-size:15px;
+  }
+
+  .header-categorias{
+    justify-content:center;
+    padding:12px 0;
+  }
+
+  .header-categorias button{
+    padding:8px 13px;
+    font-size:13px;
   }
 
   .contenedor{
@@ -781,13 +768,13 @@ footer{
   }
 
   .banner-container{
-    height:230px;
+    height:210px;
     margin-bottom:25px;
     border-radius:15px;
   }
 
   .banner-texto{
-    padding:50px 20px 25px;
+    padding:45px 20px 23px;
   }
 
   .banner-texto h2{
@@ -839,17 +826,16 @@ footer{
     font-size:20px;
   }
 
-  .categorias button{
-    padding:9px 13px;
-    font-size:13px;
-  }
-
   .carrito-btn{
     right:12px;
     bottom:12px;
   }
 
 }
+
+/* =========================
+   MOVIL PEQUEÑO
+========================= */
 
 @media(max-width:400px){
 
@@ -870,6 +856,15 @@ footer{
     padding:10px;
   }
 
+  .header-categorias{
+    gap:5px;
+  }
+
+  .header-categorias button{
+    padding:7px 10px;
+    font-size:12px;
+  }
+
 }
 
 </style>
@@ -879,75 +874,81 @@ footer{
 <body>
 
 
-<!-- =====================================================
+<!-- =========================
      HEADER
-===================================================== -->
+========================= -->
 
 <header>
 
-  <img
-    class="logo"
-    id="logoImagen"
-    src=""
-    alt="Tekno Activa"
-  >
+  <div class="header-contenido">
 
-</header>
+    <div class="header-superior">
 
+      <img
+        class="logo"
+        id="logoImagen"
+        src=""
+        alt="Tekno Activa"
+        style="display:none;"
+      >
 
-<!-- =====================================================
-     CONTENIDO
-===================================================== -->
+      <div
+        class="logo-texto"
+        id="logoTexto"
+      >
+        TEKNO ACTIVA
+      </div>
 
-<div class="contenedor">
+      <div class="header-buscador">
 
+        <input
+          type="search"
+          id="busqueda"
+          placeholder="Buscar productos..."
+          oninput="buscarProductos()"
+        >
 
-  <!-- BUSCADOR -->
+      </div>
 
-  <div class="buscador">
+    </div>
 
-    <input
-      type="search"
-      id="busqueda"
-      placeholder="🔎 Buscar productos..."
-      oninput="buscarProductos()"
-    >
-
-  </div>
-
-
-  <!-- CATEGORIAS -->
-
-  <div class="barra">
-
-    <div class="categorias">
+    <div class="header-categorias">
 
       <button
         class="activo"
         onclick="filtrar('todos')"
       >
-        🛍️ Todos
+        Todos
       </button>
 
       <button onclick="filtrar('auriculares')">
-        🎧 Auriculares
+        Auriculares
       </button>
 
       <button onclick="filtrar('cargadores')">
-        🔌 Cargadores
+        Cargadores
       </button>
 
       <button onclick="filtrar('hogar')">
-        🏠 Hogar
+        Hogar
       </button>
 
       <button onclick="filtrar('belleza')">
-        💄 Belleza
+        Belleza
       </button>
 
     </div>
 
   </div>
+
+</header>
+
+
+<!-- =========================
+     CONTENIDO
+========================= -->
+
+<div class="contenedor">
 
 
   <!-- BANNER -->
@@ -1012,9 +1013,9 @@ footer{
 </div>
 
 
-<!-- =====================================================
-     PAGOS
-===================================================== -->
+<!-- =========================
+     FORMAS DE PAGO
+========================= -->
 
 <section class="pagos">
 
@@ -1053,9 +1054,9 @@ footer{
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
      CARRITO
-===================================================== -->
+========================= -->
 
 <button
   class="carrito-btn"
@@ -1112,9 +1113,9 @@ footer{
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      LOGIN
-===================================================== -->
+========================= -->
 
 <div
   class="modal"
@@ -1177,9 +1178,9 @@ footer{
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      ADMIN
-===================================================== -->
+========================= -->
 
 <div
   class="modal"
@@ -1196,10 +1197,7 @@ footer{
       🔓 Sesión activa
     </div>
 
-
-    <!-- =================================================
-         PRODUCTO
-    ================================================= -->
+    <hr>
 
     <h3 style="margin:20px 0 10px;">
       📦 Agregar producto
@@ -1278,9 +1276,6 @@ footer{
       placeholder="Descripción del producto"
     ></textarea>
 
-
-    <!-- IMAGEN PRODUCTO -->
-
     <div class="campo-imagen">
 
       <label>
@@ -1329,13 +1324,7 @@ footer{
       ➕ Guardar producto
     </button>
 
-
     <hr style="margin:25px 0;">
-
-
-    <!-- =================================================
-         LOGO
-    ================================================= -->
 
     <h3 style="margin-bottom:10px;">
       🏷️ Logo de Tekno Activa
@@ -1399,13 +1388,7 @@ footer{
       🏷️ Guardar logo
     </button>
 
-
     <hr style="margin:25px 0;">
-
-
-    <!-- =================================================
-         BANNER
-    ================================================= -->
 
     <h3 style="margin-bottom:10px;">
       🖼️ Agregar banner
@@ -1499,13 +1482,7 @@ footer{
       🖼️ Guardar banner
     </button>
 
-
     <hr style="margin:25px 0;">
-
-
-    <!-- =================================================
-         LISTA PRODUCTOS
-    ================================================= -->
 
     <h3 style="margin-bottom:10px;">
       📋 Productos actuales
@@ -1515,24 +1492,6 @@ footer{
       id="adminLista"
       class="admin-lista"
     ></div>
-
-
-    <hr style="margin:25px 0;">
-
-
-    <!-- =================================================
-         LISTA BANNERS
-    ================================================= -->
-
-    <h3 style="margin-bottom:10px;">
-      🖼️ Banners actuales
-    </h3>
-
-    <div
-      id="adminBanners"
-      class="admin-lista"
-    ></div>
-
 
     <button
       class="logout"
@@ -1553,18 +1512,15 @@ footer{
 </div>
 
 
-<!-- =====================================================
+<!-- =========================
      FOOTER
-===================================================== -->
+========================= -->
 
 <footer>
 
-  <img
-    id="footerLogo"
-    class="footer-logo-img"
-    src=""
-    alt="Tekno Activa"
-  >
+  <div class="footer-logo">
+    TEKNO ACTIVA
+  </div>
 
   <div>
     Tecnología y accesorios para vos.
@@ -1594,17 +1550,16 @@ footer{
 </footer>
 
 
-<!-- =====================================================
+<!-- =========================
      SUPABASE
-===================================================== -->
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
 /* =====================================================
-   CONFIGURACIÓN
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -1624,18 +1579,8 @@ const supabaseCliente =
    WHATSAPP
 ===================================================== */
 
-/*
-   IMPORTANTE:
-   Reemplazá este número por tu número real.
-
-   Formato:
-   5492646181163
-
-   Sin +, sin espacios y sin guiones.
-*/
-
 const NUMERO_WHATSAPP =
-  "5492646181163";
+  "549264XXXXXXXX";
 
 
 /* =====================================================
@@ -1651,15 +1596,10 @@ const BUCKET_IMAGENES =
 ===================================================== */
 
 let productos = [];
-
 let banners = [];
-
 let carrito = [];
-
 let categoriaActual = "todos";
-
 let bannerActual = 0;
-
 let intervaloBanner = null;
 
 
@@ -1759,7 +1699,7 @@ async function subirImagen(
 
 
 /* =====================================================
-   PREVISUALIZAR IMAGEN
+   PREVISUALIZAR
 ===================================================== */
 
 function previsualizarImagen(
@@ -1786,6 +1726,9 @@ function previsualizarImagen(
 
   }
 
+  const archivo =
+    input.files[0];
+
   const lector =
     new FileReader();
 
@@ -1800,9 +1743,7 @@ function previsualizarImagen(
 
     };
 
-  lector.readAsDataURL(
-    input.files[0]
-  );
+  lector.readAsDataURL(archivo);
 
 }
 
@@ -1822,8 +1763,8 @@ async function cargarLogo(){
 
   if(resultado.error){
 
-    console.error(
-      "Error cargando logo:",
+    console.log(
+      "No se pudo cargar logo:",
       resultado.error.message
     );
 
@@ -1852,9 +1793,9 @@ function mostrarLogo(url){
       "logoImagen"
     );
 
-  const footer =
+  const texto =
     document.getElementById(
-      "footerLogo"
+      "logoTexto"
     );
 
   if(!url){
@@ -1862,8 +1803,8 @@ function mostrarLogo(url){
     imagen.style.display =
       "none";
 
-    footer.style.display =
-      "none";
+    texto.style.display =
+      "block";
 
     return;
 
@@ -1874,11 +1815,8 @@ function mostrarLogo(url){
   imagen.style.display =
     "block";
 
-  footer.src = url;
-
-  footer.style.display =
-    "block";
-
+  texto.style.display =
+    "none";
 
   imagen.onerror =
     function(){
@@ -1886,14 +1824,8 @@ function mostrarLogo(url){
       imagen.style.display =
         "none";
 
-    };
-
-
-  footer.onerror =
-    function(){
-
-      footer.style.display =
-        "none";
+      texto.style.display =
+        "block";
 
     };
 
@@ -1906,9 +1838,6 @@ function mostrarLogo(url){
 
 async function guardarLogo(){
 
-  ocultarMensaje("logoError");
-  ocultarMensaje("logoExito");
-
   const error =
     document.getElementById(
       "logoError"
@@ -1918,6 +1847,9 @@ async function guardarLogo(){
     document.getElementById(
       "logoExito"
     );
+
+  ocultarMensaje("logoError");
+  ocultarMensaje("logoExito");
 
   const url =
     document.getElementById(
@@ -1995,7 +1927,7 @@ async function guardarLogo(){
 
     mostrarMensaje(
       exito,
-      "✅ Logo guardado correctamente."
+      "Logo guardado correctamente."
     );
 
     document.getElementById(
@@ -2020,7 +1952,7 @@ async function guardarLogo(){
 
     mostrarMensaje(
       error,
-      "❌ " + err.message
+      "Error: " + err.message
     );
 
     console.error(err);
@@ -2042,9 +1974,7 @@ async function cargarProductos(){
       .select("*")
       .order(
         "id",
-        {
-          ascending:false
-        }
+        {ascending:false}
       );
 
   if(resultado.error){
@@ -2059,7 +1989,7 @@ async function cargarProductos(){
 
       <div class="sin-productos">
 
-        ⚠️ No se pudieron cargar
+        No se pudieron cargar
         los productos.
 
         <p style="margin-top:10px;">
@@ -2097,13 +2027,17 @@ function mostrarProductos(){
       "productos"
     );
 
-  const busqueda =
+  const inputBusqueda =
     document.getElementById(
       "busqueda"
-    )
-    .value
-    .toLowerCase()
-    .trim();
+    );
+
+  const busqueda =
+    inputBusqueda
+      ? inputBusqueda.value
+          .toLowerCase()
+          .trim()
+      : "";
 
   const lista =
     productos.filter(
@@ -2141,7 +2075,6 @@ function mostrarProductos(){
       }
     );
 
-
   if(lista.length === 0){
 
     contenedor.innerHTML = `
@@ -2149,7 +2082,7 @@ function mostrarProductos(){
       <div class="sin-productos">
 
         <h3>
-          😕 No encontramos productos
+          No encontramos productos
         </h3>
 
         <p style="margin-top:8px;">
@@ -2163,7 +2096,6 @@ function mostrarProductos(){
     return;
 
   }
-
 
   contenedor.innerHTML =
     lista.map(
@@ -2179,25 +2111,41 @@ function mostrarProductos(){
             producto.precio_anterior || 0
           );
 
-        const tieneOferta =
+        let oferta = "";
+
+        if(
           precioAnterior > precio &&
-          precioAnterior > 0;
+          precioAnterior > 0
+        ){
 
-        const oferta =
-          tieneOferta
-            ? `<span class="oferta">OFERTA</span>`
-            : "";
+          oferta = `
 
-        const anterior =
-          tieneOferta
-            ? `
-              <div class="precio-anterior">
-                $${formatearPrecio(
-                  precioAnterior
-                )}
-              </div>
-            `
-            : "";
+            <span class="oferta">
+              OFERTA
+            </span>
+
+          `;
+
+        }
+
+        let anterior = "";
+
+        if(
+          precioAnterior > precio &&
+          precioAnterior > 0
+        ){
+
+          anterior = `
+
+            <div class="precio-anterior">
+              $${formatearPrecio(
+                precioAnterior
+              )}
+            </div>
+
+          `;
+
+        }
 
         const imagen =
           producto.imagen ||
@@ -2256,14 +2204,13 @@ function mostrarProductos(){
         `;
 
       }
-    )
-    .join("");
+    ).join("");
 
 }
 
 
 /* =====================================================
-   FILTROS
+   FILTRAR
 ===================================================== */
 
 function filtrar(categoria){
@@ -2273,7 +2220,7 @@ function filtrar(categoria){
 
   document
     .querySelectorAll(
-      ".categorias button"
+      ".header-categorias button"
     )
     .forEach(
       function(boton){
@@ -2287,7 +2234,7 @@ function filtrar(categoria){
 
   document
     .querySelectorAll(
-      ".categorias button"
+      ".header-categorias button"
     )
     .forEach(
       function(boton){
@@ -2343,7 +2290,7 @@ function formatearPrecio(numero){
 
 
 /* =====================================================
-   SEGURIDAD HTML
+   ESCAPAR HTML
 ===================================================== */
 
 function escaparHTML(texto){
@@ -2405,8 +2352,11 @@ function agregarAlCarrito(id){
     productos.find(
       function(item){
 
-        return Number(item.id)
-          === Number(id);
+        return Number(
+          item.id
+        )
+        ===
+        Number(id);
 
       }
     );
@@ -2425,8 +2375,11 @@ function agregarAlCarrito(id){
     carrito.find(
       function(item){
 
-        return Number(item.id)
-          === Number(id);
+        return Number(
+          item.id
+        )
+        ===
+        Number(id);
 
       }
     );
@@ -2456,6 +2409,11 @@ function agregarAlCarrito(id){
   guardarCarrito();
 
   actualizarCarrito();
+
+  alert(
+    producto.nombre +
+    " agregado al carrito."
+  );
 
 }
 
@@ -2488,10 +2446,6 @@ function actualizarCarrito(){
       "listaCarrito"
     );
 
-  if(!lista){
-    return;
-  }
-
   if(carrito.length === 0){
 
     lista.innerHTML = `
@@ -2503,7 +2457,7 @@ function actualizarCarrito(){
           color:#777;
         "
       >
-        🛒 Tu carrito está vacío.
+        Tu carrito está vacío.
       </div>
 
     `;
@@ -2524,8 +2478,12 @@ function actualizarCarrito(){
       function(item,index){
 
         const subtotal =
-          Number(item.precio) *
-          Number(item.cantidad);
+          Number(
+            item.precio
+          ) *
+          Number(
+            item.cantidad
+          );
 
         total += subtotal;
 
@@ -2592,7 +2550,9 @@ function actualizarCarrito(){
   document.getElementById(
     "total"
   ).textContent =
-    formatearPrecio(total);
+    formatearPrecio(
+      total
+    );
 
 }
 
@@ -2602,9 +2562,8 @@ function cambiarCantidad(
   cambio
 ){
 
-  if(!carrito[index]){
+  if(!carrito[index])
     return;
-  }
 
   carrito[index].cantidad +=
     cambio;
@@ -2672,21 +2631,7 @@ function enviarWhatsApp(){
   if(carrito.length === 0){
 
     alert(
-      "🛒 El carrito está vacío."
-    );
-
-    return;
-
-  }
-
-  if(
-    NUMERO_WHATSAPP.includes(
-      "XXXXXXXX"
-    )
-  ){
-
-    alert(
-      "⚠️ Primero configurá tu número de WhatsApp en el código."
+      "El carrito está vacío."
     );
 
     return;
@@ -2694,7 +2639,7 @@ function enviarWhatsApp(){
   }
 
   let mensaje =
-    "🛍️ *NUEVO PEDIDO - TEKNO ACTIVA*\n\n";
+    "NUEVO PEDIDO - TEKNO ACTIVA%0A%0A";
 
   let total = 0;
 
@@ -2708,43 +2653,42 @@ function enviarWhatsApp(){
       total += subtotal;
 
       mensaje +=
-        "📦 " +
-        item.nombre +
-        "\n" +
+        "Producto: " +
+        encodeURIComponent(
+          item.nombre
+        ) +
+        "%0A" +
 
         "Cantidad: " +
         item.cantidad +
-        "\n" +
+        "%0A" +
 
         "Precio: $" +
         formatearPrecio(
           item.precio
         ) +
-        "\n" +
+        "%0A" +
 
         "Subtotal: $" +
         formatearPrecio(
           subtotal
         ) +
-        "\n\n";
+        "%0A%0A";
 
     }
   );
 
   mensaje +=
-    "💰 *TOTAL: $" +
+    "TOTAL: $" +
     formatearPrecio(
       total
-    ) +
-    "*";
+    );
 
   const url =
     "https://wa.me/" +
     NUMERO_WHATSAPP +
     "?text=" +
-    encodeURIComponent(
-      mensaje
-    );
+    mensaje;
 
   window.open(
     url,
@@ -2776,8 +2720,6 @@ async function abrirAdmin(){
       "block";
 
     mostrarAdminProductos();
-
-    mostrarAdminBanners();
 
   }else{
 
@@ -2830,10 +2772,7 @@ async function iniciarSesion(){
     "loginError"
   );
 
-  if(
-    !email ||
-    !password
-  ){
+  if(!email || !password){
 
     mostrarMensaje(
       error,
@@ -2882,6 +2821,10 @@ async function iniciarSesion(){
 }
 
 
+/* =====================================================
+   CERRAR SESION
+===================================================== */
+
 async function cerrarSesion(){
 
   await supabaseCliente
@@ -2894,7 +2837,7 @@ async function cerrarSesion(){
     "none";
 
   alert(
-    "🔒 Sesión cerrada."
+    "Sesión cerrada."
   );
 
 }
@@ -2916,14 +2859,6 @@ function cerrarAdmin(){
 
 async function guardarProducto(){
 
-  ocultarMensaje(
-    "productoError"
-  );
-
-  ocultarMensaje(
-    "productoExito"
-  );
-
   const error =
     document.getElementById(
       "productoError"
@@ -2933,6 +2868,14 @@ async function guardarProducto(){
     document.getElementById(
       "productoExito"
     );
+
+  ocultarMensaje(
+    "productoError"
+  );
+
+  ocultarMensaje(
+    "productoExito"
+  );
 
   const nombre =
     document.getElementById(
@@ -2998,10 +2941,10 @@ async function guardarProducto(){
 
   }
 
-  try{
+  let imagenFinal =
+    urlImagen || null;
 
-    let imagenFinal =
-      urlImagen || null;
+  try{
 
     if(archivo){
 
@@ -3059,7 +3002,7 @@ async function guardarProducto(){
 
     mostrarMensaje(
       exito,
-      "✅ Producto guardado correctamente."
+      "Producto guardado correctamente."
     );
 
     document.getElementById(
@@ -3102,7 +3045,7 @@ async function guardarProducto(){
 
     mostrarMensaje(
       error,
-      "❌ " + err.message
+      "Error: " + err.message
     );
 
     console.error(err);
@@ -3113,7 +3056,7 @@ async function guardarProducto(){
 
 
 /* =====================================================
-   LISTA PRODUCTOS ADMIN
+   LISTA ADMIN
 ===================================================== */
 
 function mostrarAdminProductos(){
@@ -3123,9 +3066,8 @@ function mostrarAdminProductos(){
       "adminLista"
     );
 
-  if(!lista){
+  if(!lista)
     return;
-  }
 
   if(productos.length === 0){
 
@@ -3174,7 +3116,7 @@ function mostrarAdminProductos(){
             <button
               onclick="eliminarProducto(${Number(producto.id)})"
             >
-              🗑️ Eliminar
+              Eliminar
             </button>
 
           </div>
@@ -3187,6 +3129,10 @@ function mostrarAdminProductos(){
 }
 
 
+/* =====================================================
+   ELIMINAR PRODUCTO
+===================================================== */
+
 async function eliminarProducto(id){
 
   const confirmar =
@@ -3194,9 +3140,8 @@ async function eliminarProducto(id){
       "¿Seguro que querés eliminar este producto?"
     );
 
-  if(!confirmar){
+  if(!confirmar)
     return;
-  }
 
   const resultado =
     await supabaseCliente
@@ -3210,7 +3155,7 @@ async function eliminarProducto(id){
   if(resultado.error){
 
     alert(
-      "❌ Error: " +
+      "Error: " +
       resultado.error.message
     );
 
@@ -3221,7 +3166,7 @@ async function eliminarProducto(id){
   await cargarProductos();
 
   alert(
-    "✅ Producto eliminado."
+    "Producto eliminado."
   );
 
 }
@@ -3255,8 +3200,6 @@ async function cargarBanners(){
       resultado.error
     );
 
-    banners = [];
-
     mostrarBanner();
 
     return;
@@ -3269,8 +3212,6 @@ async function cargarBanners(){
   bannerActual = 0;
 
   mostrarBanner();
-
-  mostrarAdminBanners();
 
 }
 
@@ -3295,13 +3236,12 @@ function mostrarBanner(){
     !slider ||
     !dots
   ){
+
     return;
+
   }
 
   detenerBanner();
-
-
-  /* SIN BANNERS */
 
   if(banners.length === 0){
 
@@ -3346,7 +3286,6 @@ function mostrarBanner(){
 
   }
 
-
   if(
     bannerActual < 0
   ){
@@ -3364,101 +3303,80 @@ function mostrarBanner(){
 
   }
 
+  const banner =
+    banners[
+      bannerActual
+    ];
 
-  /* TODOS LOS SLIDES */
+  const enlace =
+    banner.enlace || "";
 
-  slider.innerHTML =
-    banners.map(
-      function(banner,index){
+  const destino =
+    enlace
+      ? escaparHTML(enlace)
+      : "#";
 
-        const enlace =
-          banner.enlace || "";
+  const target =
+    enlace
+      ? 'target="_blank"'
+      : '';
 
-        const destino =
-          enlace
-            ? escaparHTML(enlace)
-            : "#";
+  slider.innerHTML = `
 
-        const target =
-          enlace
-            ? 'target="_blank"'
-            : "";
+    <a
+      href="${destino}"
+      ${target}
+      onclick="${
+        enlace
+          ? ""
+          : "return false;"
+      }"
+    >
 
-        return `
+      <img
+        src="${escaparHTML(
+          banner.imagen || ""
+        )}"
+        alt="${escaparHTML(
+          banner.titulo ||
+          "Banner"
+        )}"
+        onerror="
+          this.style.display='none';
+        "
+      >
 
-          <div
-            class="
-              banner-slide
-              ${
-                index === bannerActual
-                  ? "activo"
-                  : ""
-              }
-            "
-          >
+      <div class="banner-texto">
 
-            <a
-              href="${destino}"
-              ${target}
-              onclick="${
-                enlace
-                  ? ""
-                  : "return false;"
-              }"
-            >
-
-              <img
-                src="${escaparHTML(
-                  banner.imagen || ""
-                )}"
-                alt="${escaparHTML(
-                  banner.titulo ||
-                  "Banner"
-                )}"
-                onerror="
-                  this.style.display='none';
-                "
-              >
-
-              <div class="banner-texto">
-
-                ${
+        ${
+          banner.titulo
+            ? `
+              <h2>
+                ${escaparHTML(
                   banner.titulo
-                    ? `
-                      <h2>
-                        ${escaparHTML(
-                          banner.titulo
-                        )}
-                      </h2>
-                    `
-                    : ""
-                }
+                )}
+              </h2>
+            `
+            : ""
+        }
 
-                ${
+        ${
+          banner.texto
+            ? `
+              <p>
+                ${escaparHTML(
                   banner.texto
-                    ? `
-                      <p>
-                        ${escaparHTML(
-                          banner.texto
-                        )}
-                      </p>
-                    `
-                    : ""
-                }
+                )}
+              </p>
+            `
+            : ""
+        }
 
-              </div>
+      </div>
 
-            </a>
+    </a>
 
-          </div>
-
-        `;
-
-      }
-    ).join("");
-
-
-  /* PUNTOS */
+  `;
 
   dots.innerHTML =
     banners.map(
@@ -3480,14 +3398,13 @@ function mostrarBanner(){
       }
     ).join("");
 
-
   iniciarBannerAutomatico();
 
 }
 
 
 /* =====================================================
-   SIGUIENTE BANNER
+   SIGUIENTE
 ===================================================== */
 
 function bannerSiguiente(){
@@ -3495,14 +3412,15 @@ function bannerSiguiente(){
   if(
     banners.length <= 1
   ){
+
     return;
+
   }
 
   bannerActual++;
 
   if(
-    bannerActual >=
-    banners.length
+    bannerActual >= banners.length
   ){
 
     bannerActual = 0;
@@ -3515,7 +3433,7 @@ function bannerSiguiente(){
 
 
 /* =====================================================
-   BANNER ANTERIOR
+   ANTERIOR
 ===================================================== */
 
 function bannerAnterior(){
@@ -3523,7 +3441,9 @@ function bannerAnterior(){
   if(
     banners.length <= 1
   ){
+
     return;
+
   }
 
   bannerActual--;
@@ -3552,7 +3472,9 @@ function irBanner(index){
     index < 0 ||
     index >= banners.length
   ){
+
     return;
+
   }
 
   bannerActual =
@@ -3564,7 +3486,7 @@ function irBanner(index){
 
 
 /* =====================================================
-   BANNER AUTOMÁTICO
+   BANNER AUTOMATICO
 ===================================================== */
 
 function iniciarBannerAutomatico(){
@@ -3574,12 +3496,24 @@ function iniciarBannerAutomatico(){
   if(
     banners.length <= 1
   ){
+
     return;
+
   }
 
   intervaloBanner =
     setInterval(
       function(){
+
+        if(
+          banners.length <= 1
+        ){
+
+          detenerBanner();
+
+          return;
+
+        }
 
         bannerActual++;
 
@@ -3600,6 +3534,10 @@ function iniciarBannerAutomatico(){
 
 }
 
+
+/* =====================================================
+   DETENER BANNER
+===================================================== */
 
 function detenerBanner(){
 
@@ -3623,14 +3561,6 @@ function detenerBanner(){
 
 async function guardarBanner(){
 
-  ocultarMensaje(
-    "bannerError"
-  );
-
-  ocultarMensaje(
-    "bannerExito"
-  );
-
   const error =
     document.getElementById(
       "bannerError"
@@ -3640,6 +3570,14 @@ async function guardarBanner(){
     document.getElementById(
       "bannerExito"
     );
+
+  ocultarMensaje(
+    "bannerError"
+  );
+
+  ocultarMensaje(
+    "bannerExito"
+  );
 
   const urlImagen =
     document.getElementById(
@@ -3741,7 +3679,7 @@ async function guardarBanner(){
 
     mostrarMensaje(
       exito,
-      "✅ Banner guardado correctamente."
+      "Banner guardado correctamente."
     );
 
     document.getElementById(
@@ -3780,148 +3718,12 @@ async function guardarBanner(){
 
     mostrarMensaje(
       error,
-      "❌ " + err.message
+      "Error: " + err.message
     );
 
     console.error(err);
 
   }
-
-}
-
-
-/* =====================================================
-   ADMIN BANNERS
-===================================================== */
-
-function mostrarAdminBanners(){
-
-  const lista =
-    document.getElementById(
-      "adminBanners"
-    );
-
-  if(!lista){
-    return;
-  }
-
-  if(banners.length === 0){
-
-    lista.innerHTML = `
-
-      <div
-        style="
-          text-align:center;
-          color:#777;
-          padding:20px;
-        "
-      >
-        No hay banners todavía.
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-  lista.innerHTML =
-    banners.map(
-      function(banner){
-
-        return `
-
-          <div class="admin-banner">
-
-            ${
-              banner.imagen
-                ? `
-                  <img
-                    src="${escaparHTML(
-                      banner.imagen
-                    )}"
-                    alt="Banner"
-                  >
-                `
-                : ""
-            }
-
-            <strong>
-              ${escaparHTML(
-                banner.titulo ||
-                "Sin título"
-              )}
-            </strong>
-
-            ${
-              banner.texto
-                ? `
-                  <div
-                    style="
-                      margin:5px 0 10px;
-                      color:#777;
-                    "
-                  >
-                    ${escaparHTML(
-                      banner.texto
-                    )}
-                  </div>
-                `
-                : ""
-            }
-
-            <button
-              onclick="eliminarBanner(${Number(banner.id)})"
-            >
-              🗑️ Eliminar banner
-            </button>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
-
-}
-
-
-async function eliminarBanner(id){
-
-  const confirmar =
-    confirm(
-      "¿Seguro que querés eliminar este banner?"
-    );
-
-  if(!confirmar){
-    return;
-  }
-
-  const resultado =
-    await supabaseCliente
-      .from("banners")
-      .delete()
-      .eq(
-        "id",
-        id
-      );
-
-  if(resultado.error){
-
-    alert(
-      "❌ Error: " +
-      resultado.error.message
-    );
-
-    return;
-
-  }
-
-  await cargarBanners();
-
-  alert(
-    "✅ Banner eliminado."
-  );
 
 }
 
@@ -3947,7 +3749,9 @@ function mostrarMensaje(
 function ocultarMensaje(id){
 
   const elemento =
-    document.getElementById(id);
+    document.getElementById(
+      id
+    );
 
   if(elemento){
 
@@ -4026,7 +3830,7 @@ document.addEventListener(
       document.getElementById(
         "modalLogin"
       ).style.display ===
-      "block"
+        "block"
     ){
 
       iniciarSesion();
@@ -4038,7 +3842,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   SESION SUPABASE
+   SESION
 ===================================================== */
 
 supabaseCliente
