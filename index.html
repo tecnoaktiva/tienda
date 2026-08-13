@@ -763,3 +763,463 @@
   </button>
 
   <div
+    id="bannerDots"
+    class="banner-dots">
+  </div>
+
+</div>
+
+
+<div class="contenedor">
+
+  <div class="titulo-seccion">
+
+    <h1>Productos destacados</h1>
+
+    <p>
+      Tecnología y accesorios para tu día a día
+    </p>
+
+  </div>
+
+
+  <!-- BENEFICIOS -->
+
+  <div class="beneficios">
+
+    <div class="beneficio">
+      <div class="beneficio-icono">🚚</div>
+      <strong>Envíos</strong>
+      <span>Recibí tu pedido de forma segura.</span>
+    </div>
+
+    <div class="beneficio">
+      <div class="beneficio-icono">💳</div>
+      <strong>Medios de pago</strong>
+      <span>Elegí la forma de pago que prefieras.</span>
+    </div>
+
+    <div class="beneficio">
+      <div class="beneficio-icono">🔒</div>
+      <strong>Compra segura</strong>
+      <span>Comprá con tranquilidad.</span>
+    </div>
+
+    <div class="beneficio">
+      <div class="beneficio-icono">📲</div>
+      <strong>WhatsApp</strong>
+      <span>Consultanos directamente.</span>
+    </div>
+
+  </div>
+
+
+  <div class="barra">
+
+    <div class="categorias">
+
+      <button
+        class="activo"
+        onclick="filtrar('todos')">
+        🛍️ Todos
+      </button>
+
+      <button onclick="filtrar('auriculares')">
+        🎧 Auriculares
+      </button>
+
+      <button onclick="filtrar('cargadores')">
+        🔌 Cargadores
+      </button>
+
+      <button onclick="filtrar('hogar')">
+        🏠 Hogar
+      </button>
+
+      <button onclick="filtrar('belleza')">
+        💄 Belleza
+      </button>
+
+    </div>
+
+    <button
+      class="admin-btn"
+      onclick="abrirAdmin()">
+      ⚙️ Administrar
+    </button>
+
+  </div>
+
+
+  <div
+    id="productos"
+    class="productos">
+  </div>
+
+</div>
+
+
+<!-- =========================
+     FORMAS DE PAGO
+========================= -->
+
+<section class="pagos">
+
+  <h2>Formas de pago</h2>
+
+  <p>
+    Elegí la opción que te resulte más cómoda.
+  </p>
+
+  <div class="pagos-grid">
+
+    <div class="pago">
+      💵
+      <strong>Efectivo</strong>
+    </div>
+
+    <div class="pago">
+      🏦
+      <strong>Transferencia</strong>
+    </div>
+
+    <div class="pago">
+      💳
+      <strong>Tarjetas</strong>
+    </div>
+
+    <div class="pago">
+      📲
+      <strong>Mercado Pago</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     CARRITO
+========================= -->
+
+<button
+  class="carrito-btn"
+  onclick="abrirCarrito()">
+
+  🛒 Carrito
+
+  <span id="contador">0</span>
+
+</button>
+
+
+<div
+  class="modal"
+  id="modalCarrito">
+
+  <div class="modal-contenido">
+
+    <h2>🛒 Tu carrito</h2>
+
+    <div id="listaCarrito"></div>
+
+    <div class="total">
+      Total: $<span id="total">0</span>
+    </div>
+
+    <button
+      class="whatsapp"
+      onclick="enviarWhatsApp()">
+
+      📲 Enviar pedido por WhatsApp
+
+    </button>
+
+    <button
+      class="cerrar"
+      onclick="cerrarCarrito()">
+
+      Cerrar
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
+
+<div
+  class="modal"
+  id="modalLogin">
+
+  <div class="modal-contenido">
+
+    <h2>🔐 Administrador</h2>
+
+    <p style="margin-bottom:15px;">
+      Ingresá con tu cuenta de administrador.
+    </p>
+
+    <div
+      id="loginError"
+      class="error">
+    </div>
+
+    <label>Email</label>
+
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="tu@email.com"
+      autocomplete="username">
+
+    <label>Contraseña</label>
+
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Tu contraseña"
+      autocomplete="current-password">
+
+    <button
+      class="guardar"
+      onclick="iniciarSesion()">
+
+      🔐 Ingresar
+
+    </button>
+
+    <button
+      class="cerrar"
+      onclick="cerrarLogin()">
+
+      Cancelar
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     ADMINISTRACIÓN
+========================= -->
+
+<div
+  class="modal"
+  id="modalAdmin">
+
+  <div class="modal-contenido">
+
+    <h2>⚙️ Administrar Tekno Activa</h2>
+
+    <div class="admin-estado">
+      🔓 Sesión de administrador activa
+    </div>
+
+    <hr>
+
+    <h3 style="margin:20px 0 10px;">
+      📦 Agregar producto
+    </h3>
+
+    <div
+      id="productoError"
+      class="error">
+    </div>
+
+    <div
+      id="productoExito"
+      class="exito">
+    </div>
+
+    <label>Nombre</label>
+
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Ej: Auricular A6S">
+
+    <label>Precio</label>
+
+    <input
+      id="precio"
+      type="number"
+      placeholder="9999">
+
+    <label>Precio anterior</label>
+
+    <input
+      id="precioAnterior"
+      type="number"
+      placeholder="11500">
+
+    <label>Categoría</label>
+
+    <select id="categoria">
+
+      <option value="auriculares">
+        Auriculares
+      </option>
+
+      <option value="cargadores">
+        Cargadores
+      </option>
+
+      <option value="hogar">
+        Hogar
+      </option>
+
+      <option value="belleza">
+        Belleza
+      </option>
+
+    </select>
+
+    <label>Descripción</label>
+
+    <textarea
+      id="descripcion"
+      placeholder="Descripción del producto">
+    </textarea>
+
+    <label>URL de imagen</label>
+
+    <input
+      id="imagen"
+      type="text"
+      placeholder="https://...">
+
+    <button
+      class="guardar"
+      onclick="guardarProducto()">
+
+      ➕ Guardar producto
+
+    </button>
+
+    <hr style="margin:25px 0;">
+
+    <h3 style="margin-bottom:10px;">
+      🖼️ Agregar banner
+    </h3>
+
+    <div
+      id="bannerError"
+      class="error">
+    </div>
+
+    <div
+      id="bannerExito"
+      class="exito">
+    </div>
+
+    <label>URL de imagen</label>
+
+    <input
+      id="bannerImagen"
+      type="text"
+      placeholder="https://...">
+
+    <label>Título</label>
+
+    <input
+      id="bannerTitulo"
+      type="text"
+      placeholder="Ej: ¡Ofertas de la semana!">
+
+    <label>Texto</label>
+
+    <input
+      id="bannerTexto"
+      type="text"
+      placeholder="Ej: Hasta 30% de descuento">
+
+    <label>Enlace opcional</label>
+
+    <input
+      id="bannerEnlace"
+      type="text"
+      placeholder="https://...">
+
+    <button
+      class="guardar"
+      onclick="guardarBanner()">
+
+      🖼️ Guardar banner
+
+    </button>
+
+    <hr style="margin:25px 0;">
+
+    <h3 style="margin-bottom:10px;">
+      📋 Productos actuales
+    </h3>
+
+    <div
+      id="adminLista"
+      class="admin-lista">
+    </div>
+
+    <button
+      class="logout"
+      onclick="cerrarSesion()">
+
+      🔒 Cerrar sesión
+
+    </button>
+
+    <button
+      class="cerrar"
+      onclick="cerrarAdmin()">
+
+      Cerrar panel
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <div class="footer-logo">
+    TEKNO ACTIVA
+  </div>
+
+  <div>
+    Tecnología y accesorios para vos.
+  </div>
+
+  <div class="footer-links">
+    <span>📲 WhatsApp</span>
+    <span>📦 Envíos</span>
+    <span>💳 Pagos</span>
+    <span>🛒 Compras</span>
+  </div>
+
+  © 2026 Tekno Activa
+
+</footer>
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://emjknuwvbvqonafckwce
