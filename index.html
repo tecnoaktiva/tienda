@@ -262,8 +262,7 @@ header{
   flex-wrap:wrap;
 }
 
-.categorias button,
-.admin-btn{
+.categorias button{
   border:1px solid #ddd;
   background:#fff;
   padding:11px 16px;
@@ -274,16 +273,10 @@ header{
 }
 
 .categorias button:hover,
-.categorias button.activo,
-.admin-btn:hover{
+.categorias button.activo{
   background:#111;
   color:#fff;
   border-color:#111;
-}
-
-.admin-btn{
-  background:#111;
-  color:#fff;
 }
 
 /* =========================
@@ -659,6 +652,34 @@ footer{
 }
 
 /* =========================
+   ACCESO USUARIO
+========================= */
+
+.usuario-secreto{
+  margin:20px auto 15px;
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:50%;
+  background:transparent;
+  color:#777;
+  font-size:17px;
+  cursor:pointer;
+  opacity:.45;
+  transition:.2s;
+}
+
+.usuario-secreto:hover{
+  opacity:1;
+  background:#222;
+  color:#fff;
+}
+
+.copyright{
+  margin-top:5px;
+}
+
+/* =========================
    MENSAJES
 ========================= */
 
@@ -756,10 +777,6 @@ footer{
     align-items:flex-start;
   }
 
-  .admin-btn{
-    width:100%;
-  }
-
   .carrito-btn{
     right:12px;
     bottom:12px;
@@ -771,9 +788,7 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -795,7 +810,9 @@ footer{
 </header>
 
 
-<!-- BANNER -->
+<!-- =========================
+     BANNER
+========================= -->
 
 <div class="banner-container">
 
@@ -826,8 +843,11 @@ footer{
 </div>
 
 
-<div class="contenedor">
+<!-- =========================
+     CONTENIDO
+========================= -->
 
+<div class="contenedor">
 
   <div class="titulo-seccion">
 
@@ -969,14 +989,6 @@ footer{
 
     </div>
 
-
-    <button
-      class="admin-btn"
-      onclick="abrirAdmin()"
-    >
-      ⚙️ Administrar
-    </button>
-
   </div>
 
 
@@ -996,7 +1008,9 @@ footer{
 </div>
 
 
-<!-- PAGOS -->
+<!-- =========================
+     PAGOS
+========================= -->
 
 <section class="pagos">
 
@@ -1043,7 +1057,9 @@ footer{
 </section>
 
 
-<!-- CARRITO -->
+<!-- =========================
+     CARRITO
+========================= -->
 
 <button
   class="carrito-btn"
@@ -1107,7 +1123,9 @@ footer{
 </div>
 
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div
   class="modal"
@@ -1117,11 +1135,11 @@ footer{
   <div class="modal-contenido">
 
     <h2>
-      🔐 Administrador
+      🔐 Acceso
     </h2>
 
     <p style="margin-bottom:15px;">
-      Ingresá con tu cuenta de administrador.
+      Ingresá con tu cuenta.
     </p>
 
 
@@ -1179,7 +1197,9 @@ footer{
 </div>
 
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN
+========================= -->
 
 <div
   class="modal"
@@ -1189,13 +1209,13 @@ footer{
   <div class="modal-contenido">
 
     <h2>
-      ⚙️ Administrar Tekno Activa
+      ⚙️ Panel de gestión
     </h2>
 
 
     <div class="admin-estado">
 
-      🔓 Sesión de administrador activa
+      🔓 Sesión activa
 
     </div>
 
@@ -1421,7 +1441,9 @@ footer{
 </div>
 
 
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
@@ -1453,7 +1475,22 @@ footer{
 
   </div>
 
-  © 2026 Tekno Activa
+
+  <!-- ACCESO OCULTO -->
+
+  <button
+    class="usuario-secreto"
+    onclick="abrirAdmin()"
+    aria-label="Acceso"
+    title="Acceso"
+  >
+    👤
+  </button>
+
+
+  <div class="copyright">
+    © 2026 Tekno Activa
+  </div>
 
 </footer>
 
@@ -1463,1846 +1500,735 @@ footer{
 ========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 
+<body>
 
-<script>
+<header>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+  <img
+    class="logo"
+    src=""
+    alt="Tekno Activa"
+    id="logoImagen"
+    style="display:none;"
+  >
 
-const SUPABASE_URL =
-  "https://emjknuwvbvqonafckwce.supabase.co";
+  <div
+    class="logo-texto"
+    id="logoTexto"
+  >
+    TEKNO ACTIVA
+  </div>
 
-const SUPABASE_KEY =
-  "sb_publishable_qGD8gkIwNPEBhmnzl6OIBg_uUQiPQhG";
+</header>
 
 
-const supabaseCliente =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+<!-- =========================
+     BANNER
+========================= -->
 
+<div class="banner-container">
 
-/* =====================================================
-   WHATSAPP
-===================================================== */
+  <div
+    id="bannerSlider"
+    class="banner-slider"
+  ></div>
 
-/*
-   CAMBIÁ ESTO POR TU NÚMERO.
+  <button
+    class="banner-prev"
+    onclick="bannerAnterior()"
+  >
+    ‹
+  </button>
 
-   Ejemplo San Juan:
-   5492641234567
-*/
+  <button
+    class="banner-next"
+    onclick="bannerSiguiente()"
+  >
+    ›
+  </button>
 
-const NUMERO_WHATSAPP =
-  "549264XXXXXXXX";
+  <div
+    id="bannerDots"
+    class="banner-dots"
+  ></div>
 
+</div>
 
-/* =====================================================
-   VARIABLES
-===================================================== */
 
-let productos = [];
+<!-- =========================
+     CONTENIDO
+========================= -->
 
-let banners = [];
+<div class="contenedor">
 
-let carrito = [];
+  <div class="titulo-seccion">
 
-let categoriaActual = "todos";
+    <h1>
+      Productos destacados
+    </h1>
 
-let bannerActual = 0;
+    <p>
+      Tecnología y accesorios para tu día a día
+    </p>
 
-let intervaloBanner = null;
+  </div>
 
 
-/* =====================================================
-   INICIO
-===================================================== */
+  <!-- BUSCADOR -->
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async function(){
+  <div class="buscador">
 
-    cargarCarrito();
-
-    await cargarProductos();
-
-    await cargarBanners();
-
-    actualizarCarrito();
-
-  }
-);
-
-
-/* =====================================================
-   CARGAR PRODUCTOS
-===================================================== */
-
-async function cargarProductos(){
-
-  const resultado =
-    await supabaseCliente
-      .from("productos")
-      .select("*")
-      .order("id",{ascending:false});
-
-
-  if(resultado.error){
-
-    console.error(
-      "Error productos:",
-      resultado.error
-    );
-
-
-    document.getElementById(
-      "productos"
-    ).innerHTML = `
-
-      <div class="sin-productos">
-
-        ⚠️ No se pudieron cargar los productos.
-
-        <p style="margin-top:10px;">
-          ${resultado.error.message}
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  productos =
-    resultado.data || [];
-
-
-  mostrarProductos();
-
-  mostrarAdminProductos();
-
-}
-
-
-/* =====================================================
-   MOSTRAR PRODUCTOS
-===================================================== */
-
-function mostrarProductos(){
-
-  const contenedor =
-    document.getElementById(
-      "productos"
-    );
-
-
-  const busqueda =
-    document
-      .getElementById("busqueda")
-      .value
-      .toLowerCase()
-      .trim();
-
-
-  const lista =
-    productos.filter(function(producto){
-
-      const coincideCategoria =
-        categoriaActual === "todos" ||
-        String(producto.categoria || "")
-          .toLowerCase()
-          === categoriaActual;
-
-
-      const texto = (
-
-        String(producto.nombre || "") +
-        " " +
-        String(producto.descripcion || "") +
-        " " +
-        String(producto.categoria || "")
-
-      ).toLowerCase();
-
-
-      return (
-        coincideCategoria &&
-        texto.includes(busqueda)
-      );
-
-    });
-
-
-  if(lista.length === 0){
-
-    contenedor.innerHTML = `
-
-      <div class="sin-productos">
-
-        <h3>
-          😕 No encontramos productos
-        </h3>
-
-        <p style="margin-top:8px;">
-          Probá con otra búsqueda.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  contenedor.innerHTML =
-    lista.map(function(producto){
-
-      const precio =
-        Number(producto.precio || 0);
-
-
-      const precioAnterior =
-        Number(
-          producto.precio_anterior || 0
-        );
-
-
-      let oferta = "";
-
-      if(
-        precioAnterior > precio &&
-        precioAnterior > 0
-      ){
-
-        oferta = `
-          <span class="oferta">
-            OFERTA
-          </span>
-        `;
-
-      }
-
-
-      let anterior = "";
-
-      if(
-        precioAnterior > precio &&
-        precioAnterior > 0
-      ){
-
-        anterior = `
-
-          <div class="precio-anterior">
-            $${formatearPrecio(precioAnterior)}
-          </div>
-
-        `;
-
-      }
-
-
-      const imagen =
-        producto.imagen ||
-        "https://via.placeholder.com/500x400?text=Tekno+Activa";
-
-
-      return `
-
-        <div class="producto">
-
-          <img
-            src="${escaparHTML(imagen)}"
-            alt="${escaparHTML(producto.nombre || "Producto")}"
-            onerror="this.src='https://via.placeholder.com/500x400?text=Imagen+no+disponible'"
-          >
-
-
-          <div class="producto-info">
-
-            ${oferta}
-
-
-            <h3>
-              ${escaparHTML(
-                producto.nombre || "Producto"
-              )}
-            </h3>
-
-
-            <p>
-              ${escaparHTML(
-                producto.descripcion || ""
-              )}
-            </p>
-
-
-            ${anterior}
-
-
-            <div class="precio">
-
-              $${formatearPrecio(precio)}
-
-            </div>
-
-
-            <button
-              class="agregar"
-              onclick="agregarAlCarrito(${Number(producto.id)})"
-            >
-
-              🛒 Agregar al carrito
-
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   FILTRAR
-===================================================== */
-
-function filtrar(categoria){
-
-  categoriaActual =
-    categoria;
-
-
-  document
-    .querySelectorAll(".categorias button")
-    .forEach(function(boton){
-
-      boton.classList.remove("activo");
-
-    });
-
-
-  const botones =
-    document.querySelectorAll(
-      ".categorias button"
-    );
-
-
-  botones.forEach(function(boton){
-
-    const accion =
-      boton.getAttribute("onclick") || "";
-
-
-    if(
-      accion.includes(
-        "'" + categoria + "'"
-      )
-    ){
-
-      boton.classList.add("activo");
-
-    }
-
-  });
-
-
-  mostrarProductos();
-
-}
-
-
-/* =====================================================
-   BUSCAR
-===================================================== */
-
-function buscarProductos(){
-
-  mostrarProductos();
-
-}
-
-
-/* =====================================================
-   FORMATEAR PRECIO
-===================================================== */
-
-function formatearPrecio(numero){
-
-  return Number(numero || 0)
-    .toLocaleString("es-AR");
-
-}
-
-
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
-
-function escaparHTML(texto){
-
-  return String(texto)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   CARRITO
-===================================================== */
-
-function cargarCarrito(){
-
-  try{
-
-    const guardado =
-      localStorage.getItem(
-        "teknoActivaCarrito"
-      );
-
-
-    if(guardado){
-
-      carrito =
-        JSON.parse(guardado);
-
-    }
-
-  }catch(error){
-
-    carrito = [];
-
-  }
-
-}
-
-
-function guardarCarrito(){
-
-  localStorage.setItem(
-    "teknoActivaCarrito",
-    JSON.stringify(carrito)
-  );
-
-}
-
-
-/* =====================================================
-   AGREGAR AL CARRITO
-===================================================== */
-
-function agregarAlCarrito(id){
-
-  const producto =
-    productos.find(function(item){
-
-      return Number(item.id) === Number(id);
-
-    });
-
-
-  if(!producto){
-
-    alert(
-      "Producto no encontrado."
-    );
-
-    return;
-
-  }
-
-
-  const existente =
-    carrito.find(function(item){
-
-      return Number(item.id) === Number(id);
-
-    });
-
-
-  if(existente){
-
-    existente.cantidad++;
-
-  }else{
-
-    carrito.push({
-
-      id:producto.id,
-
-      nombre:producto.nombre,
-
-      precio:Number(
-        producto.precio || 0
-      ),
-
-      cantidad:1
-
-    });
-
-  }
-
-
-  guardarCarrito();
-
-  actualizarCarrito();
-
-
-  alert(
-    "✅ " +
-    producto.nombre +
-    " agregado al carrito."
-  );
-
-}
-
-
-/* =====================================================
-   ACTUALIZAR CARRITO
-===================================================== */
-
-function actualizarCarrito(){
-
-  const contador =
-    document.getElementById(
-      "contador"
-    );
-
-
-  const cantidad =
-    carrito.reduce(
-      function(total,item){
-
-        return total + item.cantidad;
-
-      },
-      0
-    );
-
-
-  contador.textContent =
-    cantidad;
-
-
-  const lista =
-    document.getElementById(
-      "listaCarrito"
-    );
-
-
-  if(carrito.length === 0){
-
-    lista.innerHTML = `
-
-      <div
-        style="
-          text-align:center;
-          padding:25px;
-          color:#777;
-        "
-      >
-
-        🛒 Tu carrito está vacío.
-
-      </div>
-
-    `;
-
-
-    document.getElementById(
-      "total"
-    ).textContent = "0";
-
-
-    return;
-
-  }
-
-
-  let total = 0;
-
-
-  lista.innerHTML =
-    carrito.map(function(item,index){
-
-      const subtotal =
-        item.precio *
-        item.cantidad;
-
-
-      total += subtotal;
-
-
-      return `
-
-        <div class="item-carrito">
-
-          <div style="flex:1;">
-
-            <strong>
-              ${escaparHTML(item.nombre)}
-            </strong>
-
-            <div
-              style="
-                margin-top:5px;
-                color:#777;
-              "
-            >
-
-              $${formatearPrecio(
-                item.precio
-              )}
-              cada uno
-
-            </div>
-
-          </div>
-
-
-          <div class="cantidad">
-
-            <button
-              onclick="cambiarCantidad(${index},-1)"
-            >
-              −
-            </button>
-
-            <strong>
-              ${item.cantidad}
-            </strong>
-
-            <button
-              onclick="cambiarCantidad(${index},1)"
-            >
-              +
-            </button>
-
-          </div>
-
-
-          <button
-            class="eliminar"
-            onclick="eliminarDelCarrito(${index})"
-          >
-            🗑️
-          </button>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  document.getElementById(
-    "total"
-  ).textContent =
-    formatearPrecio(total);
-
-}
-
-
-/* =====================================================
-   CAMBIAR CANTIDAD
-===================================================== */
-
-function cambiarCantidad(index,cambio){
-
-  if(!carrito[index])
-    return;
-
-
-  carrito[index].cantidad +=
-    cambio;
-
-
-  if(
-    carrito[index].cantidad <= 0
-  ){
-
-    carrito.splice(index,1);
-
-  }
-
-
-  guardarCarrito();
-
-  actualizarCarrito();
-
-}
-
-
-/* =====================================================
-   ELIMINAR DEL CARRITO
-===================================================== */
-
-function eliminarDelCarrito(index){
-
-  carrito.splice(index,1);
-
-  guardarCarrito();
-
-  actualizarCarrito();
-
-}
-
-
-/* =====================================================
-   ABRIR CARRITO
-===================================================== */
-
-function abrirCarrito(){
-
-  document.getElementById(
-    "modalCarrito"
-  ).style.display =
-    "block";
-
-
-  actualizarCarrito();
-
-}
-
-
-function cerrarCarrito(){
-
-  document.getElementById(
-    "modalCarrito"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-function enviarWhatsApp(){
-
-  if(carrito.length === 0){
-
-    alert(
-      "🛒 El carrito está vacío."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    NUMERO_WHATSAPP.includes(
-      "XXXXXXXX"
-    )
-  ){
-
-    alert(
-      "⚠️ Falta configurar tu número de WhatsApp."
-    );
-
-    return;
-
-  }
-
-
-  let mensaje =
-    "🛍️ *NUEVO PEDIDO - TEKNO ACTIVA*%0A%0A";
-
-
-  let total = 0;
-
-
-  carrito.forEach(function(item){
-
-    const subtotal =
-      item.precio *
-      item.cantidad;
-
-
-    total += subtotal;
-
-
-    mensaje +=
-      "📦 " +
-      encodeURIComponent(
-        item.nombre
-      ) +
-      "%0A" +
-
-      "Cantidad: " +
-      item.cantidad +
-      "%0A" +
-
-      "Precio: $" +
-      formatearPrecio(
-        item.precio
-      ) +
-      "%0A" +
-
-      "Subtotal: $" +
-      formatearPrecio(
-        subtotal
-      ) +
-      "%0A%0A";
-
-  });
-
-
-  mensaje +=
-    "💰 *TOTAL: $" +
-    formatearPrecio(total) +
-    "*";
-
-
-  const url =
-    "https://wa.me/" +
-    NUMERO_WHATSAPP +
-    "?text=" +
-    mensaje;
-
-
-  window.open(
-    url,
-    "_blank"
-  );
-
-}
-
-
-/* =====================================================
-   ADMIN
-===================================================== */
-
-async function abrirAdmin(){
-
-  const resultado =
-    await supabaseCliente.auth.getSession();
-
-
-  const session =
-    resultado.data.session;
-
-
-  if(session){
-
-    document.getElementById(
-      "modalAdmin"
-    ).style.display =
-      "block";
-
-
-    mostrarAdminProductos();
-
-  }else{
-
-    document.getElementById(
-      "modalLogin"
-    ).style.display =
-      "block";
-
-  }
-
-}
-
-
-function cerrarLogin(){
-
-  document.getElementById(
-    "modalLogin"
-  ).style.display =
-    "none";
-
-
-  ocultarMensaje(
-    "loginError"
-  );
-
-}
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-async function iniciarSesion(){
-
-  const email =
-    document.getElementById(
-      "loginEmail"
-    ).value.trim();
-
-
-  const password =
-    document.getElementById(
-      "loginPassword"
-    ).value;
-
-
-  const error =
-    document.getElementById(
-      "loginError"
-    );
-
-
-  ocultarMensaje(
-    "loginError"
-  );
-
-
-  if(!email || !password){
-
-    mostrarMensaje(
-      error,
-      "Completá email y contraseña."
-    );
-
-    return;
-
-  }
-
-
-  const resultado =
-    await supabaseCliente.auth
-      .signInWithPassword({
-
-        email:email,
-
-        password:password
-
-      });
-
-
-  if(resultado.error){
-
-    mostrarMensaje(
-      error,
-      resultado.error.message
-    );
-
-    return;
-
-  }
-
-
-  cerrarLogin();
-
-
-  document.getElementById(
-    "modalAdmin"
-  ).style.display =
-    "block";
-
-
-  await cargarProductos();
-
-  await cargarBanners();
-
-  mostrarAdminProductos();
-
-}
-
-
-/* =====================================================
-   CERRAR SESIÓN
-===================================================== */
-
-async function cerrarSesion(){
-
-  await supabaseCliente.auth.signOut();
-
-
-  document.getElementById(
-    "modalAdmin"
-  ).style.display =
-    "none";
-
-
-  alert(
-    "🔒 Sesión cerrada."
-  );
-
-}
-
-
-function cerrarAdmin(){
-
-  document.getElementById(
-    "modalAdmin"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =====================================================
-   GUARDAR PRODUCTO
-===================================================== */
-
-async function guardarProducto(){
-
-  const error =
-    document.getElementById(
-      "productoError"
-    );
-
-
-  const exito =
-    document.getElementById(
-      "productoExito"
-    );
-
-
-  ocultarMensaje(
-    "productoError"
-  );
-
-  ocultarMensaje(
-    "productoExito"
-  );
-
-
-  const nombre =
-    document.getElementById(
-      "nombre"
-    ).value.trim();
-
-
-  const precio =
-    Number(
-      document.getElementById(
-        "precio"
-      ).value
-    );
-
-
-  const precioAnterior =
-    Number(
-      document.getElementById(
-        "precioAnterior"
-      ).value || 0
-    );
-
-
-  const categoria =
-    document.getElementById(
-      "categoria"
-    ).value;
-
-
-  const descripcion =
-    document.getElementById(
-      "descripcion"
-    ).value.trim();
-
-
-  const imagen =
-    document.getElementById(
-      "imagen"
-    ).value.trim();
-
-
-  if(!nombre){
-
-    mostrarMensaje(
-      error,
-      "Ingresá el nombre del producto."
-    );
-
-    return;
-
-  }
-
-
-  if(!precio || precio <= 0){
-
-    mostrarMensaje(
-      error,
-      "Ingresá un precio válido."
-    );
-
-    return;
-
-  }
-
-
-  const datos = {
-
-    nombre:nombre,
-
-    precio:precio,
-
-    precio_anterior:
-      precioAnterior || null,
-
-    categoria:categoria,
-
-    descripcion:
-      descripcion || null,
-
-    imagen:
-      imagen || null
-
-  };
-
-
-  const resultado =
-    await supabaseCliente
-      .from("productos")
-      .insert([datos]);
-
-
-  if(resultado.error){
-
-    mostrarMensaje(
-      error,
-      resultado.error.message
-    );
-
-    console.error(
-      resultado.error
-    );
-
-    return;
-
-  }
-
-
-  mostrarMensaje(
-    exito,
-    "✅ Producto guardado correctamente."
-  );
-
-
-  document.getElementById(
-    "nombre"
-  ).value = "";
-
-
-  document.getElementById(
-    "precio"
-  ).value = "";
-
-
-  document.getElementById(
-    "precioAnterior"
-  ).value = "";
-
-
-  document.getElementById(
-    "descripcion"
-  ).value = "";
-
-
-  document.getElementById(
-    "imagen"
-  ).value = "";
-
-
-  await cargarProductos();
-
-}
-
-
-/* =====================================================
-   LISTA ADMIN
-===================================================== */
-
-function mostrarAdminProductos(){
-
-  const lista =
-    document.getElementById(
-      "adminLista"
-    );
-
-
-  if(!lista)
-    return;
-
-
-  if(productos.length === 0){
-
-    lista.innerHTML = `
-
-      <div
-        style="
-          text-align:center;
-          color:#777;
-          padding:20px;
-        "
-      >
-
-        No hay productos todavía.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  lista.innerHTML =
-    productos.map(function(producto){
-
-      return `
-
-        <div class="admin-producto">
-
-          <div>
-
-            <strong>
-              ${escaparHTML(
-                producto.nombre
-              )}
-            </strong>
-
-            <div style="margin-top:5px;">
-
-              $${formatearPrecio(
-                producto.precio
-              )}
-
-            </div>
-
-          </div>
-
-
-          <button
-            onclick="eliminarProducto(${Number(producto.id)})"
-          >
-
-            🗑️ Eliminar
-
-          </button>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =====================================================
-   ELIMINAR PRODUCTO
-===================================================== */
-
-async function eliminarProducto(id){
-
-  const confirmar =
-    confirm(
-      "¿Seguro que querés eliminar este producto?"
-    );
-
-
-  if(!confirmar)
-    return;
-
-
-  const resultado =
-    await supabaseCliente
-      .from("productos")
-      .delete()
-      .eq("id",id);
-
-
-  if(resultado.error){
-
-    alert(
-      "❌ Error: " +
-      resultado.error.message
-    );
-
-    return;
-
-  }
-
-
-  await cargarProductos();
-
-
-  alert(
-    "✅ Producto eliminado."
-  );
-
-}
-
-
-/* =====================================================
-   BANNERS
-===================================================== */
-
-async function cargarBanners(){
-
-  const resultado =
-    await supabaseCliente
-      .from("banners")
-      .select("*")
-      .eq("activo",true)
-      .order("id",{ascending:false});
-
-
-  if(resultado.error){
-
-    console.error(
-      "Error banners:",
-      resultado.error
-    );
-
-    return;
-
-  }
-
-
-  banners =
-    resultado.data || [];
-
-
-  bannerActual = 0;
-
-
-  mostrarBanner();
-
-}
-
-
-/* =====================================================
-   MOSTRAR BANNER
-===================================================== */
-
-function mostrarBanner(){
-
-  const slider =
-    document.getElementById(
-      "bannerSlider"
-    );
-
-
-  const dots =
-    document.getElementById(
-      "bannerDots"
-    );
-
-
-  if(banners.length === 0){
-
-    slider.innerHTML = `
-
-      <div
-        style="
-          width:100%;
-          height:100%;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          color:#fff;
-          background:#111;
-        "
-      >
-
-        <div style="text-align:center;">
-
-          <h2>
-            TEKNO ACTIVA
-          </h2>
-
-          <p
-            style="
-              margin-top:8px;
-              color:#bbb;
-            "
-          >
-            Tecnología y accesorios
-          </p>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-    dots.innerHTML = "";
-
-
-    detenerBanner();
-
-    return;
-
-  }
-
-
-  if(
-    bannerActual >= banners.length
-  ){
-
-    bannerActual = 0;
-
-  }
-
-
-  const banner =
-    banners[bannerActual];
-
-
-  const enlace =
-    banner.enlace ||
-    "#";
-
-
-  slider.innerHTML = `
-
-    <a
-      href="${escaparHTML(enlace)}"
-      ${enlace !== "#" ? 'target="_blank"' : ''}
+    <input
+      type="search"
+      id="busqueda"
+      placeholder="🔎 Buscar productos..."
+      oninput="buscarProductos()"
     >
 
-      <img
-        src="${escaparHTML(
-          banner.imagen || ""
-        )}"
-        alt="${escaparHTML(
-          banner.titulo || "Banner"
-        )}"
-      >
+  </div>
 
 
-      <div class="banner-texto">
+  <!-- BENEFICIOS -->
 
-        <h2>
-          ${escaparHTML(
-            banner.titulo || ""
-          )}
-        </h2>
+  <div class="beneficios">
 
-        <p>
-          ${escaparHTML(
-            banner.texto || ""
-          )}
-        </p>
+    <div class="beneficio">
 
+      <div class="beneficio-icono">
+        🚚
       </div>
 
-    </a>
+      <strong>
+        Envíos
+      </strong>
 
-  `;
+      <span>
+        Recibí tu pedido de forma segura.
+      </span>
 
+    </div>
 
-  dots.innerHTML =
-    banners.map(function(_,index){
 
-      return `
+    <div class="beneficio">
 
-        <button
-          class="${
-            index === bannerActual
-              ? "activo"
-              : ""
-          }"
-          onclick="irBanner(${index})"
-        ></button>
+      <div class="beneficio-icono">
+        💳
+      </div>
 
-      `;
+      <strong>
+        Medios de pago
+      </strong>
 
-    }).join("");
+      <span>
+        Elegí la forma de pago que prefieras.
+      </span>
 
+    </div>
 
-  iniciarBannerAutomatico();
 
-}
+    <div class="beneficio">
 
+      <div class="beneficio-icono">
+        🔒
+      </div>
 
-function bannerSiguiente(){
+      <strong>
+        Compra segura
+      </strong>
 
-  if(banners.length === 0)
-    return;
+      <span>
+        Comprá con tranquilidad.
+      </span>
 
+    </div>
 
-  bannerActual++;
 
+    <div class="beneficio">
 
-  if(
-    bannerActual >= banners.length
-  ){
+      <div class="beneficio-icono">
+        📲
+      </div>
 
-    bannerActual = 0;
+      <strong>
+        WhatsApp
+      </strong>
 
-  }
+      <span>
+        Consultanos directamente.
+      </span>
 
+    </div>
 
-  mostrarBanner();
+  </div>
 
-}
 
+  <!-- =========================
+       CATEGORÍAS
+  ========================= -->
 
-function bannerAnterior(){
+  <div class="barra">
 
-  if(banners.length === 0)
-    return;
+    <div class="categorias">
 
+      <button
+        class="activo"
+        onclick="filtrar('todos')"
+      >
+        🛍️ Todos
+      </button>
 
-  bannerActual--;
+      <button
+        onclick="filtrar('auriculares')"
+      >
+        🎧 Auriculares
+      </button>
 
+      <button
+        onclick="filtrar('cargadores')"
+      >
+        🔌 Cargadores
+      </button>
 
-  if(
-    bannerActual < 0
-  ){
+      <button
+        onclick="filtrar('hogar')"
+      >
+        🏠 Hogar
+      </button>
 
-    bannerActual =
-      banners.length - 1;
+      <button
+        onclick="filtrar('belleza')"
+      >
+        💄 Belleza
+      </button>
 
-  }
+    </div>
 
+  </div>
 
-  mostrarBanner();
 
-}
+  <!-- =========================
+       PRODUCTOS
+  ========================= -->
 
+  <div
+    id="productos"
+    class="productos"
+  >
 
-function irBanner(index){
+    <div class="cargando">
+      Cargando productos...
+    </div>
 
-  bannerActual =
-    index;
+  </div>
 
+</div>
 
-  mostrarBanner();
 
-}
+<!-- =========================
+     PAGOS
+========================= -->
 
+<section class="pagos">
 
-/* =====================================================
-   BANNER AUTOMÁTICO
-===================================================== */
+  <h2>
+    Formas de pago
+  </h2>
 
-function iniciarBannerAutomatico(){
+  <p>
+    Elegí la opción que te resulte más cómoda.
+  </p>
 
-  detenerBanner();
+  <div class="pagos-grid">
 
+    <div class="pago">
 
-  if(banners.length <= 1)
-    return;
+      💵
 
+      <strong>
+        Efectivo
+      </strong>
 
-  intervaloBanner =
-    setInterval(function(){
+    </div>
 
-      bannerActual++;
 
+    <div class="pago">
 
-      if(
-        bannerActual >= banners.length
-      ){
+      🏦
 
-        bannerActual = 0;
+      <strong>
+        Transferencia
+      </strong>
 
-      }
+    </div>
 
 
-      mostrarBanner();
+    <div class="pago">
 
-    },5000);
+      💳
 
-}
+      <strong>
+        Tarjetas
+      </strong>
 
+    </div>
 
-function detenerBanner(){
 
-  if(intervaloBanner){
+    <div class="pago">
 
-    clearInterval(
-      intervaloBanner
-    );
+      📲
 
-    intervaloBanner = null;
+      <strong>
+        Mercado Pago
+      </strong>
 
-  }
+    </div>
 
-}
+  </div>
 
+</section>
 
-/* =====================================================
-   GUARDAR BANNER
-===================================================== */
 
-async function guardarBanner(){
+<!-- =========================
+     CARRITO
+========================= -->
 
-  const error =
-    document.getElementById(
-      "bannerError"
-    );
+<button
+  class="carrito-btn"
+  onclick="abrirCarrito()"
+>
 
+  🛒 Carrito
 
-  const exito =
-    document.getElementById(
-      "bannerExito"
-    );
+  <span id="contador">
+    0
+  </span>
 
+</button>
 
-  ocultarMensaje(
-    "bannerError"
-  );
 
-  ocultarMensaje(
-    "bannerExito"
-  );
+<div
+  class="modal"
+  id="modalCarrito"
+>
 
+  <div class="modal-contenido">
 
-  const imagen =
-    document.getElementById(
-      "bannerImagen"
-    ).value.trim();
+    <h2>
+      🛒 Tu carrito
+    </h2>
 
+    <div id="listaCarrito"></div>
 
-  const titulo =
-    document.getElementById(
-      "bannerTitulo"
-    ).value.trim();
+    <div class="total">
 
+      Total: $
 
-  const texto =
-    document.getElementById(
-      "bannerTexto"
-    ).value.trim();
+      <span id="total">
+        0
+      </span>
 
+    </div>
 
-  const enlace =
-    document.getElementById(
-      "bannerEnlace"
-    ).value.trim();
 
+    <button
+      class="whatsapp"
+      onclick="enviarWhatsApp()"
+    >
 
-  if(!imagen){
+      📲 Enviar pedido por WhatsApp
 
-    mostrarMensaje(
-      error,
-      "Ingresá la URL de la imagen."
-    );
+    </button>
 
-    return;
 
-  }
+    <button
+      class="cerrar"
+      onclick="cerrarCarrito()"
+    >
 
+      Cerrar
 
-  const datos = {
+    </button>
 
-    imagen:imagen,
+  </div>
 
-    titulo:
-      titulo || null,
+</div>
 
-    texto:
-      texto || null,
 
-    enlace:
-      enlace || null,
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
 
-    activo:true
+<div
+  class="modal"
+  id="modalLogin"
+>
 
-  };
+  <div class="modal-contenido">
 
+    <h2>
+      🔐 Ingreso
+    </h2>
 
-  const resultado =
-    await supabaseCliente
-      .from("banners")
-      .insert([datos]);
+    <p style="margin-bottom:15px;">
+      Ingresá con tu cuenta.
+    </p>
 
 
-  if(resultado.error){
+    <div
+      id="loginError"
+      class="error"
+    ></div>
 
-    mostrarMensaje(
-      error,
-      resultado.error.message
-    );
 
-    console.error(
-      resultado.error
-    );
+    <label>
+      Email
+    </label>
 
-    return;
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="tu@email.com"
+      autocomplete="username"
+    >
 
-  }
 
+    <label>
+      Contraseña
+    </label>
 
-  mostrarMensaje(
-    exito,
-    "✅ Banner guardado correctamente."
-  );
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Tu contraseña"
+      autocomplete="current-password"
+    >
 
 
-  document.getElementById(
-    "bannerImagen"
-  ).value = "";
+    <button
+      class="guardar"
+      onclick="iniciarSesion()"
+    >
 
+      🔐 Ingresar
 
-  document.getElementById(
-    "bannerTitulo"
-  ).value = "";
+    </button>
 
 
-  document.getElementById(
-    "bannerTexto"
-  ).value = "";
+    <button
+      class="cerrar"
+      onclick="cerrarLogin()"
+    >
 
+      Cancelar
 
-  document.getElementById(
-    "bannerEnlace"
-  ).value = "";
+    </button>
 
+  </div>
 
-  await cargarBanners();
+</div>
 
-}
 
+<!-- =========================
+     ADMIN
+========================= -->
 
-/* =====================================================
-   MENSAJES
-===================================================== */
+<div
+  class="modal"
+  id="modalAdmin"
+>
 
-function mostrarMensaje(
-  elemento,
-  mensaje
-){
+  <div class="modal-contenido">
 
-  elemento.textContent =
-    mensaje;
+    <h2>
+      ⚙️ Panel privado
+    </h2>
 
-  elemento.style.display =
-    "block";
 
-}
+    <div class="admin-estado">
 
+      🔓 Sesión activa
 
-function ocultarMensaje(id){
+    </div>
 
-  const elemento =
-    document.getElementById(id);
 
+    <hr>
 
-  if(elemento){
 
-    elemento.style.display =
-      "none";
+    <!-- AGREGAR PRODUCTO -->
 
-  }
+    <h3 style="margin:20px 0 10px;">
+      📦 Agregar producto
+    </h3>
 
-}
 
+    <div
+      id="productoError"
+      class="error"
+    ></div>
 
-/* =====================================================
-   CERRAR MODALES
-===================================================== */
 
-window.addEventListener(
-  "click",
-  function(event){
+    <div
+      id="productoExito"
+      class="exito"
+    ></div>
 
-    const modalCarrito =
-      document.getElementById(
-        "modalCarrito"
-      );
 
+    <label>
+      Nombre
+    </label>
 
-    const modalLogin =
-      document.getElementById(
-        "modalLogin"
-      );
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Ej: Auricular A6S"
+    >
 
 
-    const modalAdmin =
-      document.getElementById(
-        "modalAdmin"
-      );
+    <label>
+      Precio
+    </label>
 
+    <input
+      id="precio"
+      type="number"
+      placeholder="9999"
+    >
 
-    if(
-      event.target === modalCarrito
-    ){
 
-      cerrarCarrito();
+    <label>
+      Precio anterior
+    </label>
 
-    }
+    <input
+      id="precioAnterior"
+      type="number"
+      placeholder="11500"
+    >
 
 
-    if(
-      event.target === modalLogin
-    ){
+    <label>
+      Categoría
+    </label>
 
-      cerrarLogin();
+    <select id="categoria">
 
-    }
+      <option value="auriculares">
+        Auriculares
+      </option>
 
+      <option value="cargadores">
+        Cargadores
+      </option>
 
-    if(
-      event.target === modalAdmin
-    ){
+      <option value="hogar">
+        Hogar
+      </option>
 
-      cerrarAdmin();
+      <option value="belleza">
+        Belleza
+      </option>
 
-    }
+    </select>
 
-  }
-);
 
+    <label>
+      Descripción
+    </label>
 
-/* =====================================================
-   ENTER LOGIN
-===================================================== */
+    <textarea
+      id="descripcion"
+      placeholder="Descripción del producto"
+    ></textarea>
 
-document.addEventListener(
-  "keydown",
-  function(event){
 
-    if(
-      event.key === "Enter" &&
-      document.getElementById(
-        "modalLogin"
-      ).style.display === "block"
-    ){
+    <label>
+      URL de imagen
+    </label>
 
-      iniciarSesion();
+    <input
+      id="imagen"
+      type="text"
+      placeholder="https://..."
+    >
 
-    }
 
-  }
-);
+    <button
+      class="guardar"
+      onclick="guardarProducto()"
+    >
 
+      ➕ Guardar producto
 
-/* =====================================================
-   ESTADO DE SESIÓN
-===================================================== */
+    </button>
 
-supabaseCliente.auth.onAuthStateChange(
-  function(event,session){
 
-    console.log(
-      "Estado sesión:",
-      event
-    );
+    <hr style="margin:25px 0;">
 
-  }
-);
 
-</script>
+    <!-- AGREGAR BANNER -->
 
-</body>
+    <h3 style="margin-bottom:10px;">
+      🖼️ Agregar banner
+    </h3>
 
-</html>
+
+    <div
+      id="bannerError"
+      class="error"
+    ></div>
+
+
+    <div
+      id="bannerExito"
+      class="exito"
+    ></div>
+
+
+    <label>
+      URL de imagen
+    </label>
+
+    <input
+      id="bannerImagen"
+      type="text"
+      placeholder="https://..."
+    >
+
+
+    <label>
+      Título
+    </label>
+
+    <input
+      id="bannerTitulo"
+      type="text"
+      placeholder="Ej: ¡Ofertas de la semana!"
+    >
+
+
+    <label>
+      Texto
+    </label>
+
+    <input
+      id="bannerTexto"
+      type="text"
+      placeholder="Ej: Hasta 30% de descuento"
+    >
+
+
+    <label>
+      Enlace opcional
+    </label>
+
+    <input
+      id="bannerEnlace"
+      type="text"
+      placeholder="https://..."
+    >
+
+
+    <button
+      class="guardar"
+      onclick="guardarBanner()"
+    >
+
+      🖼️ Guardar banner
+
+    </button>
+
+
+    <hr style="margin:25px 0;">
+
+
+    <!-- PRODUCTOS ACTUALES -->
+
+    <h3 style="margin-bottom:10px;">
+      📋 Productos actuales
+    </h3>
+
+
+    <div
+      id="adminLista"
+      class="admin-lista"
+    ></div>
+
+
+    <button
+      class="logout"
+      onclick="cerrarSesion()"
+    >
+
+      🔒 Cerrar sesión
+
+    </button>
+
+
+    <button
+      class="cerrar"
+      onclick="cerrarAdmin()"
+    >
+
+      Cerrar panel
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  <div class="footer-logo">
+    TEKNO ACTIVA
+  </div>
+
+  <div>
+    Tecnología y accesorios para vos.
+  </div>
+
+  <div class="footer-links">
+
+    <span>
+      📲 WhatsApp
+    </span>
+
+    <span>
+      📦 Envíos
+    </span>
+
+    <span>
+      💳 Pagos
+    </span>
+
+    <span>
+      🛒 Compras
+    </span>
+
+  </div>
+
+
+  © 2026 Tekno Activa
+
+
+  <!--
+    ICONO PRIVADO DE ADMINISTRACIÓN.
+    Los clientes solamente verán un pequeño ícono.
+  -->
+
+  <div
+    class="admin-icono"
+    onclick="abrirAdmin()"
+    title="Acceso"
+  >
+    👤
+  </div>
+
+</footer>
