@@ -679,6 +679,14 @@ input[type="file"]{
   background:#2e7d32;
 }
 
+.btn-editar{
+  background:#6a1b9a;
+}
+
+.btn-editar:hover{
+  background:#4a126b;
+}
+
 /* =========================
    FOOTER
 ========================= */
@@ -1028,6 +1036,10 @@ footer{
   <span id="contador">0</span>
 </button>
 
+<!-- =========================
+     MODAL CARRITO
+========================= -->
+
 <div
   class="modal"
   id="modalCarrito"
@@ -1066,7 +1078,9 @@ footer{
 
 </div>
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div
   class="modal"
@@ -1124,7 +1138,9 @@ footer{
 
 </div>
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN
+========================= -->
 
 <div
   class="modal"
@@ -1433,6 +1449,193 @@ footer{
       onclick="cerrarAdmin()"
     >
       Cerrar panel
+    </button>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     MODAL EDITAR PRODUCTO
+========================= -->
+
+<div
+  class="modal"
+  id="modalEditarProducto"
+>
+
+  <div class="modal-contenido">
+
+    <h2>
+      ✏️ Editar producto
+    </h2>
+
+    <div
+      id="editarProductoError"
+      class="error"
+    ></div>
+
+    <div
+      id="editarProductoExito"
+      class="exito"
+    ></div>
+
+    <input
+      type="hidden"
+      id="editarId"
+    >
+
+    <label>
+      Nombre
+    </label>
+
+    <input
+      id="editarNombre"
+      type="text"
+      placeholder="Nombre del producto"
+    >
+
+    <label>
+      Precio
+    </label>
+
+    <input
+      id="editarPrecio"
+      type="number"
+      placeholder="9999"
+    >
+
+    <label>
+      Precio anterior
+    </label>
+
+    <input
+      id="editarPrecioAnterior"
+      type="number"
+      placeholder="11500"
+    >
+
+    <label>
+      Categoría
+    </label>
+
+    <select id="editarCategoria">
+
+      <option value="auriculares">
+        Auriculares
+      </option>
+
+      <option value="cargadores">
+        Cargadores
+      </option>
+
+      <option value="hogar">
+        Hogar
+      </option>
+
+      <option value="belleza">
+        Belleza
+      </option>
+
+    </select>
+
+    <label>
+      Descripción
+    </label>
+
+    <textarea
+      id="editarDescripcion"
+      placeholder="Descripción del producto"
+    ></textarea>
+
+    <div class="campo-imagen">
+
+      <label>
+        Imagen actual
+      </label>
+
+      <img
+        id="editarImagenActual"
+        class="preview-imagen"
+        style="display:block;"
+        alt="Imagen actual"
+      >
+
+      <label style="margin-top:15px;">
+        Elegir nueva imagen
+      </label>
+
+      <input
+        type="file"
+        id="editarImagenArchivo"
+        accept="image/*"
+        onchange="previsualizarImagen('editarImagenArchivo','previewEditarProducto')"
+      >
+
+      <img
+        id="previewEditarProducto"
+        class="preview-imagen"
+        alt="Vista previa nueva imagen"
+      >
+
+      <div
+        id="subiendoEditarProducto"
+        class="subiendo"
+      >
+        Subiendo imagen...
+      </div>
+
+    </div>
+
+    <label>
+      URL de imagen
+      <small style="color:#777;">
+        (opcional)
+      </small>
+    </label>
+
+    <input
+      id="editarImagen"
+      type="text"
+      placeholder="https://..."
+    >
+
+    <label
+      style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin:10px 0 18px;
+        cursor:pointer;
+      "
+    >
+
+      <input
+        id="editarAgotado"
+        type="checkbox"
+        style="
+          width:18px;
+          height:18px;
+          margin:0;
+        "
+      >
+
+      Marcar como AGOTADO
+
+    </label>
+
+    <button
+      class="guardar"
+      onclick="guardarEdicionProducto()"
+    >
+      💾 Guardar cambios
+    </button>
+
+    <button
+      class="cerrar"
+      onclick="cerrarEditarProducto()"
+    >
+      Cancelar
     </button>
 
   </div>
@@ -1891,12 +2094,17 @@ async function cargarProductos(){
     ).innerHTML = `
 
       <div class="sin-productos">
+
         No se pudieron cargar los productos.
+
         <p style="margin-top:10px;">
+
           ${escaparHTML(
             resultado.error.message
           )}
+
         </p>
+
       </div>
 
     `;
@@ -2760,7 +2968,7 @@ function cerrarAdmin(){
 }
 
 /* =========================
-   GUARDAR PRODUCTO
+   GUARDAR PRODUCTO NUEVO
 ========================= */
 
 async function guardarProducto(){
@@ -3069,10 +3277,10 @@ function mostrarAdminProductos(){
               </button>
 
               <button
-                style="background:#6a1b9a;"
-                onclick="cambiarPrecioProducto(${Number(producto.id)})"
+                class="btn-editar"
+                onclick="abrirEditarProducto(${Number(producto.id)})"
               >
-                ✏️ Cambiar precio
+                ✏️ Editar producto
               </button>
 
               <button
@@ -3135,60 +3343,382 @@ async function cambiarEstadoProducto(
 }
 
 /* =========================
-   CAMBIAR PRECIO
+   EDITAR PRODUCTO
 ========================= */
 
-async function cambiarPrecioProducto(id){
+function abrirEditarProducto(id){
 
-  const producto = productos.find(function(p){
-    return Number(p.id) === Number(id);
-  });
+  const producto =
+    productos.find(function(p){
 
-  if(!producto) return;
+      return Number(p.id) ===
+        Number(id);
 
-  const precioActual = Number(producto.precio) || 0;
+    });
 
-  const nuevoPrecio = prompt(
-    "Nuevo precio para " + producto.nombre + ":",
-    precioActual
-  );
+  if(!producto){
 
-  if(nuevoPrecio === null) return;
+    alert(
+      "No se encontró el producto."
+    );
 
-  const precio = Number(
-    String(nuevoPrecio).replace(/[$.\s]/g, "").replace(",", ".")
-  );
-
-  if(!Number.isFinite(precio) || precio <= 0){
-    alert("Ingresá un precio válido mayor a 0.");
     return;
+
   }
 
-  const resultado =
-    await supabaseCliente
-      .from("productos")
-      .update({
-        precio: precio
-      })
-      .eq(
-        "id",
-        id
+  document.getElementById(
+    "editarId"
+  ).value =
+    producto.id;
+
+  document.getElementById(
+    "editarNombre"
+  ).value =
+    producto.nombre || "";
+
+  document.getElementById(
+    "editarPrecio"
+  ).value =
+    producto.precio || "";
+
+  document.getElementById(
+    "editarPrecioAnterior"
+  ).value =
+    producto.precio_anterior || "";
+
+  document.getElementById(
+    "editarCategoria"
+  ).value =
+    producto.categoria || "auriculares";
+
+  document.getElementById(
+    "editarDescripcion"
+  ).value =
+    producto.descripcion || "";
+
+  document.getElementById(
+    "editarImagen"
+  ).value =
+    producto.imagen || "";
+
+  document.getElementById(
+    "editarAgotado"
+  ).checked =
+    producto.agotado === true;
+
+  const imagenActual =
+    document.getElementById(
+      "editarImagenActual"
+    );
+
+  if(producto.imagen){
+
+    imagenActual.src =
+      producto.imagen;
+
+    imagenActual.style.display =
+      "block";
+
+  }else{
+
+    imagenActual.style.display =
+      "none";
+
+  }
+
+  document.getElementById(
+    "editarImagenArchivo"
+  ).value = "";
+
+  document.getElementById(
+    "previewEditarProducto"
+  ).style.display =
+    "none";
+
+  ocultarMensaje(
+    "editarProductoError"
+  );
+
+  ocultarMensaje(
+    "editarProductoExito"
+  );
+
+  document.getElementById(
+    "modalEditarProducto"
+  ).style.display =
+    "block";
+
+}
+
+function cerrarEditarProducto(){
+
+  document.getElementById(
+    "modalEditarProducto"
+  ).style.display =
+    "none";
+
+}
+
+async function guardarEdicionProducto(){
+
+  const error =
+    document.getElementById(
+      "editarProductoError"
+    );
+
+  const exito =
+    document.getElementById(
+      "editarProductoExito"
+    );
+
+  ocultarMensaje(
+    "editarProductoError"
+  );
+
+  ocultarMensaje(
+    "editarProductoExito"
+  );
+
+  const id =
+    document.getElementById(
+      "editarId"
+    ).value;
+
+  const nombre =
+    document.getElementById(
+      "editarNombre"
+    ).value.trim();
+
+  const precio =
+    Number(
+      document.getElementById(
+        "editarPrecio"
+      ).value
+    );
+
+  const precioAnterior =
+    Number(
+      document.getElementById(
+        "editarPrecioAnterior"
+      ).value || 0
+    );
+
+  const categoria =
+    document.getElementById(
+      "editarCategoria"
+    ).value;
+
+  const descripcion =
+    document.getElementById(
+      "editarDescripcion"
+    ).value.trim();
+
+  const urlImagen =
+    document.getElementById(
+      "editarImagen"
+    ).value.trim();
+
+  const archivo =
+    document.getElementById(
+      "editarImagenArchivo"
+    ).files[0];
+
+  const agotado =
+    document.getElementById(
+      "editarAgotado"
+    ).checked;
+
+  if(!id){
+
+    mostrarMensaje(
+      error,
+      "No se encontró el producto."
+    );
+
+    return;
+
+  }
+
+  if(!nombre){
+
+    mostrarMensaje(
+      error,
+      "Ingresá el nombre del producto."
+    );
+
+    return;
+
+  }
+
+  if(
+    !precio ||
+    precio <= 0
+  ){
+
+    mostrarMensaje(
+      error,
+      "Ingresá un precio válido."
+    );
+
+    return;
+
+  }
+
+  const productoActual =
+    productos.find(function(p){
+
+      return Number(p.id) ===
+        Number(id);
+
+    });
+
+  if(!productoActual){
+
+    mostrarMensaje(
+      error,
+      "No se encontró el producto actual."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    let imagenFinal =
+      productoActual.imagen || null;
+
+    /*
+      Si se escribió una URL,
+      usamos la nueva URL.
+    */
+
+    if(urlImagen){
+
+      imagenFinal =
+        urlImagen;
+
+    }
+
+    /*
+      Si se eligió una imagen,
+      subimos la nueva imagen.
+    */
+
+    if(archivo){
+
+      document.getElementById(
+        "subiendoEditarProducto"
+      ).style.display =
+        "block";
+
+      imagenFinal =
+        await subirImagen(
+          archivo,
+          "productos"
+        );
+
+      document.getElementById(
+        "subiendoEditarProducto"
+      ).style.display =
+        "none";
+
+    }
+
+    const datos = {
+
+      nombre:
+        nombre,
+
+      precio:
+        precio,
+
+      precio_anterior:
+        precioAnterior || null,
+
+      categoria:
+        categoria,
+
+      descripcion:
+        descripcion || null,
+
+      imagen:
+        imagenFinal,
+
+      agotado:
+        agotado
+
+    };
+
+    const resultado =
+      await supabaseCliente
+        .from("productos")
+        .update(datos)
+        .eq(
+          "id",
+          id
+        );
+
+    if(resultado.error){
+
+      throw new Error(
+        resultado.error.message
       );
 
-  if(resultado.error){
-    alert(
-      "No se pudo cambiar el precio:\n" +
-      resultado.error.message
+    }
+
+    mostrarMensaje(
+      exito,
+      "Producto actualizado correctamente."
     );
-    return;
+
+    await cargarProductos();
+
+    const imagenActual =
+      document.getElementById(
+        "editarImagenActual"
+      );
+
+    if(imagenFinal){
+
+      imagenActual.src =
+        imagenFinal;
+
+      imagenActual.style.display =
+        "block";
+
+    }else{
+
+      imagenActual.style.display =
+        "none";
+
+    }
+
+    setTimeout(
+      function(){
+
+        cerrarEditarProducto();
+
+      },
+      800
+    );
+
+  }catch(err){
+
+    document.getElementById(
+      "subiendoEditarProducto"
+    ).style.display =
+      "none";
+
+    mostrarMensaje(
+      error,
+      err.message
+    );
+
+    console.error(err);
+
   }
 
-  await cargarProductos();
-
-  alert(
-    "Precio actualizado correctamente a $" +
-    formatearPrecio(precio) + "."
-  );
 }
 
 /* =========================
@@ -3823,6 +4353,11 @@ window.addEventListener(
         "modalAdmin"
       );
 
+    const modalEditarProducto =
+      document.getElementById(
+        "modalEditarProducto"
+      );
+
     if(
       event.target ===
       modalCarrito
@@ -3847,6 +4382,15 @@ window.addEventListener(
     ){
 
       cerrarAdmin();
+
+    }
+
+    if(
+      event.target ===
+      modalEditarProducto
+    ){
+
+      cerrarEditarProducto();
 
     }
 
