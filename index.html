@@ -3069,6 +3069,13 @@ function mostrarAdminProductos(){
               </button>
 
               <button
+                style="background:#6a1b9a;"
+                onclick="cambiarPrecioProducto(${Number(producto.id)})"
+              >
+                ✏️ Cambiar precio
+              </button>
+
+              <button
                 style="background:#e53935;"
                 onclick="eliminarProducto(${Number(producto.id)})"
               >
@@ -3125,6 +3132,63 @@ async function cambiarEstadoProducto(
       : "Producto marcado como DISPONIBLE."
   );
 
+}
+
+/* =========================
+   CAMBIAR PRECIO
+========================= */
+
+async function cambiarPrecioProducto(id){
+
+  const producto = productos.find(function(p){
+    return Number(p.id) === Number(id);
+  });
+
+  if(!producto) return;
+
+  const precioActual = Number(producto.precio) || 0;
+
+  const nuevoPrecio = prompt(
+    "Nuevo precio para " + producto.nombre + ":",
+    precioActual
+  );
+
+  if(nuevoPrecio === null) return;
+
+  const precio = Number(
+    String(nuevoPrecio).replace(/[$.\s]/g, "").replace(",", ".")
+  );
+
+  if(!Number.isFinite(precio) || precio <= 0){
+    alert("Ingresá un precio válido mayor a 0.");
+    return;
+  }
+
+  const resultado =
+    await supabaseCliente
+      .from("productos")
+      .update({
+        precio: precio
+      })
+      .eq(
+        "id",
+        id
+      );
+
+  if(resultado.error){
+    alert(
+      "No se pudo cambiar el precio:\n" +
+      resultado.error.message
+    );
+    return;
+  }
+
+  await cargarProductos();
+
+  alert(
+    "Precio actualizado correctamente a $" +
+    formatearPrecio(precio) + "."
+  );
 }
 
 /* =========================
